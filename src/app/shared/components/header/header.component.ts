@@ -1,6 +1,8 @@
+import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
     selector: 'app-header',
@@ -11,7 +13,7 @@ export class HeaderComponent implements OnInit {
 
     pushRightClass: string = 'push-right';
     
-    constructor(private translate: TranslateService, public router: Router) {
+    constructor(private translate: TranslateService, public router: Router,private as: AuthService) {
         this.router.events.subscribe((val) => {
             if (val instanceof NavigationEnd && window.innerWidth <= 992 && this.isToggled()) {
                 this.toggleSidebar();
@@ -20,6 +22,10 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {}
+
+    logout() {
+        this.as.logout()
+    }
 
     isToggled(): boolean {
         const dom: Element = document.querySelector('body');
@@ -34,10 +40,6 @@ export class HeaderComponent implements OnInit {
     rltAndLtr() {
         const dom: any = document.querySelector('body');
         dom.classList.toggle('rtl');
-    }
-
-    onLoggedout() {
-        localStorage.removeItem('isLoggedin');
     }
 
     changeLang(language: string) {
