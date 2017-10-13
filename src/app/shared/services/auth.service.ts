@@ -12,7 +12,7 @@ export class AuthService {
     this.user = this.afa.auth.currentUser;
   }
 
-  signup(email: string, password: string,callback: (err: Error) => any) {
+  signup(email: string, password: string,name: string,callback: (err: Error) => any) {
     this.afa
       .auth
       .createUserWithEmailAndPassword(email, password)
@@ -21,7 +21,7 @@ export class AuthService {
         console.log(list)
         list.push({ 
           uid: user.uid,
-          name: '',
+          name: name,
           email: email,
           password: password
         });

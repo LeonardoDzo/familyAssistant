@@ -12,6 +12,7 @@ import { AuthGuard,AuthService } from './shared';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import {ToastModule} from 'ng2-toastr/ng2-toastr';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
     // for development
@@ -42,6 +43,7 @@ export const firebase = {
         AngularFireAuthModule,
         AngularFireDatabaseModule,
         AppRoutingModule,
+        ToastModule.forRoot(),
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
