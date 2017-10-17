@@ -5,16 +5,16 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-
     constructor(private router: Router,public af: AngularFireAuth) { }
 
     canActivate() {
-        if (this.af.auth.currentUser) {
-            console.log(this.af.auth.currentUser)
-            return true;
-        }
-
-        this.router.navigate(['/login']);
-        return false;
+        return new Promise<boolean>((resolve, reject) => {
+            this.af.auth.onAuthStateChanged((user) => {
+                if(!user){
+                    this.router.navigate(['/login']);
+                }
+                resolve(user != null)
+            });
+        })
     }
 }

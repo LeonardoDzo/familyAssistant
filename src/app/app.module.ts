@@ -13,12 +13,18 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import {ToastOptions} from 'ng2-toastr';
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
     // for development
     // return new TranslateHttpLoader(http, '/start-angular/SB-Admin-BS4-Angular-4/master/dist/assets/i18n/', '.json');
     return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
 }
+
+export class CustomOption extends ToastOptions {
+    positionClass = "toast-top-center";
+  }
 
 export const firebase = {
     apiKey: "AIzaSyBLaihGHRC-MTKOs8prjsumm6kIC4njYsg",
@@ -52,7 +58,11 @@ export const firebase = {
             }
         })
     ],
-    providers: [AuthGuard,AuthService],
+    providers: [
+        AuthGuard,
+        AuthService,
+        {provide: ToastOptions, useClass: CustomOption},
+    ],
     bootstrap: [AppComponent]
 })
 

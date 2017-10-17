@@ -10,10 +10,13 @@ import { AngularFireAuth } from 'angularfire2/auth';
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
+    name: any
     pushRightClass: string = 'push-right';
     
     constructor(private translate: TranslateService, public router: Router,private as: AuthService) {
+        as.getName().then((name) => {
+            this.name = name
+        }) 
         this.router.events.subscribe((val) => {
             if (val instanceof NavigationEnd && window.innerWidth <= 992 && this.isToggled()) {
                 this.toggleSidebar();
