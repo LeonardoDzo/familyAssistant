@@ -1,19 +1,22 @@
 <div [@routerTransition]>
-  <div class="col-lg-12 col-sm-12">
-    <div class="card hovercard">
-      <div class="cardheader">
+  <div class="col-lg-12">
+    <div class="card mb-3">
+      <div class="card-header breadcrumb">
+          <span class="breadcrumb-item active"><i class="fa fa-fw fa-gear"></i>Ajustes</span>
       </div>
-      <div class="avatar">
-        <img alt="" src="{{ user.url }}">
-      </div>
-      <div class="info">
-        <div class="title">
-          <a target="_blank">{{ user.name }}</a>
+      <div class="row">
+        <div class="card-block col-lg-4">
+          <div class="avatar">
+            <img class="imagen" alt="" src="{{ user.url }}">
+          </div>
+          <div class="info">
+            <div class="title">
+              <a target="_blank">{{ user.name }}</a>
+            </div>
+            <div class="desc">{{ user.email }}</div>
+          </div>
         </div>
-        <div class="desc">{{ user.email }}</div>
-      </div>
-      <div class="row justify-content-md-center">
-        <div class="col-lg-6">
+        <div class="col-lg-7 edit-form">
           <form (ngSubmit)="edit()" role="form" #editForm="ngForm" ngNativeValidate>
             <fieldset class="form-group">
               <label>Rfc.</label>
@@ -29,15 +32,15 @@
             <div class="form-group">
               <label>Tipo de sangre.</label>
               <select class="form-control" name="tipoSangre" [(ngModel)]="user.tipoSangre" required>
-                <option selected="selected">A+</option>
-                <option>A-</option>
-                <option>O+</option>
-                <option>O-</option>
-                <option>B+</option>
-                <option>B-</option>
-                <option>AB+</option>
-                <option>AB-</option>
-              </select>
+                  <option selected="selected">A+</option>
+                  <option>A-</option>
+                  <option>O+</option>
+                  <option>O-</option>
+                  <option>B+</option>
+                  <option>B-</option>
+                  <option>AB+</option>
+                  <option>AB-</option>
+                </select>
             </div>
 
             <fieldset class="form-group">
@@ -54,8 +57,10 @@
               <label for="exampleInputFile">Subir imagen</label>
               <input type="file" name="file" class="form-control-file" id="exampleInputFile" #fileInput>
             </fieldset>
-
-            <input type="submit" class="btn rounded-btn btn-primary" value="Guardar">
+            <br>
+            <div class="center">
+              <input type="submit" class="btn rounded-btn btn-primary" value="Guardar">
+            </div>
           </form>
         </div>
       </div>
