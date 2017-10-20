@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
 import { EditRoutingModule } from './edit-routing.module';
 import { EditComponent } from './edit.component';
 import { PageHeaderModule } from './../../shared';
@@ -9,12 +9,11 @@ import { PageHeaderModule } from './../../shared';
   imports: [
     CommonModule,
     EditRoutingModule,
-    PageHeaderModule
+    PageHeaderModule,
+    FormsModule
   ],
   declarations: [EditComponent]
 })
 export class EditModule {
-  construtor() {
-    console.log("entró alv")
-  }
+  construtor() { }
  }

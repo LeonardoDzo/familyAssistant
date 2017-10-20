@@ -1,3 +1,4 @@
+import { UserService } from './../shared/services/user.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
@@ -12,12 +13,15 @@ import { HeaderComponent, SidebarComponent } from '../shared';
         CommonModule,
         NgbDropdownModule.forRoot(),
         LayoutRoutingModule,
-        TranslateModule
+        TranslateModule,
     ],
     declarations: [
         LayoutComponent,
         HeaderComponent,
         SidebarComponent,
+    ],
+    providers: [
+        UserService
     ]
 })
 export class LayoutModule { }

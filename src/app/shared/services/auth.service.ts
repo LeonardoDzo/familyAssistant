@@ -54,13 +54,4 @@ export class AuthService {
       })
       .catch();
   }
-
-  getName() {
-    var uid = this.afa.auth.currentUser.uid
-    return new Promise<string>((resolve, reject) => {
-      this.afd.database.ref(`/users/${uid}`).once('value').then((snapshot: DatabaseSnapshot) => {
-        resolve(snapshot.val().name)
-      });
-    })
-  }
 }

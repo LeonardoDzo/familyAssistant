@@ -1,3 +1,5 @@
+import { UserService } from 'app/shared/services/user.service';
+import { User } from 'app/shared/services/user';
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
@@ -13,10 +15,15 @@ export class HeaderComponent implements OnInit {
     name: any
     pushRightClass: string = 'push-right';
     
-    constructor(private translate: TranslateService, public router: Router,private as: AuthService) {
-        as.getName().then((name) => {
-            this.name = name
-        }) 
+    constructor(
+        private translate: TranslateService, 
+        public router: Router,
+        private as: AuthService,
+        private us: UserService
+    ) {
+        us.getUser().then((user: User) => {
+            this.name = user.name
+        })
         this.router.events.subscribe((val) => {
             if (val instanceof NavigationEnd && window.innerWidth <= 992 && this.isToggled()) {
                 this.toggleSidebar();

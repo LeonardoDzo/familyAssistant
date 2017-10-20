@@ -14,6 +14,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import {ToastOptions} from 'ng2-toastr';
+import 'firebase/storage';
+import 'firebase/database';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
@@ -23,7 +25,7 @@ export function HttpLoaderFactory(http: Http) {
 }
 
 export class CustomOption extends ToastOptions {
-    positionClass = "toast-top-center";
+    positionClass = "toast-bottom-right";
   }
 
 export const firebase = {
