@@ -1,15 +1,55 @@
+import { Contacto } from './contacto';
 import { Observable } from 'rxjs/Observable';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase, DatabaseSnapshot } from 'angularfire2/database';
+import { AngularFireDatabase, DatabaseSnapshot, AngularFireList } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
 import { User } from 'app/shared/services/user';
 import { FirebaseApp } from 'angularfire2';
 
 @Injectable()
 export class UserService {
-  
+  contacts: Observable<Contacto[]> = null;
   constructor(private afd: AngularFireDatabase,private afa: AngularFireAuth,public app: FirebaseApp) { }
+
+  getContacts(): Observable<Contacto[]> {
+    var uid = this.afa.auth.currentUser.uid;
+    this.contacts = this.afd.list('/contacts/' + uid).valueChanges()
+    return this.contacts;
+  }
+
+  removeContact(contact: Contacto,toastr: ToastsManager) {
+    var uid = this.afa.auth.currentUser.uid;
+    var key = contact.key;
+    this.afd.database.ref('contacts/' + uid + '/' + key).remove().then(() => {
+      toastr.error("El usuario ha sido eliminado...",null);
+    });
+  }
+
+  addContact(contacto: Contacto,toastr: ToastsManager) {
+    var uid = this.afa.auth.currentUser.uid;
+    let key =this.afd.database.ref('contacts/' + uid).push({
+      nombre: contacto.nombre,
+      telefono: contacto.telefono,
+      ocupacion: contacto.ocupacion,
+      direccion: contacto.direccion,
+      url: contacto.url
+    }).key;
+
+    this.afd.database.ref('contacts/' + uid + '/' + key).update({
+      key: key
+    }).then(() => {
+      toastr.success("Usuario agregado correctamente.",null);
+    });
+  }
+
+  updateContact(contacto: Contacto,toastr: ToastsManager) {
+    var uid = this.afa.auth.currentUser.uid;
+    var key = contacto.key;
+    this.afd.database.ref('contacts/' + uid + '/' + key).update(contacto).then(() => {
+      toastr.success("Los datos se han guardado correctamente.",null);
+    });
+  }
 
   getUserObservable(): Observable<any> {
     var uid = this.afa.auth.currentUser.uid

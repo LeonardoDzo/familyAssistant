@@ -6,26 +6,113 @@
           <i class="fa fa-address-book"></i> Contactos
         </li>
         <li>
-          <a class="button" rel="publisher"><i class="fa fa-plus"></i></a>
+          <button type="button" class="badge badge-success pull-right" rel="publisher" (click)="newContact(template)">
+            <i class="fa fa-plus"></i>
+          </button>
         </li>
       </ol>
     </div>
   </div>
   <div class="row">
-    <div class="col-lg-3 col-sm-6">
-      <app-contacto></app-contacto>
-    </div>
-    <div class="col-lg-3 col-sm-6">
-      <app-contacto></app-contacto>
-    </div>
-    <div class="col-lg-3 col-sm-6">
-      <app-contacto></app-contacto>
-    </div>
-    <div class="col-lg-3 col-sm-6">
-      <app-contacto></app-contacto>
-    </div>
-    <div class="col-lg-3 col-sm-6">
-      <app-contacto></app-contacto>
+    <div class="col-xl-12">
+      <ul *ngFor="let contact of contacts" class="list-group">
+        <li class="list-group-item justify-content-between">
+          <a href="/contactos#" (click)="openInfoModal(contact,userTemplate)">{{ contact.nombre }}</a>
+          <div class="row">
+            <button (click)="edit(contact,template)" class="badge badge-primary">
+              <i class="fa fa-pencil"></i>
+            </button>
+            <button (click)="openConfirmModal(contact,confirmTemplate)" class="badge badge-danger">
+              <i class="fa fa-trash"></i>
+            </button>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
+
+  <!--Modal para agregar usuario-->
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{(!contacto.key) ? 'Agregar contacto' : 'Editar'}}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <ul>
+        <li *ngFor="let message of errorMessage">
+          {{ message }}
+        </li>
+      </ul>
+      <form role="form" #addContactForm="ngForm">
+        <fieldset class="form-group">
+          <label>Nombre:</label>
+          <input class="form-control" name="nombre" [(ngModel)]="contacto.nombre">
+        </fieldset>
+
+        <fieldset class="form-group">
+          <label>Teléfono:</label>
+          <input class="form-control" name="telefono" [(ngModel)]="contacto.telefono">
+        </fieldset>
+
+        <fieldset class="form-group">
+          <label>Ocupación:</label>
+          <input class="form-control" name="ocupacion" [(ngModel)]="contacto.ocupacion">
+        </fieldset>
+
+        <fieldset class="form-group">
+          <label>Dirección:</label>
+          <input class="form-control" name="direccion" [(ngModel)]="contacto.direccion">
+        </fieldset>
+
+        <fieldset class="form-group">
+          <label>URL:</label>
+          <input class="form-control" name="url" [(ngModel)]="contacto.url">
+        </fieldset>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button (click)="submitModal()" class="btn btn-primary">{{ (!contacto.key) ? 'Agregar' : 'Guardar' }}</button>
+    </div>
+  </ng-template>
+
+  <!--Modal user info-->
+  <ng-template #userTemplate>
+    <div class="row justify-content-center">
+      <div class="col-xl-6">
+        <div class="card hovercard">
+          <div class="cardheader">
+
+          </div>
+          <div class="avatar">
+            <img alt="" src="../../assets/images/user.png">
+          </div>
+          <div class="info">
+            <div class="title">
+              <p target="_blank">{{ contacto.nombre }}</p>
+            </div>
+            <div class="desc"><b>Telefono:</b> {{ contacto.telefono }}</div>
+            <div class="desc"><b>Ocupación:</b> {{ contacto.ocupacion }}</div>
+            <div *ngIf="contacto.direccion" class="desc"><b>Dirección:</b> {{ contacto.direccion }}</div>
+            <div *ngIf="contacto.url" class="desc"><b>URL:</b> {{ contacto.url }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <!--Modal confirmación eliminar-->
+  <ng-template #confirmTemplate>
+    <div class="modal-header">
+      <p><i class="fa fa-exclamation"></i>Alerta</p>
+    </div>
+    <div class="modal-body">
+      ¿Está seguro que desea eliminar al contacto {{ contacto.nombre }}?
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" (click)="removeContact()">Si</button>
+      <button class="btn btn-default" (click)="modalRef.hide()">No</button>
+    </div>
+  </ng-template>
 </div>
