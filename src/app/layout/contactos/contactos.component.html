@@ -1,33 +1,77 @@
 <div class="container" [@routerTransition]>
-  <div class="row">
-    <div class="col-xl-12">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item active">
-          <i class="fa fa-address-book"></i> Contactos
-        </li>
-        <li>
-          <button type="button" class="badge badge-success pull-right" rel="publisher" (click)="newContact(template)">
-            <i class="fa fa-plus"></i>
-          </button>
-        </li>
-      </ol>
+  <!--Header de la página-->
+  <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <div class="navbar-brand" href="#">
+      <i class="fa fa-address-book"></i> Contactos
     </div>
-  </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto"></ul>
+      <form role="form" class="form-inline" #searchForm="ngForm">
+        <input (ngModelChange)="search($event)" 
+          class="form-control" 
+          type="text" 
+          placeholder="Buscar" 
+          name="searchString" 
+          [(ngModel)]="searchString">
+      </form>
+    </div>
+  </nav>
+
+  <!--Cuerpo de la página-->
   <div class="row">
-    <div class="col-xl-12">
-      <ul *ngFor="let contact of contacts" class="list-group">
-        <li class="list-group-item justify-content-between">
-          <a href="/contactos#" (click)="openInfoModal(contact,userTemplate)">{{ contact.nombre }}</a>
+    <div class="col-md-12">
+      <tabset>
+        <tab class="active">
+          <ng-template tabHeading>
+            <i class="fa fa-th-list"></i>
+          </ng-template>
           <div class="row">
-            <button (click)="edit(contact,template)" class="badge badge-primary">
-              <i class="fa fa-pencil"></i>
-            </button>
-            <button (click)="openConfirmModal(contact,confirmTemplate)" class="badge badge-danger">
-              <i class="fa fa-trash"></i>
-            </button>
+            <div class="col-xl-12">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Ocupación</th>
+                    <th>
+                      <a class="btn btn-success" (click)="openModal(template)">
+                        <i class="fa fa-plus fa-inverse"></i>
+                      </a>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let contact of contacts">
+                    <td>
+                      <a href="/contactos#" (click)="openModal(userTemplate,contact)">{{ contact.nombre }}</a>
+                    </td>
+                    <td>{{ contact.telefono }}</td>
+                    <td>{{ contact.ocupacion }}</td>
+                    <td>
+                      <a (click)="openModal(template,contact)" class="btn btn-primary">
+                        <i class="fa fa-pencil fa-inverse"></i>
+                      </a>
+                      <a class="btn btn-danger"(click)="openModal(confirmTemplate,contact)">
+                        <i class="fa fa-trash-o fa-inverse"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-        </li>
-      </ul>
+        </tab>
+        <tab>
+          <ng-template tabHeading>
+            <i class="fa fa-th"></i>
+          </ng-template>
+          <div class="row">
+            <div *ngFor="let contact of contacts" class="col-md-3">
+              <app-contacto [contacto]="contact"></app-contacto>
+            </div>
+          </div>
+        </tab>
+      </tabset>
     </div>
   </div>
 
@@ -79,24 +123,10 @@
 
   <!--Modal user info-->
   <ng-template #userTemplate>
-    <div class="row justify-content-center">
-      <div class="col-xl-6">
-        <div class="card hovercard">
-          <div class="cardheader">
-
-          </div>
-          <div class="avatar">
-            <img alt="" src="../../assets/images/user.png">
-          </div>
-          <div class="info">
-            <div class="title">
-              <p target="_blank">{{ contacto.nombre }}</p>
-            </div>
-            <div class="desc"><b>Telefono:</b> {{ contacto.telefono }}</div>
-            <div class="desc"><b>Ocupación:</b> {{ contacto.ocupacion }}</div>
-            <div *ngIf="contacto.direccion" class="desc"><b>Dirección:</b> {{ contacto.direccion }}</div>
-            <div *ngIf="contacto.url" class="desc"><b>URL:</b> {{ contacto.url }}</div>
-          </div>
+    <div class="modal-body">
+      <div class="row justify-content-center">
+        <div class="col-xl-6">
+          <app-contacto [contacto]="contacto"></app-contacto>
         </div>
       </div>
     </div>
@@ -105,7 +135,8 @@
   <!--Modal confirmación eliminar-->
   <ng-template #confirmTemplate>
     <div class="modal-header">
-      <p><i class="fa fa-exclamation"></i>Alerta</p>
+      <p>
+        <i class="fa fa-exclamation"></i>Alerta</p>
     </div>
     <div class="modal-body">
       ¿Está seguro que desea eliminar al contacto {{ contacto.nombre }}?

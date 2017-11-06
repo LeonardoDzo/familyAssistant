@@ -5,4 +5,8 @@ export class Contacto {
     ocupacion: string;
     direccion: string = '';
     url: string = '';
+
+    getName(): string {
+        return this.nombre.slice(0,this.nombre.length);
+    }
 }

@@ -34,12 +34,10 @@ export class UserService {
       ocupacion: contacto.ocupacion,
       direccion: contacto.direccion,
       url: contacto.url
-    }).key;
-
-    this.afd.database.ref('contacts/' + uid + '/' + key).update({
-      key: key
-    }).then(() => {
-      toastr.success("Usuario agregado correctamente.",null);
+    }).then((contacto) => {
+      this.afd.database.ref('contacts/' + uid + "/" + contacto.key).update({
+        key: contacto.key
+      })
     });
   }
 

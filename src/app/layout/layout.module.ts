@@ -1,3 +1,5 @@
+import { FilesService } from './../shared/services/files.service';
+import { RegexService } from './../shared/services/regex.service';
 import { UserService } from './../shared/services/user.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -23,7 +25,9 @@ import { ModalModule } from 'ngx-bootstrap';
         SidebarComponent
     ],
     providers: [
-        UserService
+        UserService,
+        RegexService,
+        FilesService
     ]
 })
 export class LayoutModule { }

@@ -22,7 +22,10 @@
             "styles": [
                 "../node_modules/font-awesome/css/font-awesome.css",
                 "styles/app.scss",
-                "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css"
+                "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css",
+                "styles/custom.css",
+                "styles/fontastic.css",
+                "styles/style.default.css"
             ],
             "scripts": [
                 "../node_modules/chart.js/dist/Chart.js"

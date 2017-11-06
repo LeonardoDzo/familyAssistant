@@ -1,41 +1,107 @@
-<div class="pos-f-t fixed-top header">
-    <nav class="navbar navbar-inverse bg-inverse navbar-toggleable-md">
-        <button class="navbar-toggler navbar-toggler-right" (click)="toggleSidebar()">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="javascript:void(0)">Family Assistant</a>
-        <div class="collapse navbar-collapse">
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="{{ 'Search' | translate }}" >
+<header class="header">
+    <nav class="navbar">
+        <div class="search-box">
+            <button class="dismiss">
+                <i class="icon-close"></i>
+            </button>
+            <form id="searchForm" action="#" role="search">
+                <input type="search" placeholder="What are you looking for..." class="form-control">
             </form>
-            <ul class="navbar-nav ml-auto mt-2 mt-md-0">
+        </div>
+        <div class="container-fluid">
+            <div class="navbar-holder d-flex align-items-center justify-content-between">
+                <div class="navbar-header">
+                    <a class="navbar-brand">
+                        <div class="brand-text brand-big">
+                            <span>Bootstrap </span>
+                            <strong>Dashboard</strong>
+                        </div>
+                        <div class="brand-text brand-small">
+                            <strong>BD</strong>
+                        </div>
+                        <a id="toggle-btn" href="#" class="menu-btn active">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </a>
+                    </a>
+                    <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                        <li class="nav-item d-flex align-items-center">
+                            <a id="search" href="#">
+                                <i class="icon-search"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a id="notifications" rel="nofollow" data-target="#" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" class="nav-link">
+                                <i class="fa fa-bell-o"></i>
+                                <span class="badge bg-red">12</span>
+                            </a>
+                            <ul aria-labelledby="notifications" class="dropdown-menu">
+                                <li>
+                                    <a rel="nofollow" href="#" class="dropdown-item">
+                                        <div class="notification">
+                                            <div class="notification-content">
+                                                <i class="fa fa-envelope bg-green"></i>You have 6 new messages </div>
+                                            <div class="notification-time">
+                                                <small>4 minutes ago</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a rel="nofollow" href="#" class="dropdown-item">
+                                        <div class="notification">
+                                            <div class="notification-content">
+                                                <i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
+                                            <div class="notification-time">
+                                                <small>4 minutes ago</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--<ul class="navbar-nav ml-auto mt-2 mt-md-0">
                 <li class="nav-item dropdown" ngbDropdown>
-                    <!-- <div class="dropdown"> -->
+                    <!-- <div class="dropdown"> 
                     <a class="nav-link" href="javascript:void(0)" ngbDropdownToggle>
-                        <i class="fa fa-envelope"></i> <b class="caret"></b><span class="sr-only">(current)</span>
+                        <i class="fa fa-envelope"></i>
+                        <b class="caret"></b>
+                        <span class="sr-only">(current)</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right messages">
                         <li class="media">
-                            <img class="d-flex align-self-center mr-3" src="http://i.huffpost.com/gadgets/slideshows/461162/slide_461162_6224974_sq50.jpg" alt="Generic placeholder image">
+                            <img class="d-flex align-self-center mr-3" src="http://i.huffpost.com/gadgets/slideshows/461162/slide_461162_6224974_sq50.jpg"
+                                alt="Generic placeholder image">
                             <div class="media-body">
                                 <h5 class="mt-0 mb-1">{{ name }}</h5>
-                                <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                <p class="small text-muted">
+                                    <i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
                                 <p class="last"> Lorem ipsum dolor sit amet, consectetur...</p>
                             </div>
                         </li>
                         <li class="media">
-                            <img class="d-flex align-self-center mr-3" src="http://i.huffpost.com/gadgets/slideshows/461162/slide_461162_6224974_sq50.jpg" alt="Generic placeholder image">
+                            <img class="d-flex align-self-center mr-3" src="http://i.huffpost.com/gadgets/slideshows/461162/slide_461162_6224974_sq50.jpg"
+                                alt="Generic placeholder image">
                             <div class="media-body">
                                 <h5 class="mt-0 mb-1">{{ name }}</h5>
-                                <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                <p class="small text-muted">
+                                    <i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
                                 <p class="last"> Lorem ipsum dolor sit amet, consectetur...</p>
                             </div>
                         </li>
                         <li class="media">
-                            <img class="d-flex align-self-center mr-3" src="http://i.huffpost.com/gadgets/slideshows/461162/slide_461162_6224974_sq50.jpg" alt="Generic placeholder image">
+                            <img class="d-flex align-self-center mr-3" src="http://i.huffpost.com/gadgets/slideshows/461162/slide_461162_6224974_sq50.jpg"
+                                alt="Generic placeholder image">
                             <div class="media-body">
                                 <h5 class="mt-0 mb-1">{{ name }}</h5>
-                                <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                <p class="small text-muted">
+                                    <i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
                                 <p class="last"> Lorem ipsum dolor sit amet, consectetur...</p>
                             </div>
                         </li>
@@ -43,28 +109,40 @@
                 </li>
                 <li class="nav-item dropdown" ngbDropdown>
                     <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
-                        <i class="fa fa-bell"></i> <b class="caret"></b><span class="sr-only">(current)</span>
+                        <i class="fa fa-bell"></i>
+                        <b class="caret"></b>
+                        <span class="sr-only">(current)</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <a href="javascript:void(0)" class="dropdown-item">Pending Task <span class="badge badge-info">6</span></a>
-                        <a href="javascript:void(0)" class="dropdown-item">In queue <span class="badge badge-info"> 13</span></a>
-                        <a href="javascript:void(0)" class="dropdown-item">Mail <span class="badge badge-info"> 45</span></a>
+                        <a href="javascript:void(0)" class="dropdown-item">Pending Task
+                            <span class="badge badge-info">6</span>
+                        </a>
+                        <a href="javascript:void(0)" class="dropdown-item">In queue
+                            <span class="badge badge-info"> 13</span>
+                        </a>
+                        <a href="javascript:void(0)" class="dropdown-item">Mail
+                            <span class="badge badge-info"> 45</span>
+                        </a>
                         <li class="dropdown-divider"></li>
                         <a href="javascript:void(0)" class="dropdown-item">View All</a>
                     </ul>
                 </li>
                 <li class="nav-item dropdown" ngbDropdown>
                     <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
-                        <i class="fa fa-user"></i> {{ name }} <b class="caret"></b>
+                        <i class="fa fa-user"></i> {{ name }}
+                        <b class="caret"></b>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-fw fa-user"></i> {{ 'Profile' | translate }}</a>
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-fw fa-envelope"></i> {{ 'Inbox' | translate }}</a>
-                        <a class="dropdown-item" [routerLink]="['/edit']"><i class="fa fa-fw fa-gear"></i> {{ 'Settings' | translate }}</a>
-                        <a class="dropdown-item" [routerLink]="['/login']" (click)="logout()"><i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }} </a>
+                        <a class="dropdown-item" href="javascript:void(0)">
+                            <i class="fa fa-fw fa-user"></i> {{ 'Profile' | translate }}</a>
+                        <a class="dropdown-item" href="javascript:void(0)">
+                            <i class="fa fa-fw fa-envelope"></i> {{ 'Inbox' | translate }}</a>
+                        <a class="dropdown-item" [routerLink]="['/edit']">
+                            <i class="fa fa-fw fa-gear"></i> {{ 'Settings' | translate }}</a>
+                        <a class="dropdown-item" [routerLink]="['/login']" (click)="logout()">
+                            <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }} </a>
                     </div>
                 </li>
-            </ul>
-        </div>
+            </ul>-->
     </nav>
-</div>
+</header>
