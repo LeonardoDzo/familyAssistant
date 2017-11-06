@@ -1,4 +1,29 @@
-<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
+<nav class="side-navbar">
+        <!-- Sidebar Header-->
+        <div class="sidebar-header d-flex align-items-center">
+          <div class=""><img src="{{user.url}}" alt="..." class="imagen"></div>
+          <div class="title">
+            <h1 class="h4">{{user.name}}</h1>
+            <p>Administrador</p>
+          </div>
+        </div>
+        <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+        <ul class="list-unstyled">
+          <li class="active"> <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']"><i class="icon-home"></i>Dashboard</a></li>
+          <li> <a [routerLink]="['/contactos']" [routerLinkActive]="['router-link-active']"> <i class="fa fa-address-book-o"></i>Contactos </a></li>
+          <li> <a [routerLink]="['/safebox']" [routerLinkActive]="['router-link-active']"> <i class="fa fa-lock"></i>Safebox</a></li>
+          <li> <a href=""> <i class="icon-padnote"></i>Forms </a></li>
+          <li> <a href=""> <i class="icon-interface-windows"></i>Login Page</a></li>
+        </ul><span class="heading">Extras</span>
+        <ul class="list-unstyled">
+          <li> <a href="#"> <i class="icon-flask"></i>Demo </a></li>
+          <li> <a href="#"> <i class="icon-screen"></i>Demo </a></li>
+          <li> <a href="#"> <i class="icon-mail"></i>Demo </a></li>
+          <li> <a href="#"> <i class="icon-picture"></i>Demo </a></li>
+        </ul>
+      </nav>
+
+<!--<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
     <ul class="list-group">
         <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'Dashboard' | translate }}
@@ -61,4 +86,4 @@
             {{ 'More Theme' | translate }}
         </a>
     </ul>
-</nav>
+</nav>-->

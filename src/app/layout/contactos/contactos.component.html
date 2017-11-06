@@ -1,79 +1,62 @@
-<div class="container" [@routerTransition]>
+<div [@routerTransition]>
   <!--Header de la página-->
-  <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-    <div class="navbar-brand" href="#">
-      <i class="fa fa-address-book"></i> Contactos
-    </div>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto"></ul>
-      <form role="form" class="form-inline" #searchForm="ngForm">
-        <input (ngModelChange)="search($event)" 
-          class="form-control" 
-          type="text" 
-          placeholder="Buscar" 
-          name="searchString" 
-          [(ngModel)]="searchString">
-      </form>
-    </div>
-  </nav>
 
-  <!--Cuerpo de la página-->
-  <div class="row">
-    <div class="col-md-12">
-      <tabset>
-        <tab class="active">
-          <ng-template tabHeading>
-            <i class="fa fa-th-list"></i>
-          </ng-template>
-          <div class="row">
-            <div class="col-xl-12">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Teléfono</th>
-                    <th>Ocupación</th>
-                    <th>
-                      <a class="btn btn-success" (click)="openModal(template)">
-                        <i class="fa fa-plus fa-inverse"></i>
-                      </a>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let contact of contacts">
-                    <td>
-                      <a href="/contactos#" (click)="openModal(userTemplate,contact)">{{ contact.nombre }}</a>
-                    </td>
-                    <td>{{ contact.telefono }}</td>
-                    <td>{{ contact.ocupacion }}</td>
-                    <td>
-                      <a (click)="openModal(template,contact)" class="btn btn-primary">
+  <section class="tables">
+    <div class="container-fluid">
+      <div class="col-lg-12">
+        <div class="card">
+
+          <div class="card-header d-flex align-items-center">
+            <h3 class="h4">Contactos</h3>
+            <div style="float: right;">
+                <form role="form" class="form-inline" #searchForm="ngForm">
+                    <input (ngModelChange)="search($event)" 
+                      class="form-control" 
+                      type="text" 
+                      placeholder="Buscar" 
+                      name="searchString" 
+                      [(ngModel)]="searchString">
+                  </form>
+            </div>
+          </div>
+          
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Teléfono</th>
+                  <th>Ocupación</th>
+                  <th>
+                    <a class="btn btn-success" (click)="openModal(template)">
+                      <i class="fa fa-plus fa-inverse"></i>
+                    </a>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let contact of contacts">
+                  <td>
+                    <a href="/contactos#" (click)="openModal(userTemplate,contact)">{{ contact.nombre }}</a>
+                  </td>
+                  <td>{{ contact.telefono }}</td>
+                  <td>{{ contact.ocupacion }}</td>
+                  <td>
+                    <a (click)="openModal(template,contact)" class="btn btn-primary">
                         <i class="fa fa-pencil fa-inverse"></i>
                       </a>
-                      <a class="btn btn-danger"(click)="openModal(confirmTemplate,contact)">
+                    <a class="btn btn-danger" (click)="openModal(confirmTemplate,contact)">
                         <i class="fa fa-trash-o fa-inverse"></i>
                       </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </tab>
-        <tab>
-          <ng-template tabHeading>
-            <i class="fa fa-th"></i>
-          </ng-template>
-          <div class="row">
-            <div *ngFor="let contact of contacts" class="col-md-3">
-              <app-contacto [contacto]="contact"></app-contacto>
-            </div>
-          </div>
-        </tab>
-      </tabset>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
   <!--Modal para agregar usuario-->
   <ng-template #template>

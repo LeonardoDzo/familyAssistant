@@ -299,7 +299,7 @@ button, input {
 }
 
 .page {
-  background: #EEF5F9;
+  background: #F3F3F3;
 }
 
 .page .text-white {
@@ -442,17 +442,17 @@ nav.side-navbar ul a {
 }
 
 nav.side-navbar ul a:hover {
-  background: #796AEE;
-  border-left: 4px solid #3b25e6;
+  background: #F35151;
+  border-left: 4px solid #572424;
   color: #fff;
 }
 
 nav.side-navbar ul li.active a {
-  background: #EEF5F9;
+  background: #F5F1F1;
 }
 
 nav.side-navbar ul li.active a:hover {
-  background: #796AEE;
+  background: #F35151;
 }
 
 nav.side-navbar ul ul {
@@ -1816,7 +1816,7 @@ section.forms .line {
 * ==========================================================
 *     LOGIN PAGE
 * ==========================================================
-*/
+*//*
 .login-page {
   position: relative;
 }
@@ -1927,7 +1927,7 @@ section.forms .line {
     padding-bottom: 100px !important;
   }
 }
-
+*/
 /*
 
 =====================

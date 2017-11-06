@@ -28,7 +28,8 @@
                 "styles/style.default.css"
             ],
             "scripts": [
-                "../node_modules/chart.js/dist/Chart.js"
+                "../node_modules/chart.js/dist/Chart.js",
+                "assets/js/front.js"
             ],
             "environmentSource": "environments/environment.ts",
             "environments": {

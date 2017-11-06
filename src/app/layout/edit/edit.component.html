@@ -1,5 +1,78 @@
 <div [@routerTransition]>
-  <div class="col-lg-12">
+  <section class="tables">
+    <div class="container-fluid">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h3><i class="fa fa-fw fa-gear"></i>Ajustes</h3>
+          </div>
+          <div class="card-body">
+              <div class="row">
+            <div class="card-block col-lg-4">
+              <div class="avatar">
+                <img class="imagen" alt="" src="{{ user.url }}">
+              </div>
+              <div class="info">
+                <div class="title">
+                  <a target="_blank">{{ user.name }}</a>
+                </div>
+                <div class="desc">{{ user.email }}</div>
+              </div>
+            </div>
+            <div class="col-lg-7 edit-form">
+              <form (ngSubmit)="edit()" role="form" #editForm="ngForm" ngNativeValidate>
+                <fieldset class="form-group">
+                  <label>Rfc.</label>
+                  <input class="form-control" name="rfc" [(ngModel)]="user.rfc" id="rfc" pattern="^([A-ZÑ\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1]))([A-Z\d]{3})?$"
+                    required>
+                </fieldset>
+    
+                <fieldset class="form-group">
+                  <label>Curp.</label>
+                  <input class="form-control" name="curp" [(ngModel)]="user.curp" pattern="^([A-Z]{4})([0-9]{6})([A-Z]{6})([0-9]{2})$" required>
+                </fieldset>
+    
+                <div class="form-group">
+                  <label>Tipo de sangre.</label>
+                  <select class="form-control" name="tipoSangre" [(ngModel)]="user.tipoSangre" required>
+                      <option selected="selected">A+</option>
+                      <option>A-</option>
+                      <option>O+</option>
+                      <option>O-</option>
+                      <option>B+</option>
+                      <option>B-</option>
+                      <option>AB+</option>
+                      <option>AB-</option>
+                    </select>
+                </div>
+    
+                <fieldset class="form-group">
+                  <label>Teléfono.</label>
+                  <input type="tel" class="form-control" name="telefono" [(ngModel)]="user.telefono" required>
+                </fieldset>
+    
+                <fieldset class="form-group">
+                  <label>Número de seguro social.</label>
+                  <input class="form-control" name="nss" [(ngModel)]="user.nss" required>
+                </fieldset>
+    
+                <fieldset class="form-group">
+                  <label for="exampleInputFile">Foto de perfil</label>
+                  <input type="file" name="file" class="form-control-file" id="exampleInputFile" #fileInput>
+                </fieldset>
+                <br>
+                <div class="">
+                  <input type="submit" class="btn rounded-btn btn-primary" value="Guardar">
+                </div>
+              </form>
+            </div>
+          </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--<div class="col-lg-12">
     <div class="card mb-3">
       <div class="card-header breadcrumb">
           <span class="breadcrumb-item active"><i class="fa fa-fw fa-gear"></i>Ajustes</span>
@@ -65,5 +138,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>-->
 </div>
