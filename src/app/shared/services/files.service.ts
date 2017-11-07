@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import { UUID } from 'angular2-uuid';
 
 @Injectable()
 export class FilesService {
@@ -33,11 +34,11 @@ export class FilesService {
   upload(files: FileList, upload, toast: ToastsManager) {
     var uid = this.afa.auth.currentUser.uid;
     var ref = this.app.storage().ref();
-
     for (var i = 0; i < files.length; i++) {
+      let uuid = UUID.UUID();
       var file = files[i];
       var ext = this.getExt(file.name);
-      var imgRef = ref.child('safebox/' + uid + '/' + file.name);
+      var imgRef = ref.child('safebox/' + uid + '/' + uuid + "." + ext);
       var type = this.extensiones.indexOf(ext) == -1 ? 'file' : 'image';
       var uploadTask = imgRef.put(file);
       upload.isUploading = true
