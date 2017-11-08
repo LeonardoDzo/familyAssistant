@@ -13,9 +13,6 @@ https://bootstrapious.com/p/admin-template
 *     GENERAL STYLES
 * ==========================================================
 */
-body {
-  overflow-x: hidden;
-}
 
 a, i, span {
   display: inline-block;
@@ -361,6 +358,7 @@ nav.side-navbar {
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 9;
+  height: 100%;
   /*==== Sidebar Header ====*/
   /*==== Sidebar Menu ====*/
   /*==== Shrinked Sidebar ====*/
@@ -1473,6 +1471,7 @@ footer.main-footer {
   background: #2f333e;
   color: #fff;
   padding: 10px;
+  vertical-align: bottom;
 }
 
 footer.main-footer a {

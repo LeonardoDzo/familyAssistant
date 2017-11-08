@@ -10,6 +10,7 @@ import { UUID } from 'angular2-uuid';
 @Injectable()
 export class FilesService {
   extensiones: string[];
+  archivos: string[];
 
   constructor(
     public app: FirebaseApp,
@@ -20,10 +21,25 @@ export class FilesService {
     this.http.get('assets/extensiones-imagenes.json').subscribe( res => {
       this.extensiones = res.json();
     });
+
+    this.http.get('assets/extensiones-archivos.json').subscribe( res => {
+      this.archivos = res.json();
+    });
   }
 
   private getExt(name: string): string {
     return name.split('.').pop();
+  }
+
+  getImageLink(file: any): string {
+    let name = file.filename;
+    let ext = this.getExt(name)
+    if(this.extensiones.indexOf(ext) != -1) {
+      return file.downloadUrl
+    } else if(this.archivos.indexOf(ext) != -1) {
+      return "assets/images/files/" + ext + ".png"
+    } 
+    return "assets/images/files/_blank.png"
   }
 
   getFiles() {
@@ -39,7 +55,6 @@ export class FilesService {
       var file = files[i];
       var ext = this.getExt(file.name);
       var imgRef = ref.child('safebox/' + uid + '/' + uuid + "." + ext);
-      var type = this.extensiones.indexOf(ext) == -1 ? 'file' : 'image';
       var uploadTask = imgRef.put(file);
       upload.isUploading = true
       uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
@@ -53,8 +68,7 @@ export class FilesService {
       () => {
         this.afd.database.ref('safebox/' + uid).push({
           downloadUrl: uploadTask.snapshot.downloadURL,
-          filename: file.name,
-          type: type
+          filename: file.name
         })
         toast.success("El archivo se subió correctamente.",null)
         upload.isUploading = false

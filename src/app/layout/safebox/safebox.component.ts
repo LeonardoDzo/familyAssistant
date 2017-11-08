@@ -30,6 +30,10 @@ export class SafeboxComponent implements OnInit {
     this.upload = {progress: 0, isUploading: false}
   }
 
+  getImageLink(file: any): string {
+    return this.fs.getImageLink(file);
+  }
+
   uploadFile($event) {
     const files: FileList = $event.srcElement.files;
     this.fs.upload(files,this.upload,this.toastr);

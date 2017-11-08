@@ -4,22 +4,15 @@
           <div class=""><img src="{{user.url}}" alt="..." class="imagen"></div>
           <div class="title">
             <h1 class="h4">{{user.name}}</h1>
-            <p>Administrador</p>
+            <p>{{user.email}}</p>
           </div>
         </div>
         <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
         <ul class="list-unstyled">
-          <li class="active"> <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']"><i class="icon-home"></i>Dashboard</a></li>
-          <li> <a [routerLink]="['/contactos']" [routerLinkActive]="['router-link-active']"> <i class="fa fa-address-book-o"></i>Contactos </a></li>
-          <li> <a [routerLink]="['/safebox']" [routerLinkActive]="['router-link-active']"> <i class="fa fa-lock"></i>Safebox</a></li>
-          <li> <a href=""> <i class="icon-padnote"></i>Forms </a></li>
-          <li> <a href=""> <i class="icon-interface-windows"></i>Login Page</a></li>
-        </ul><span class="heading">Extras</span>
-        <ul class="list-unstyled">
-          <li> <a href="#"> <i class="icon-flask"></i>Demo </a></li>
-          <li> <a href="#"> <i class="icon-screen"></i>Demo </a></li>
-          <li> <a href="#"> <i class="icon-mail"></i>Demo </a></li>
-          <li> <a href="#"> <i class="icon-picture"></i>Demo </a></li>
+            <li> <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']"><i class="icon-home"></i>Dashboard</a></li>
+            <li> <a [routerLink]="['/contactos']" [routerLinkActive]="['router-link-active']"> <i class="fa fa-address-book-o"></i>Contactos </a></li>
+            <li> <a [routerLink]="['/safebox']" [routerLinkActive]="['router-link-active']"> <i class="fa fa-lock"></i>Safebox</a></li>
+            <li> <a> <i class="fa fa-plus"></i>Botiquín</a></li>                     
         </ul>
       </nav>
 

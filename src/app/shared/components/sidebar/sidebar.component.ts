@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'app/shared/services/user.service';
 import { User } from 'app/shared/services/user';
 
+declare var jquery:any;
+declare var $ :any;
+
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',

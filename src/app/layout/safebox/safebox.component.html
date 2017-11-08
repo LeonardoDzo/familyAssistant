@@ -2,9 +2,9 @@
   <header class="page-header">
     <div class="container-fluid">
       <h2 class="no-margin-bottom">
-        <i class="fa fa-lock"></i>Safebox
+        <i class="fa fa-lock"></i> Caja Fuerte &nbsp; &nbsp;
         <span class="btn btn-success btn-file {{ upload.isUploading? 'disabled' : '' }}">
-          <i class="fa fa-upload"></i> Upload
+          <i class="fa fa-upload"></i> Subir
           <input name="file" (change)="uploadFile($event)" type="file" id="fileInput">
         </span>
         <span *ngIf="upload.isUploading">
@@ -13,11 +13,11 @@
       </h2>
     </div>
   </header>
-  <section class="dashboard-header">
+  <section class="tables">
     <div class="container-fluid">
       <div class="row">
         <div class="card hovercard file-div" *ngFor="let file of files">
-          <img class="image" src="{{ file.type == 'image'? file.downloadUrl : 'assets/images/file.png' }}">
+          <img class="image" src="{{ getImageLink(file) }}">
             <div class="title">
               <div class="desc">
                 <a href="{{ file.downloadUrl }}">{{ file.filename }}</a>
