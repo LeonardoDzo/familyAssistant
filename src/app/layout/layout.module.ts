@@ -1,3 +1,4 @@
+import { IllnessService } from './../shared/services/illness.service';
 import { FilesService } from './../shared/services/files.service';
 import { RegexService } from './../shared/services/regex.service';
 import { UserService } from './../shared/services/user.service';
@@ -27,7 +28,8 @@ import { ModalModule } from 'ngx-bootstrap';
     providers: [
         UserService,
         RegexService,
-        FilesService
+        FilesService,
+        IllnessService
     ]
 })
 export class LayoutModule { }

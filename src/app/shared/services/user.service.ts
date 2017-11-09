@@ -28,7 +28,7 @@ export class UserService {
 
   addContact(contacto: Contacto,toastr: ToastsManager) {
     var uid = this.afa.auth.currentUser.uid;
-    let key =this.afd.database.ref('contacts/' + uid).push({
+    let key = this.afd.database.ref('contacts/' + uid).push({
       nombre: contacto.nombre,
       telefono: contacto.telefono,
       ocupacion: contacto.ocupacion,

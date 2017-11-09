@@ -15,8 +15,9 @@ const routes: Routes = [
             { path: 'components', loadChildren: './bs-component/bs-component.module#BsComponentModule' },
             { path: 'blank-page', loadChildren: './blank-page/blank-page.module#BlankPageModule' },
             { path: 'edit', loadChildren: './edit/edit.module#EditModule' },
-            { path: 'contactos', loadChildren: './contactos/contactos.module#ContactosModule' },
-            { path: 'safebox', loadChildren: './safebox/safebox.module#SafeboxModule'}
+            { path: 'contacts', loadChildren: './contactos/contactos.module#ContactosModule' },
+            { path: 'safebox', loadChildren: './safebox/safebox.module#SafeboxModule'},
+            { path: 'illnesses', loadChildren: './illnesses/illnesses.module#IllnessesModule' }
         ]
     }
 ];

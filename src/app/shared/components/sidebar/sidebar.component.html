@@ -1,20 +1,42 @@
 <nav class="side-navbar">
-        <!-- Sidebar Header-->
-        <div class="sidebar-header d-flex align-items-center">
-          <div class=""><img src="{{user.url}}" alt="..." class="imagen"></div>
-          <div class="title">
+    <!-- Sidebar Header-->
+    <div class="sidebar-header d-flex align-items-center">
+        <div class="">
+            <img src="{{user.url}}" alt="..." class="imagen">
+        </div>
+        <div class="title">
             <h1 class="h4">{{user.name}}</h1>
             <p>{{user.email}}</p>
-          </div>
         </div>
-        <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
-        <ul class="list-unstyled">
-            <li> <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']"><i class="icon-home"></i>Dashboard</a></li>
-            <li> <a [routerLink]="['/contactos']" [routerLinkActive]="['router-link-active']"> <i class="fa fa-address-book-o"></i>Contactos </a></li>
-            <li> <a [routerLink]="['/safebox']" [routerLinkActive]="['router-link-active']"> <i class="fa fa-lock"></i>Safebox</a></li>
-            <li> <a> <i class="fa fa-plus"></i>Botiquín</a></li>                     
-        </ul>
-      </nav>
+    </div>
+    <!-- Sidebar Navidation Menus-->
+    <span class="heading">Menú</span>
+    <ul class="list-unstyled">
+        <li>
+            <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']">
+                <i class="icon-home"></i>Inicio</a>
+        </li>
+        <li>
+            <a [routerLink]="['/contacts']" [routerLinkActive]="['router-link-active']">
+                <i class="fa fa-address-book-o"></i>Contactos </a>
+        </li>
+        <li>
+            <a [routerLink]="['/safebox']" [routerLinkActive]="['router-link-active']">
+                <i class="fa fa-lock"></i>Safebox</a>
+        </li>
+    </ul>
+    <span class="heading">Botiquín</span>
+    <ul>
+        <li>
+            <a [routerLink]="['/illnesses']" [routerLinkActive]="['router-link-active']">
+                <i class="fa fa-heartbeat"></i>Enfermedades</a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fa fa-medkit"></i>Medicamentos</a>
+        </li>
+    </ul>
+</nav>
 
 <!--<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
     <ul class="list-group">
