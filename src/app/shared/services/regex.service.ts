@@ -1,5 +1,7 @@
+import { Illness } from './illness';
 import { Contacto } from './contacto';
 import { Injectable } from '@angular/core';
+import { Medicine } from 'app/shared/services/medicine';
 
 @Injectable()
 export class RegexService {
@@ -9,6 +11,37 @@ export class RegexService {
   phoneNumberRegExp: RegExp = /^(\d{7,10})$/;
 
   constructor() { }
+
+  medicineValidation(medicine: Medicine) {
+    let errorMessages = []
+    if(!medicine.name) {
+      errorMessages.push('El campo nombre es obligatorio.')
+    }
+
+    if(!medicine.dosage) {
+      errorMessages.push('El campo dosis es obligatorio.')
+    }
+
+    if(!medicine.indications) {
+      errorMessages.push('El campo indicaciones es obligatorio.');
+    }
+
+    return errorMessages;
+  }
+
+  illnessValidation(illness: Illness) {
+    var errorMessages = [];
+
+    if(!illness.nombre) {
+      errorMessages.push('El campo nombre es obligatorio.')
+    }
+
+    if(!illness.medicine) {
+      errorMessages.push('El campo medcamentos es obligatorio.')
+    }
+
+    return errorMessages;
+  }
 
   contactValidation(contacto: Contacto): string[] {
     var errorMessages: string[] = [];

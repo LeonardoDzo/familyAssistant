@@ -11,14 +11,9 @@ export class IllnessService {
     private afa: AngularFireAuth
   ) { }
 
-  getIllnessKeys() {
+  getIllnesses() {
     let uid = this.afa.auth.currentUser.uid;
     return this.afd.list('illnesses/' + uid).snapshotChanges()
-  }
-
-  getIllness(key: string) {
-    let uid = this.afa.auth.currentUser.uid;
-    return this.afd.object('illnesses/' + uid + '/' + key).valueChanges()
   }
 
   addIllness(illness: Illness) {

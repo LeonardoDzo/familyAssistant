@@ -1,3 +1,4 @@
+import { RegexService } from './../../shared/services/regex.service';
 import { IllnessService } from './../../shared/services/illness.service';
 import { Illness } from './../../shared/services/illness';
 import { Component, OnInit, TemplateRef } from '@angular/core';
@@ -16,20 +17,21 @@ export class IllnessesComponent implements OnInit {
   illness: Illness;
   illnesses: Illness[] = [];
   public modalRef: BsModalRef;
+  public errorMessage: string[] = [];
 
   constructor(
     private modalService: BsModalService,
-    private illnessService: IllnessService
+    private illnessService: IllnessService,
+    private regexService: RegexService
   ) { }
 
   ngOnInit() {
-    this.illnessService.getIllnessKeys().subscribe((keys) => {
+    this.illnessService.getIllnesses().subscribe((snapshots) => {
       this.illnesses = []
-      keys.forEach((elem) => {
-        this.illnessService.getIllness(elem.key).subscribe((illness: Illness) => {
-          illness.key = elem.key
-          this.illnesses.push(illness)
-        })
+      snapshots.forEach((elem) => {
+        let illness = Object.assign(new Illness(), elem.payload.toJSON())
+        illness.key = elem.key;
+        this.illnesses.push(illness)
       })
     })
   }
@@ -37,14 +39,19 @@ export class IllnessesComponent implements OnInit {
   public openModal(template: TemplateRef<any>,illness: Illness = new Illness()) {
     this.illness = Object.assign(new Illness(), illness);
     this.modalRef = this.modalService.show(template);
+    this.errorMessage = [];
   }
 
   public submitModal() {
-    if(!this.illness.key)
-      this.illnessService.addIllness(this.illness)
-    else
-      this.illnessService.editIllness(this.illness)
-    this.modalRef.hide()
+    this.errorMessage = this.regexService.illnessValidation(this.illness)
+    if(this.errorMessage.length < 1){
+      if(!this.illness.key)
+        this.illnessService.addIllness(this.illness)
+      else
+        this.illnessService.editIllness(this.illness)
+      this.modalRef.hide()
+      this.errorMessage = [];
+    }
   }
 
   public removeIllness() {

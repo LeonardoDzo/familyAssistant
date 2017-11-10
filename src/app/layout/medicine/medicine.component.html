@@ -1,0 +1,129 @@
+<div [@routerTransition]>
+  <section class="tables">
+    <div class="container-fluid">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header d-flex align-items-center">
+            <h3 class="h4">
+              <i class="fa fa-group"></i> Medicamentos
+            </h3>
+          </div>
+
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Dosis</th>
+                  <th>
+                    <a class="btn btn-success" (click)="openModal(addTemplate)">
+                      <i class="fa fa-plus fa-inverse"></i>
+                    </a>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let medicine of medicines">
+                  <td>
+                    <a href="/medicine#" (click)="openModal(infoTemplate,medicine)">{{ medicine.name }}</a>
+                  </td>
+                  <td>{{ medicine.dosage }}</td>
+                  <td>
+                    <a href="/medicine#" (click)="openModal(addTemplate,medicine)" class="btn btn-primary">
+                      <i class="fa fa-pencil fa-inverse"></i>
+                    </a>
+                    <a href="/medicine#" (click)="openModal(confirmTemplate,medicine)" class="btn btn-danger">
+                      <i class="fa fa-trash-o fa-inverse"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<ng-template #addTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{(!medicine.key)? 'Agregar enfermedad' : 'Editar enfermedad'}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ul>
+      <li *ngFor="let message of errorMessage">
+        {{ message }}
+      </li>
+    </ul>
+    <form role="form" #addMedicineForm>
+      <fieldset class="form-group">
+        <label>Nombre</label>
+        <input class="form-control" name="nombre" [(ngModel)]="medicine.name">
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label>Indicaciones</label>
+        <input class="form-control" name="indications" [(ngModel)]="medicine.indications">
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label>Dosis</label>
+        <input class="form-control" name="dosage" [(ngModel)]="medicine.dosage">
+      </fieldset>
+      <fieldset class="form-group">
+        <label>Restricciones</label>
+        <input class="form-control" name="restrictions" [(ngModel)]="medicine.restrictions">
+      </fieldset>
+      <fieldset class="form-group">
+        <label>Info</label>
+        <input class="form-control" name="moreInfo" [(ngModel)]="medicine.moreInfo">
+      </fieldset>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button (click)="submitModal()" class="btn btn-primary">{{(!medicine.key)? 'Agregar' : 'Guardar'}}</button>
+  </div>
+</ng-template>
+
+<ng-template #infoTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Info</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body center">
+    <div>
+      <b>Nombre: </b> {{ medicine.name }}</div>
+    <br>
+    <div>
+      <b>Indicaciones: </b>{{ medicine.indications }}</div>
+    <br>
+    <div>
+      <b>Dosis: </b>{{ medicine.dosage }}</div>
+    <br>
+    <div>
+      <b>Dosis: </b>{{ medicine.restrictions }}</div>
+    <br>
+    <div>
+      <b>info: </b>{{ medicine.moreInfo }}</div>
+  </div>
+</ng-template>
+
+<ng-template #confirmTemplate>
+  <div class="modal-header">
+    <p>
+      <i class="fa fa-exclamation"></i>Alerta</p>
+  </div>
+  <div class="modal-body">
+    ¿Está seguro que desea eliminar la enfermedad {{ medicine.name }}?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" (click)="removeMedicine()">Si</button>
+    <button class="btn btn-default" (click)="modalRef.hide()">No</button>
+  </div>
+</ng-template>

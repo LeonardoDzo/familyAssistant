@@ -54,6 +54,11 @@
     </button>
   </div>
   <div class="modal-body">
+    <ul>
+      <li *ngFor="let message of errorMessage">
+        {{ message }}
+      </li>
+    </ul>
     <form role="form" #addIllnessForm>
       <fieldset class="form-group">
         <label>Nombre</label>

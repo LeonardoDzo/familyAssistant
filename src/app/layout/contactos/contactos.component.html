@@ -66,6 +66,16 @@
               </tab>
             </tabset>
           </div>
+          <div class="card-footer">
+            <div class="row">
+              <div class="col"></div>
+              <div class="col align-self-center">
+                <pagination [itemsPerPage]="itemsPerPage" [totalItems]="totalItems" 
+                  (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"></pagination>
+              </div>
+              <div class="col"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

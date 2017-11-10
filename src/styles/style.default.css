@@ -1831,13 +1831,8 @@ section.forms .line {
   background-size: cover;
   -webkit-filter: blur(5px);
   filter: blur(5px);
-  top:-5px;
-  bottom:-5px;
-  right: -5px;
   z-index: 1;
   position: absolute;
-  top: 0;
-  right: 0;
 }
 
 .login-page .container {
@@ -1865,7 +1860,7 @@ section.forms .line {
 }
 
 .login-page .form-holder .info {
-  background: rgba(238, 106, 106, 0.9);
+  background: rgba(223, 75, 75, 0.93);
   color: #fff;
 }
 
@@ -1895,6 +1890,15 @@ section.forms .line {
 .login-page .form-holder .form #login, .login-page .form-holder .form #register {
   margin-bottom: 20px;
   cursor: pointer;
+  border: 0px;
+}
+
+.login-page .form-holder .form input[type="submit"], .login-page .form-holder .form button {
+  background: #7e4166;
+}
+
+.login-page .form-holder .form input[type="submit"]:hover, .login-page .form-holder .form button:hover {
+  background: #502940;
 }
 
 .login-page .form-holder .form a.forgot-pass, .login-page .form-holder .form a.signup {

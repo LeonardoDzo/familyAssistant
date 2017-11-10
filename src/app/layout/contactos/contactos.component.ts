@@ -22,6 +22,9 @@ export class ContactosComponent implements OnInit {
   public contacto = new Contacto();
   public realContacts: Contacto[] = [];
   public contacts: Contacto[] = [];
+  public currentPage = 1;
+  public totalItems = 0;
+  public itemsPerPage = 10;
 
   constructor(
     public toastr: ToastsManager,
@@ -45,7 +48,8 @@ export class ContactosComponent implements OnInit {
       });
 
       this.realContacts = contacts;
-      this.contacts = this.realContacts;
+      this.totalItems = contacts.length;
+      this.contacts = this.realContacts.slice(0,this.itemsPerPage);
      });
   }
 
@@ -53,6 +57,9 @@ export class ContactosComponent implements OnInit {
     this.contacts = this.realContacts.filter( item => {
       return item.nombre.toLowerCase().toString().search($event.toLocaleLowerCase().toString()) != -1;
     });
+    this.currentPage = 1;
+    this.totalItems = this.contacts.length;
+    this.contacts = this.contacts.slice(0,this.itemsPerPage);
   }
 
   public removeContact() {
@@ -84,5 +91,10 @@ export class ContactosComponent implements OnInit {
         this.updateContact();
       this.modalRef.hide();
     }
+  }
+
+  public pageChanged($event: any) {
+    this.currentPage = $event.page;
+    this.contacts = this.realContacts.slice(this.itemsPerPage*(this.currentPage - 1),this.itemsPerPage*this.currentPage);
   }
 }

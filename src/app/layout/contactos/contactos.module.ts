@@ -8,6 +8,7 @@ import { ContactosRoutingModule } from './contactos-routing.module';
 import { ContactosComponent } from './contactos.component';
 import { PageHeaderModule } from './../../shared';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 @NgModule({
   imports: [
@@ -16,8 +17,12 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     PageHeaderModule,
     FormsModule,
     ContactoModule,
-    TabsModule.forRoot()
+    TabsModule.forRoot(),
+    PaginationModule.forRoot()
   ],
-  declarations: [ContactosComponent]
+  declarations: [
+    ContactosComponent
+  ]
 })
+
 export class ContactosModule { }
