@@ -1,4 +1,4 @@
-import { Contacto } from './../../services/contacto';
+import { Contacto } from './../../models/contacto';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({

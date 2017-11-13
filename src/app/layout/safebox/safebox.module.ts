@@ -10,7 +10,8 @@ import { SafeboxComponent } from './safebox.component';
   imports: [
     CommonModule,
     SafeboxRoutingModule,
-    ToastModule
+    ToastModule,
+    FormsModule
   ],
   declarations: [ SafeboxComponent ]
 })

@@ -1,7 +1,7 @@
 import { RegexService } from './../../shared/services/regex.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { UserService } from './../../shared/services/user.service';
-import { Contacto } from './../../shared/services/contacto';
+import { Contacto } from './../../shared/models/contacto';
 import { Component, OnInit, TemplateRef, ViewContainerRef, ViewChild } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -64,6 +64,8 @@ export class ContactosComponent implements OnInit {
 
   public removeContact() {
     this.userService.removeContact(this.contacto,this.toastr);
+    this.currentPage = 1;
+    this.contacts = this.realContacts.slice(this.itemsPerPage*(this.currentPage - 1),this.itemsPerPage*this.currentPage);    
     this.modalRef.hide();
   }
 
@@ -81,7 +83,7 @@ export class ContactosComponent implements OnInit {
     this.userService.updateContact(this.contacto,this.toastr);
     this.errorMessage = [];
   }
-
+  
   public submitModal() {
     this.errorMessage = this.regexService.contactValidation(this.contacto);
     if(this.errorMessage.length < 1) {
@@ -96,5 +98,6 @@ export class ContactosComponent implements OnInit {
   public pageChanged($event: any) {
     this.currentPage = $event.page;
     this.contacts = this.realContacts.slice(this.itemsPerPage*(this.currentPage - 1),this.itemsPerPage*this.currentPage);
+    window.scrollTo(0, 0);
   }
 }

@@ -1,5 +1,5 @@
 import { UserService } from 'app/shared/services/user.service';
-import { User } from 'app/shared/services/user';
+import { User } from 'app/shared/models/user';
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';

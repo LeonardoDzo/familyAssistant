@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs/Observable';
+import { File } from '../models/file';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { FirebaseApp } from 'angularfire2';
@@ -31,7 +33,7 @@ export class FilesService {
     return name.split('.').pop();
   }
 
-  getImageLink(file: any): string {
+  getImageLink(file: File): string {
     let name = file.filename;
     let ext = this.getExt(name)
     if(this.extensiones.indexOf(ext) != -1) {
@@ -42,7 +44,7 @@ export class FilesService {
     return "assets/images/files/_blank.png"
   }
 
-  getFiles() {
+  getFiles(): Observable<File[]> {
     var uid = this.afa.auth.currentUser.uid;
     return this.afd.list('safebox/' + uid).valueChanges();
   }

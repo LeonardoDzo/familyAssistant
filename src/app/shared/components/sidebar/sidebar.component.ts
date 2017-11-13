@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'app/shared/services/user.service';
-import { User } from 'app/shared/services/user';
+import { User } from 'app/shared/models/user';
 
 declare var jquery:any;
 declare var $ :any;

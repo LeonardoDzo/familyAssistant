@@ -4,6 +4,7 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { Http } from '@angular/http';
 import { FormBuilder,FormGroup } from '@angular/forms';
+import { File } from 'app/shared/models/file'
 
 @Component({
   selector: 'app-safebox',
@@ -14,8 +15,10 @@ import { FormBuilder,FormGroup } from '@angular/forms';
 
 export class SafeboxComponent implements OnInit {
   extensiones: string[];
-  files: any[];
+  realFiles: File[];
+  files: File[];
   upload: any;
+  searchString: string
 
   constructor(
     private fs: FilesService,
@@ -24,13 +27,28 @@ export class SafeboxComponent implements OnInit {
   ) { this.toastr.setRootViewContainerRef(vcr); }
 
   ngOnInit() {
-    this.fs.getFiles().subscribe(files => {
+    this.fs.getFiles().subscribe((files: File[]) => {
+      files.sort((a,b) => {
+        if(a.filename < b.filename){
+          return -1;
+        } else if(a.filename > b.filename) {
+          return 1;
+        }
+        return 0;
+      });
+      this.realFiles = files
       this.files = files;
     });
     this.upload = {progress: 0, isUploading: false}
   }
 
-  getImageLink(file: any): string {
+  search($event) {
+    this.files = this.realFiles.filter( item => {
+      return item.filename.toLowerCase().toString().search($event.toLocaleLowerCase().toString()) != -1;
+    });
+  }
+
+  getImageLink(file: File): string {
     return this.fs.getImageLink(file);
   }
 

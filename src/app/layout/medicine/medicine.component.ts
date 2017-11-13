@@ -4,7 +4,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { routerTransition } from 'app/router.animations';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
-import { Medicine } from 'app/shared/services/medicine';
+import { Medicine } from 'app/shared/models/medicine';
 
 @Component({
   selector: 'app-medicine',
@@ -18,6 +18,10 @@ export class MedicineComponent implements OnInit {
   public errorMessage: string[] = [];
   public medicine: Medicine;
   public medicines: Medicine[];
+  public realMedicines: Medicine[];
+  public currentPage = 1;
+  public totalItems = 0;
+  public itemsPerPage = 10;
 
   constructor(
     private medicineService: MedicineService,
@@ -27,13 +31,36 @@ export class MedicineComponent implements OnInit {
 
   ngOnInit() {
     this.medicineService.getMedicines().subscribe((snapshots) => {
-      this.medicines = []
+      let medicines: Medicine[] = []
       snapshots.forEach((elem) => {
         let medicine = Object.assign(new Medicine(), elem.payload.toJSON())
         medicine.key = elem.key;
-        this.medicines.push(medicine)
+        medicines.push(medicine)
       })
+
+      medicines.sort((a,b) => {
+        if(a.name < b.name){
+          return -1;
+        } else if(a.name > b.name) {
+          return 1;
+        }
+        return 0;
+      });
+
+      this.realMedicines = medicines;
+      this.totalItems = medicines.length;
+      this.medicines = this.realMedicines;
     })
+  }
+
+  public search($event) {
+    this.medicines = this.realMedicines.filter( item => {
+      return item.name.toLowerCase().toString().search($event.toLocaleLowerCase().toString()) != -1;
+    });
+
+    this.currentPage = 1;
+    this.totalItems = this.medicines.length;
+    this.medicines = this.medicines.slice(0,this.itemsPerPage);
   }
 
   public openModal(template: TemplateRef<any>,medicine: Medicine = new Medicine()) {
@@ -56,6 +83,12 @@ export class MedicineComponent implements OnInit {
   removeMedicine() {
     this.medicineService.removeMedicine(this.medicine)
     this.modalRef.hide();
+  }
+
+  public pageChanged($event: any) {
+    this.currentPage = $event.page;
+    this.medicines = this.realMedicines.slice(this.itemsPerPage*(this.currentPage - 1),this.itemsPerPage*this.currentPage);
+    window.scrollTo(0, 0);
   }
 
 }

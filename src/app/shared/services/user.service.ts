@@ -1,10 +1,10 @@
-import { Contacto } from './contacto';
+import { Contacto } from '../models/contacto';
 import { Observable } from 'rxjs/Observable';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, DatabaseSnapshot, AngularFireList } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
-import { User } from 'app/shared/services/user';
+import { User } from 'app/shared/models/user';
 import { FirebaseApp } from 'angularfire2';
 
 @Injectable()

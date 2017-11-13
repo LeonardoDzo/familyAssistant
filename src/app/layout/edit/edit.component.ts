@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { User } from './../../shared/services/user';
+import { User } from './../../shared/models/user';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { routerTransition } from '../../router.animations';

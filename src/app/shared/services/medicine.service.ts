@@ -1,4 +1,4 @@
-import { Medicine } from './medicine';
+import { Medicine } from '../models/medicine';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';

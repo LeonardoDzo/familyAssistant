@@ -1,7 +1,7 @@
-import { Illness } from './illness';
-import { Contacto } from './contacto';
+import { Illness } from '../models/illness';
+import { Contacto } from '../models/contacto';
 import { Injectable } from '@angular/core';
-import { Medicine } from 'app/shared/services/medicine';
+import { Medicine } from 'app/shared/models/medicine';
 
 @Injectable()
 export class RegexService {
