@@ -1,0 +1,69 @@
+<div [@routerTransition]>
+  <header class="page-header align-items-center">
+    <div class="container-fluid">
+      <h2 class="no-margin-bottom">
+        <i class="fa fa-calendar"></i> Pendientes &nbsp; &nbsp;
+        <button class="btn btn-success" (click)="openModal(new)">
+          <i class="fa fa-plus"></i> Nuevo</button>
+        <span class="search-bar pull-right">
+          <form role="form" class="form-inline">
+            <input (ngModelChange)="search($event)" class="form-control" type="text" placeholder="Buscar" name="searchString" [(ngModel)]="searchString">
+          </form>
+        </span>
+      </h2>
+    </div>
+  </header>
+
+  <section>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-xl-11">
+          <ul class="event-list">
+            <li>
+              <time datetime="2014-07-20">
+                <span class="day">4</span>
+                <span class="month">Jul</span>
+                <span class="year">2014</span>
+                <span class="time">ALL DAY</span>
+              </time>
+              <!--<img alt="Independence Day" src="https://farm4.staticflickr.com/3100/2693171833_3545fb852c_q.jpg" />
+              -->
+                <div class="info">
+                <h2 class="title">Independence Day</h2>
+                <p class="desc">United States Holidayacdlkjcdsakjcajlkcasdlkjcsdacsdalkcjsdalkcjsdaklcsdajklcsdajcklsdajcksdlajcsdlakcjsdaklcjsdakclsdajcklsdajcdslkacjdsklacjdsalk</p>
+              </div>
+              <div class="social">
+                <ul>
+                  <li class="edit" style="width: 50%;">
+                    <a href="#">
+                      <span class="fa fa-pencil"></span>
+                    </a>
+                  </li>
+                  <li class="erase" style="width:50%;">
+                    <a href="#">
+                      <span class="fa fa-trash"></span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<ng-template #new>
+  <div class="modal-header">
+    <h3>Nuevo pendiente</h3>
+  </div>
+
+  <div class="modal-body">
+    cdsacdsacdsacdsa
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-primary">Agregar</button>
+  </div>
+</ng-template>
