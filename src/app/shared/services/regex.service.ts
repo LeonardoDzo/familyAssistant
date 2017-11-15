@@ -1,3 +1,4 @@
+import { Pending } from './../models/pending';
 import { Illness } from '../models/illness';
 import { Contacto } from '../models/contacto';
 import { Injectable } from '@angular/core';
@@ -11,6 +12,21 @@ export class RegexService {
   phoneNumberRegExp: RegExp = /^(\d{7,10})$/;
 
   constructor() { }
+
+  todoValidation(pending: Pending) {
+    let errorMessages = [];
+
+    if(!pending.date) {
+      errorMessages.push("Debe seleccionar una fecha...")
+    }
+
+    if(!pending.name) {
+      errorMessages.push("El pendiente debe tener un nombre...")
+    }
+
+    return errorMessages;
+
+  }
 
   medicineValidation(medicine: Medicine) {
     let errorMessages = []

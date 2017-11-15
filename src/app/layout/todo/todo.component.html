@@ -19,28 +19,28 @@
       <div class="row justify-content-center">
         <div class="col-xl-11">
           <ul class="event-list">
-            <li>
+            <li *ngFor="let pending of pendings">
               <time datetime="2014-07-20">
-                <span class="day">4</span>
-                <span class="month">Jul</span>
-                <span class="year">2014</span>
+                <span class="day">{{pending.date.getDate()}}</span>
+                <span class="month">{{months[pending.date.getMonth()]}}</span>
+                <span class="year">{{pending.date.getFullYear()}}</span>
                 <span class="time">ALL DAY</span>
               </time>
-              <!--<img alt="Independence Day" src="https://farm4.staticflickr.com/3100/2693171833_3545fb852c_q.jpg" />
-              -->
-                <div class="info">
-                <h2 class="title">Independence Day</h2>
-                <p class="desc">United States Holidayacdlkjcdsakjcajlkcasdlkjcsdacsdalkcjsdalkcjsdaklcsdajklcsdajcklsdajcksdlajcsdlakcjsdaklcjsdakclsdajcklsdajcdslkacjdsklacjdsalk</p>
+              <img *ngIf="pending.downloadUrl" src="{{pending.downloadUrl}}" />
+
+              <div class="info">
+                <h2 class="title">{{pending.name}}</h2>
+                <p class="desc">{{pending.description}}</p>
               </div>
               <div class="social">
                 <ul>
                   <li class="edit" style="width: 50%;">
-                    <a href="#">
+                    <a (click)="openModal(new,pending)" href="/todo#">
                       <span class="fa fa-pencil"></span>
                     </a>
                   </li>
                   <li class="erase" style="width:50%;">
-                    <a href="#">
+                    <a (click)="openModal(confirm,pending)" href="/todo#">
                       <span class="fa fa-trash"></span>
                     </a>
                   </li>
@@ -56,14 +56,62 @@
 
 <ng-template #new>
   <div class="modal-header">
-    <h3>Nuevo pendiente</h3>
+    <h3>{{(!pending.key) ? 'Nuevo pendiente' : 'Editar pendiente'}}</h3>
   </div>
 
   <div class="modal-body">
-    cdsacdsacdsacdsa
+    <form role="form">
+      <fieldset class="form-group">
+        <label>Fecha:</label>
+        <div class="input-group">
+          <input name="date" [(ngModel)]="pending.date" [bsConfig]="bsConfig" type="text" class="form-control" #dp="bsDatepicker" bsDatepicker
+            [(bsValue)]="bsValue">
+          <div class="input-group-btn">
+            <button class="btn btn-default" (click)="dp.toggle()">
+              <i class="fa fa-calendar"></i>
+            </button>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label>Nombre:</label>
+        <input name="name" [(ngModel)]="pending.name" class="form-control">
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label>Descripción:</label>
+        <input name="description" [(ngModel)]="pending.description" class="form-control">
+      </fieldset>
+
+      <fieldset class="form-check">
+        <label class="form-check-label">
+          <input name="active" [(ngModel)]="pending.active" type="checkbox" class="form-check-input"> Activo
+        </label>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label for="exampleInputFile">Imagen</label>
+        <input #fileupload (change)="fileChanged(fileupload.files)" type="file" name="file" class="form-control-file">
+      </fieldset>
+    </form>
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-primary">Agregar</button>
+    <button (click)="submitModal()" class="btn btn-primary">{{(!pending.key) ? 'Agregar' : 'Guardar'}}</button>
   </div>
+</ng-template>
+
+<ng-template #confirm>
+    <div class="modal-header">
+        <p>
+          <i class="fa fa-exclamation"></i>Alerta</p>
+      </div>
+      <div class="modal-body">
+        ¿Está seguro que desea eliminar la el pendiente {{ pending.name }}?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="removePending()">Si</button>
+        <button class="btn btn-default" (click)="modalRef.hide()">No</button>
+      </div>
 </ng-template>

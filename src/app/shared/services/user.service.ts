@@ -76,7 +76,7 @@ export class UserService {
     imageRef.put(file).then((snapshot) => {
       this.afd.database.ref(`/users/${uid}`).update({
         url: snapshot.downloadURL
-      })
+      });
       toastr.success("La imagen fue actualizada correctamente.","Confirmación:")
     }).catch((err) => {
       toastr.error("Sucedió un error subiendo la imagen...","Error:")

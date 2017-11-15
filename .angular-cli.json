@@ -25,7 +25,8 @@
                 "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css",
                 "styles/custom.css",
                 "styles/fontastic.css",
-                "styles/style.default.css"
+                "styles/style.default.css",
+                "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css"
             ],
             "scripts": [
                 "../node_modules/chart.js/dist/Chart.js",
