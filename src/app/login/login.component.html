@@ -1,5 +1,5 @@
-<div class="login-page" [@routerTransition]>
-    <div class="container d-flex align-items-center">
+<div class="login-page">
+    <div class="container d-flex align-items-center" [@routerTransition]>
         <div class="form-holder has-shadow">
             <div class="row">
                 <div class="col-lg-6">
@@ -27,14 +27,11 @@
                                     <label for="login-password" class="label-material">Contraseña</label>
                                 </div>
                                 <div class="row">
-                                    <input type="submit" id="login" class="btn btn-primary" value="Iniciar Sesión"> &nbsp;
-                                    <button class="btn btn-primary" id="login" [routerLink]="['/signup']">Registrarse</button>
+                                    <input type="submit" id="login" class="btn btn-primary" value="Iniciar Sesión">
                                 </div>
                             </form>
-                            <a href="#" class="forgot-pass">Forgot Password?</a>
-                            <br>
-                            <small>Do not have an account? </small>
-                            <a href="#" class="signup">Signup</a>
+                            <small>¿No tienes una cuenta? </small>
+                            <a [routerLink]="['/signup']" class="signup">Registro</a>
                         </div>
                     </div>
                 </div>

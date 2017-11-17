@@ -14,10 +14,11 @@ export class AuthService {
       .auth
       .createUserWithEmailAndPassword(email, password)
       .then(user => {
-       this.afd.database.ref('users/' + user.uid).set({
+       this.afd.database.ref('assistants/' + user.uid).set({
           name: name,
           email: email,
           password: password,
+          bosses: {},
           rfc: '',
           curp: '',
           tipoSangre: '',

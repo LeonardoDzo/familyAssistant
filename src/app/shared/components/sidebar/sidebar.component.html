@@ -2,7 +2,7 @@
     <!-- Sidebar Header-->
     <div class="sidebar-header d-flex align-items-center">
         <div class="">
-            <img src="{{user.url}}" alt="..." class="imagen">
+            <img src="{{(!user.url) ? 'assets/images/user.png' : user.url}}" alt="..." class="imagen">
         </div>
         <div class="title">
             <h1 class="h4">{{user.name}}</h1>

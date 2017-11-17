@@ -16,6 +16,7 @@ import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import {ToastOptions} from 'ng2-toastr';
 import 'firebase/storage';
 import 'firebase/database';
+import { SelectionComponent } from './selection/selection.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
@@ -39,7 +40,8 @@ export const firebase = {
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        SelectionComponent
     ],
     imports: [
         BrowserModule,

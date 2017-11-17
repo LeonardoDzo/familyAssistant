@@ -1,0 +1,17 @@
+<div class="card hovercard">
+    <div class="cardheader">
+  
+    </div>
+    <div class="avatar">
+      <img alt="" src="{{(!boss.url)? 'assets/images/user.png' : boss.url}}">
+    </div>
+    <div class="info">
+      <div class="title">
+        <p target="_blank">{{boss.name}}</p>
+      </div>
+    </div>
+    <div class="bottom">
+      <button (click)="acceptBoss()" class="btn btn-success"><i class="fa fa-check"></i></button>
+      <button (click)="rejectBoss()" class="btn btn-danger"><i class="fa fa-times"></i></button>
+    </div>
+  </div>

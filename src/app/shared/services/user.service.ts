@@ -1,3 +1,4 @@
+import { Boss } from './../models/boss';
 import { Contacto } from '../models/contacto';
 import { Observable } from 'rxjs/Observable';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -51,18 +52,39 @@ export class UserService {
 
   getUserObservable(): Observable<any> {
     var uid = this.afa.auth.currentUser.uid
-    return this.afd.object(`/users/${uid}`).valueChanges()
+    return this.afd.object(`/assistants/${uid}`).valueChanges()
+  }
+
+  getBoss(uid: string) {
+    return this.afd.database.ref(`users/${uid}`).once('value');
   }
 
   getUser() {
     var uid = this.afa.auth.currentUser.uid
     return new Promise<User>((resolve, reject) => {
-      this.afd.database.ref(`/users/${uid}`).once('value').then(u => {
+      this.afd.database.ref(`/assistants/${uid}`).once('value').then(u => {
         var user = new User();
         user = u.val();
         resolve(user);
       });
     });
+  }
+
+  getSolicitudes() {
+    var uid = this.afa.auth.currentUser.uid;
+    return this.afd.list(`assistants/${uid}/solicitudes`).snapshotChanges();
+  }
+
+  acceptBoss(boss: Boss) {
+    var uid = this.afa.auth.currentUser.uid;
+    this.afd.database.ref(`assistants/${uid}/bosses`).push(boss.userKey);
+    this.afd.database.ref(`users/${boss.userKey}/assistants`).push(uid);
+    this.afd.database.ref(`assistants/${uid}/solicitudes/${boss.solicitudeKey}`).remove();
+  }
+
+  rejectBoss(boss: Boss) {
+    let uid = this.afa.auth.currentUser.uid;
+    this.afd.database.ref(`assistants/${uid}/solicitudes/${boss.solicitudeKey}`).remove();
   }
 
   private getExt(name: string): string {
@@ -74,7 +96,7 @@ export class UserService {
     var ext = this.getExt(file.name)
     var imageRef = ref.child('images/' + uid + "." + ext)
     imageRef.put(file).then((snapshot) => {
-      this.afd.database.ref(`/users/${uid}`).update({
+      this.afd.database.ref(`/assistants/${uid}`).update({
         url: snapshot.downloadURL
       });
       toastr.success("La imagen fue actualizada correctamente.","Confirmación:")
@@ -88,7 +110,7 @@ export class UserService {
     if(file) {
       this.upload(file,toastr,uid)
     }
-    this.afd.database.ref(`/users/${uid}`).update({
+    this.afd.database.ref(`/assistants/${uid}`).update({
       rfc: user.rfc,
       curp: user.curp,
       tipoSangre: user.tipoSangre,

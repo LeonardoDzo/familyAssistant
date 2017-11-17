@@ -1,10 +1,10 @@
+import { SolicitudeComponent } from './../../shared/components/solicitude/solicitude.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
     NgbCarouselModule,
     NgbAlertModule
 } from '@ng-bootstrap/ng-bootstrap';
-
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
@@ -27,7 +27,8 @@ import { StatModule } from '../../shared';
         DashboardComponent,
         TimelineComponent,
         NotificationComponent,
-        ChatComponent
+        ChatComponent,
+        SolicitudeComponent
     ]
 })
 export class DashboardModule { }
