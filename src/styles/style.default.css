@@ -296,7 +296,7 @@ button, input {
 }
 
 .page {
-  background: rgb(246, 249, 250);
+  background: rgb(248, 248, 248);
 }
 
 .page .text-white {
@@ -1827,10 +1827,10 @@ section.forms .line {
   height: 100%;
   display: block;
   z-index: -1;
-  background: url(../assets/images/bg.jpg);
-  background-size: cover;
+  background: rgb(236, 236, 236); /*url(../assets/images/bg.jpg)*/
+  /*background-size: cover;
   -webkit-filter: blur(5px);
-  filter: blur(5px);
+  filter: blur(5px);*/
   z-index: 1;
   position: absolute;
 }
@@ -1860,7 +1860,7 @@ section.forms .line {
 }
 
 .login-page .form-holder .info {
-  background: rgba(223, 75, 75, 0.93);
+  background: rgb(196, 59, 75);/*rgb(223, 75, 75);*/
   color: #fff;
 }
 

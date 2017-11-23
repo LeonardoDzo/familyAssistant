@@ -1,3 +1,4 @@
+import { User } from 'app/shared/models/user';
 import { Observable } from 'rxjs/Observable';
 import { File } from '../models/file';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -13,6 +14,7 @@ import { UUID } from 'angular2-uuid';
 export class FilesService {
   extensiones: string[];
   archivos: string[];
+  assistant: User = new User();
 
   constructor(
     public app: FirebaseApp,
@@ -27,6 +29,16 @@ export class FilesService {
     this.http.get('assets/extensiones-archivos.json').subscribe( res => {
       this.archivos = res.json();
     });
+
+    let uid = this.afa.auth.currentUser.uid;
+    this.getUser().subscribe((user: User) => {
+      this.assistant = user;
+    });
+  }
+
+  getUser() {
+    let uid = this.afa.auth.currentUser.uid;
+    return this.afd.object(`assistants/${uid}`).valueChanges();
   }
 
   private getExt(name: string): string {
@@ -45,12 +57,12 @@ export class FilesService {
   }
 
   getFiles(): Observable<File[]> {
-    var uid = this.afa.auth.currentUser.uid;
+    var uid = this.assistant.selectedBoss;
     return this.afd.list('safebox/' + uid).valueChanges();
   }
 
   upload(files: FileList, upload, toast: ToastsManager) {
-    var uid = this.afa.auth.currentUser.uid;
+    var uid = this.assistant.selectedBoss;
     var ref = this.app.storage().ref();
     for (var i = 0; i < files.length; i++) {
       let uuid = UUID.UUID();

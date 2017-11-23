@@ -1,4 +1,5 @@
-import { Pending } from './../models/pending';
+import { User } from 'app/shared/models/user';
+import { Event } from './../models/event';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';
@@ -7,43 +8,52 @@ import { UUID } from 'angular2-uuid';
 
 @Injectable()
 export class TodoService {
-
+  assistant: User;
   constructor(
     private afa: AngularFireAuth,
     private afd: AngularFireDatabase,
     public app: FirebaseApp
-  ) { }
+  ) { 
+    this.getUser().subscribe((user: User) => {
+      this.assistant = user;
+    })
+  }
 
-  addPending(pending: Pending) {
+  getUser() {
     let uid = this.afa.auth.currentUser.uid;
+    return this.afd.object(`assistants/${uid}`).valueChanges();
+  }
+
+  addEvent(event: Event) {
+    let uid = this.assistant.selectedBoss;
     let key = this.afd.database.ref("todo/" + uid).push({
-      dateTime: pending.date.getTime(),
-      name: pending.name,
-      description: pending.description,
-      active: (pending.active) ? pending.active: false
+      dateTime: event.date.getTime(),
+      name: event.name,
+      description: event.description,
+      active: (event.active) ? event.active: false
     }).key;
 
-    if(pending.file) {
-      this.upload(pending.file,uid,key)
+    if(event.file) {
+      this.upload(event.file,uid,key)
     }
   }
 
-  removePending(pending: Pending) {
-    let uid = this.afa.auth.currentUser.uid;
-    this.afd.database.ref("todo/" + uid + "/" + pending.key).remove()
+  removeEvent(event: Event) {
+    let uid = this.assistant.selectedBoss;
+    this.afd.database.ref("todo/" + uid + "/" + event.key).remove()
   }
 
-  updatePending(pending: Pending) {
-    let uid = this.afa.auth.currentUser.uid;
-    this.afd.database.ref("todo/" + uid + "/" + pending.key).update({
-      dateTime: pending.date.getTime(),
-      name: pending.name,
-      description: pending.description,
-      active: (pending.active) ? pending.active: false
+  updateEvent(event: Event) {
+    let uid = this.assistant.selectedBoss;
+    this.afd.database.ref("todo/" + uid + "/" + event.key).update({
+      dateTime: event.date.getTime(),
+      name: event.name,
+      description: event.description,
+      active: (event.active) ? event.active: false
     });
 
-    if(pending.file) {
-      this.upload(pending.file,uid,pending.key)
+    if(event.file) {
+      this.upload(event.file,uid,event.key)
     }
   }
 
@@ -63,8 +73,8 @@ export class TodoService {
     });
   }
 
-  getPendings() {
-    let uid = this.afa.auth.currentUser.uid;
+  getEvents() {
+    let uid = this.assistant.selectedBoss;
     return this.afd.list("todo/" + uid).snapshotChanges()
   }
 

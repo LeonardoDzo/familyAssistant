@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Subscription';
 import { RegexService } from './../../shared/services/regex.service';
 import { IllnessService } from './../../shared/services/illness.service';
 import { Illness } from './../../shared/models/illness';
@@ -22,15 +23,18 @@ export class IllnessesComponent implements OnInit {
   public currentPage = 1;
   public totalItems = 0;
   public itemsPerPage = 10;
+  sub: Subscription;
 
   constructor(
     private modalService: BsModalService,
     private illnessService: IllnessService,
     private regexService: RegexService
   ) { }
-
-  ngOnInit() {
-    this.illnessService.getIllnesses().subscribe((snapshots) => {
+  private init() {
+    if(this.sub) {
+      this.sub.unsubscribe();
+    }
+    this.sub = this.illnessService.getIllnesses().subscribe((snapshots) => {
       //Se obtiene el arreglo de enfermedades.
       let illnesses: Illness[] = []
       snapshots.forEach((elem) => {
@@ -41,9 +45,9 @@ export class IllnessesComponent implements OnInit {
       
       //Se ordena el arreglo de enfermedades.
       illnesses.sort((a,b) => {
-        if(a.nombre < b.nombre){
+        if(a.nombre.toLowerCase() < b.nombre.toLowerCase()){
           return -1;
-        } else if(a.nombre > b.nombre) {
+        } else if(a.nombre.toLowerCase() > b.nombre.toLowerCase()) {
           return 1;
         }
         return 0;
@@ -53,6 +57,11 @@ export class IllnessesComponent implements OnInit {
       this.realIllnesses = illnesses;
       this.totalItems = illnesses.length;
       this.illnesses = this.realIllnesses.slice(0,this.itemsPerPage);
+    })
+  }
+  ngOnInit() {
+    this.illnessService.getUser().subscribe(() => {
+      this.init();
     })
   }
 

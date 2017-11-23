@@ -7,4 +7,5 @@ export class User {
     public name: string = '';
     public email: string = '';
     public url: string = '';
+    public selectedBoss: string;
 }

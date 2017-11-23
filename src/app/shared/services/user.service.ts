@@ -7,20 +7,27 @@ import { AngularFireDatabase, DatabaseSnapshot, AngularFireList } from 'angularf
 import { Injectable } from '@angular/core';
 import { User } from 'app/shared/models/user';
 import { FirebaseApp } from 'angularfire2';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class UserService {
   contacts: Observable<Contacto[]> = null;
-  constructor(private afd: AngularFireDatabase,private afa: AngularFireAuth,public app: FirebaseApp) { }
+  assistant: User = new User();
+  
+  constructor(private afd: AngularFireDatabase,private afa: AngularFireAuth,public app: FirebaseApp) { 
+    this.getUserObservable().subscribe((user: User) => {
+      this.assistant = user;
+    });
+  }
 
   getContacts(): Observable<Contacto[]> {
-    var uid = this.afa.auth.currentUser.uid;
+    var uid = this.assistant.selectedBoss;
     this.contacts = this.afd.list('/contacts/' + uid).valueChanges()
     return this.contacts;
   }
 
   removeContact(contact: Contacto,toastr: ToastsManager) {
-    var uid = this.afa.auth.currentUser.uid;
+    var uid = this.assistant.selectedBoss;
     var key = contact.key;
     this.afd.database.ref('contacts/' + uid + '/' + key).remove().then(() => {
       toastr.error("El usuario ha sido eliminado...",null);
@@ -28,22 +35,18 @@ export class UserService {
   }
 
   addContact(contacto: Contacto,toastr: ToastsManager) {
-    var uid = this.afa.auth.currentUser.uid;
-    let key = this.afd.database.ref('contacts/' + uid).push({
+    var uid = this.assistant.selectedBoss;
+    let key = this.afd.database.ref('contacts/' + this.assistant.selectedBoss).push({
       nombre: contacto.nombre,
       telefono: contacto.telefono,
       ocupacion: contacto.ocupacion,
       direccion: contacto.direccion,
       url: contacto.url
-    }).then((contacto) => {
-      this.afd.database.ref('contacts/' + uid + "/" + contacto.key).update({
-        key: contacto.key
-      })
     });
   }
 
   updateContact(contacto: Contacto,toastr: ToastsManager) {
-    var uid = this.afa.auth.currentUser.uid;
+    var uid = this.assistant.selectedBoss;
     var key = contacto.key;
     this.afd.database.ref('contacts/' + uid + '/' + key).update(contacto).then(() => {
       toastr.success("Los datos se han guardado correctamente.",null);
@@ -68,6 +71,23 @@ export class UserService {
         resolve(user);
       });
     });
+  }
+
+  getSelectedBoss() {
+    var uid = this.afa.auth.currentUser.uid;
+    return this.afd.object(`/assistants/${uid}/selectedBoss`).valueChanges();
+  }
+
+  setSelectedBoss(key: string) {
+    let uid = this.afa.auth.currentUser.uid;
+    this.afd.database.ref(`assistants/${uid}`).update({
+      selectedBoss: key
+    });
+  }
+
+  getBosses() {
+    var uid = this.afa.auth.currentUser.uid;
+    return this.afd.list(`assistants/${uid}/bosses`).snapshotChanges();
   }
 
   getSolicitudes() {

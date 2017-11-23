@@ -1,4 +1,4 @@
-import { Pending } from './../models/pending';
+import { Event } from './../models/event';
 import { Illness } from '../models/illness';
 import { Contacto } from '../models/contacto';
 import { Injectable } from '@angular/core';
@@ -13,14 +13,14 @@ export class RegexService {
 
   constructor() { }
 
-  todoValidation(pending: Pending) {
+  todoValidation(event: Event) {
     let errorMessages = [];
 
-    if(!pending.date) {
+    if(!event.date) {
       errorMessages.push("Debe seleccionar una fecha...")
     }
 
-    if(!pending.name) {
+    if(!event.name) {
       errorMessages.push("El pendiente debe tener un nombre...")
     }
 

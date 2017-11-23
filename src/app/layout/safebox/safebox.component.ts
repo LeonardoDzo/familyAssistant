@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Subscription';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { FilesService } from './../../shared/services/files.service';
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
@@ -19,6 +20,7 @@ export class SafeboxComponent implements OnInit {
   files: File[];
   upload: any;
   searchString: string
+  sub: Subscription;
 
   constructor(
     private fs: FilesService,
@@ -26,8 +28,11 @@ export class SafeboxComponent implements OnInit {
     vcr: ViewContainerRef
   ) { this.toastr.setRootViewContainerRef(vcr); }
 
-  ngOnInit() {
-    this.fs.getFiles().subscribe((files: File[]) => {
+  private init() {
+    if(this.sub) {
+      this.sub.unsubscribe();
+    }
+    this.sub = this.fs.getFiles().subscribe((files: File[]) => {
       files.sort((a,b) => {
         if(a.filename < b.filename){
           return -1;
@@ -38,6 +43,12 @@ export class SafeboxComponent implements OnInit {
       });
       this.realFiles = files
       this.files = files;
+    });
+  }
+
+  ngOnInit() {
+    this.fs.getUser().subscribe(() => {
+      this.init();
     });
     this.upload = {progress: 0, isUploading: false}
   }

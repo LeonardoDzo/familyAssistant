@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Subscription';
 import { MedicineService } from './../../shared/services/medicine.service';
 import { RegexService } from './../../shared/services/regex.service';
 import { Component, OnInit, TemplateRef } from '@angular/core';
@@ -22,15 +23,18 @@ export class MedicineComponent implements OnInit {
   public currentPage = 1;
   public totalItems = 0;
   public itemsPerPage = 10;
+  sub: Subscription;
 
   constructor(
     private medicineService: MedicineService,
     private modalService: BsModalService,
     private regexService: RegexService
   ) { }
-
-  ngOnInit() {
-    this.medicineService.getMedicines().subscribe((snapshots) => {
+  private init() {
+    if(this.sub) {
+      this.sub.unsubscribe();
+    }
+    this.sub = this.medicineService.getMedicines().subscribe((snapshots) => {
       let medicines: Medicine[] = []
       snapshots.forEach((elem) => {
         let medicine = Object.assign(new Medicine(), elem.payload.toJSON())
@@ -39,9 +43,9 @@ export class MedicineComponent implements OnInit {
       })
 
       medicines.sort((a,b) => {
-        if(a.name < b.name){
+        if(a.name.toLowerCase() < b.name.toLowerCase()){
           return -1;
-        } else if(a.name > b.name) {
+        } else if(a.name.toLowerCase() > b.name.toLowerCase()) {
           return 1;
         }
         return 0;
@@ -51,6 +55,12 @@ export class MedicineComponent implements OnInit {
       this.totalItems = medicines.length;
       this.medicines = this.realMedicines;
     })
+  }
+
+  ngOnInit() {
+    this.medicineService.getUser().subscribe(()=> {
+      this.init();
+    });
   }
 
   public search($event) {

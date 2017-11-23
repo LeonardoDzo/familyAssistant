@@ -1,4 +1,4 @@
-export class Pending {
+export class Event {
     file: File;
     key: string;
     name: string;

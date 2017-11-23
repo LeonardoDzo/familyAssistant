@@ -1,5 +1,6 @@
+import { Subscription } from 'rxjs/Subscription';
 import { TodoService } from './../../shared/services/todo.service';
-import { Pending } from './../../shared/models/pending';
+import { Event } from './../../shared/models/event';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { routerTransition } from 'app/router.animations';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -16,9 +17,9 @@ export class TodoComponent implements OnInit {
   public modalRef: BsModalRef;
   bsValue: Date = new Date();
   bsConfig: Partial<BsDatepickerConfig>;
-  pending: Pending = new Pending();
-  pendings: Pending[];
-
+  event: Event = new Event();
+  events: Event[];
+  sub: Subscription;
   months = ["En", "Febr", "Mzo", 
             "Abr", "May", "Jun", 
             "Jul", "Agto", "Sept",
@@ -28,46 +29,51 @@ export class TodoComponent implements OnInit {
     private todoService: TodoService,
   ) { }
 
-  ngOnInit() {
-    this.bsConfig = Object.assign({}, { containerClass: "theme-red" });
-
-    this.todoService.getPendings().subscribe((snapshot) => {
-      let pendings: Pending[] = [];
+  private init() {
+    this.todoService.getEvents().subscribe((snapshot) => {
+      let events: Event[] = [];
       snapshot.forEach((elem) => {
-        let pending = Object.assign(new Pending(),elem.payload.toJSON());
-        pending.date = new Date(pending.dateTime);
-        pending.key = elem.key
-        pendings.push(pending)
+        let event = Object.assign(new Event(),elem.payload.toJSON());
+        event.date = new Date(event.dateTime);
+        event.key = elem.key
+        events.push(event);
       });
 
-      pendings.sort((a,b) => {
+      events.sort((a,b) => {
         return a.dateTime - b.dateTime;
       });
 
-      this.pendings = pendings;
+      this.events = events;
     });
-
   }
 
-  public openModal(template: TemplateRef<any>, pending: Pending = new Pending()) {
-    this.pending = Object.assign(new Pending(),pending);
+  ngOnInit() {
+    this.bsConfig = Object.assign({}, { containerClass: "theme-red" });
+
+    this.todoService.getUser().subscribe(() => {
+      this.init();
+    })
+  }
+
+  public openModal(template: TemplateRef<any>, event: Event = new Event()) {
+    this.event = Object.assign(new Event(),event);
     this.modalRef = this.modalService.show(template);
   }
 
   fileChanged(files: any){
-    this.pending.file = files[0];
+    this.event.file = files[0];
   }
 
-  removePending() {
-    this.todoService.removePending(this.pending);
+  removeEvent() {
+    this.todoService.removeEvent(this.event);
     this.modalRef.hide();
   }
 
   submitModal() {
-    if(!this.pending.key)
-      this.todoService.addPending(this.pending)
+    if(!this.event.key)
+      this.todoService.addEvent(this.event)
     else
-      this.todoService.updatePending(this.pending)
+      this.todoService.updateEvent(this.event)
     this.modalRef.hide()
   }
 
