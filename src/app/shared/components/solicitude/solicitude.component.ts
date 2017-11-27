@@ -8,7 +8,7 @@ import { UserService } from 'app/shared/services/user.service';
   styleUrls: ['./solicitude.component.scss']
 })
 export class SolicitudeComponent implements OnInit {
-  @Input() boss: Boss;
+  @Input() boss: Boss = new Boss();
   constructor(
     private userService: UserService
   ) { }

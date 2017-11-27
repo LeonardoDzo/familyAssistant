@@ -62,6 +62,11 @@ export class UserService {
     return this.afd.database.ref(`users/${uid}`).once('value');
   }
 
+  getPendings(bossKey: string) {
+    let uid = this.afa.auth.currentUser.uid;
+    return this.afd.list(`pendings/${uid}`, ref => ref.orderByChild('boss').equalTo(bossKey)).valueChanges();
+  }
+
   getUser() {
     var uid = this.afa.auth.currentUser.uid
     return new Promise<User>((resolve, reject) => {

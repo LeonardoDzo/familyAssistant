@@ -2,16 +2,13 @@
     <section class="dashboard-solicitude">
         <div class="row">
             <div class="col-sm-6">
-                <div class="card dashboard-card">
-                    <div class="card-header">
+                <div class="articles card">
+                    <div class="card-header d-flex align-items-center">
                         Solicitudes.
                     </div>
-
-                    <div class="card-body card-body-height">
-                        <div class="row">
-                            <div *ngFor="let boss of bosses" class="user-request">
-                                <app-solicitude [boss]="boss"></app-solicitude>
-                            </div>
+                    <div class="card-body no-padding card-body-height">
+                        <div *ngFor="let boss of bosses">
+                            <app-solicitude [boss]="boss"></app-solicitude>
                         </div>
                     </div>
                 </div>
@@ -23,20 +20,8 @@
                         Pendientes.
                     </div>
                     <div class="card-body no-padding card-body-height">
-                        <div class="item d-flex">
-                            <label for="input-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</label>
-                        </div>
-                        <div class="item d-flex">
-                            <label for="input-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</label>
-                        </div>
-                        <div class="item d-flex">
-                            <label for="input-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</label>
-                        </div>
-                        <div class="item d-flex">
-                            <label for="input-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</label>
-                        </div>
-                        <div class="item d-flex">
-                            <label for="input-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</label>
+                        <div *ngFor="let pending of pendings" (click)="openModal(pendingTemplate,pending)" class="item d-flex {{getLabel(pending)}}">
+                            <label>{{pending.name}}</label>
                         </div>
                     </div>
                 </div>
@@ -44,3 +29,12 @@
         </div>
     </section>
 </div>
+
+<ng-template #pendingTemplate>
+    <div class="modal-header">
+        <b>{{pending.name}}</b>
+    </div>
+    <div class="modal-body">
+        <b>Descripción: </b> {{pending.description}}
+    </div>
+</ng-template>
