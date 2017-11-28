@@ -15,40 +15,38 @@
   </header>
 
   <section>
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-xl-11">
-          <ul class="event-list">
-            <li *ngFor="let event of events">
-              <time datetime="2014-07-20">
-                <span class="day">{{event.date.getDate()}}</span>
-                <span class="month">{{months[event.date.getMonth()]}}</span>
-                <span class="year">{{event.date.getFullYear()}}</span>
-                <span class="time">ALL DAY</span>
-              </time>
-              <img *ngIf="event.downloadUrl" src="{{event.downloadUrl}}" />
+    <div class="row justify-content-center">
+      <div class="col-xl-11">
+        <ul class="event-list">
+          <li *ngFor="let event of events">
+            <time datetime="2014-07-20">
+              <span class="day">{{event.date.getDate()}}</span>
+              <span class="month">{{months[event.date.getMonth()]}}</span>
+              <span class="year">{{event.date.getFullYear()}}</span>
+              <span class="time">ALL DAY</span>
+            </time>
+            <img *ngIf="event.downloadUrl" src="{{event.downloadUrl}}" />
 
-              <div class="info">
-                <h2 class="title">{{event.name}}</h2>
-                <p class="desc">{{event.description}}</p>
-              </div>
-              <div class="social">
-                <ul>
-                  <li class="edit" style="width: 50%;">
-                    <a (click)="openModal(new,event)" href="/todo#">
-                      <span class="fa fa-pencil"></span>
-                    </a>
-                  </li>
-                  <li class="erase" style="width:50%;">
-                    <a (click)="openModal(confirm,event)" href="/todo#">
-                      <span class="fa fa-trash"></span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </div>
+            <div class="info">
+              <h2 class="title">{{event.name}}</h2>
+              <p class="desc">{{event.description}}</p>
+            </div>
+            <div class="social">
+              <ul>
+                <li class="edit" style="width: 50%;">
+                  <a (click)="openModal(new,event)" href="/todo#">
+                    <span class="fa fa-pencil"></span>
+                  </a>
+                </li>
+                <li class="erase" style="width:50%;">
+                  <a (click)="openModal(confirm,event)" href="/todo#">
+                    <span class="fa fa-trash"></span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </section>
@@ -103,15 +101,15 @@
 </ng-template>
 
 <ng-template #confirm>
-    <div class="modal-header">
-        <p>
-          <i class="fa fa-exclamation"></i>Alerta</p>
-      </div>
-      <div class="modal-body">
-        ¿Está seguro que desea eliminar la el pendiente {{ event.name }}?
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-danger" (click)="removeEvent()">Si</button>
-        <button class="btn btn-default" (click)="modalRef.hide()">No</button>
-      </div>
+  <div class="modal-header">
+    <p>
+      <i class="fa fa-exclamation"></i>Alerta</p>
+  </div>
+  <div class="modal-body">
+    ¿Está seguro que desea eliminar la el pendiente {{ event.name }}?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" (click)="removeEvent()">Si</button>
+    <button class="btn btn-default" (click)="modalRef.hide()">No</button>
+  </div>
 </ng-template>

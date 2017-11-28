@@ -1257,7 +1257,7 @@ section.dashboard-counts div[class*='col-']:last-of-type .item {
 */
 /*====== Checklist Box ======*/
 .checklist label {
-  font-size: 0.8em;
+  font-size: 0.9em;
   color: #999;
   line-height: 1.8em;
 }

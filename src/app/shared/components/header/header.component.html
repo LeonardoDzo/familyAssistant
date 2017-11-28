@@ -29,7 +29,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item dropdown" ngbDropdown>
+                    <li *ngIf="user.selectedBoss" class="nav-item dropdown" ngbDropdown>
                         <a id="bosses" rel="nofollow" data-target="#" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false" class="nav-link bosses" ngbDropdownToggle>
                             <i class="fa fa-user"></i> {{selectedBoss.name}}

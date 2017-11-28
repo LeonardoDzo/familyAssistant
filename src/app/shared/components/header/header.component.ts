@@ -16,7 +16,7 @@ declare var $ :any;
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit,AfterViewInit {
-    user: any
+    user: any = new User();
     pushRightClass: string = 'push-right';
     bosses: Boss[];
     selectedBoss: Boss = new Boss();

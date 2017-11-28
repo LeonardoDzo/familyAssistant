@@ -56,7 +56,7 @@ export class FilesService {
     return "assets/images/files/_blank.png"
   }
 
-  getFiles(): Observable<File[]> {
+  getFiles() {
     var uid = this.assistant.selectedBoss;
     return this.afd.list('safebox/' + uid).valueChanges();
   }

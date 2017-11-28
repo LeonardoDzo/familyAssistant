@@ -20,10 +20,9 @@ export class UserService {
     });
   }
 
-  getContacts(): Observable<Contacto[]> {
+  getContacts() {
     var uid = this.assistant.selectedBoss;
-    this.contacts = this.afd.list('/contacts/' + uid).valueChanges()
-    return this.contacts;
+    return this.afd.list('/contacts/' + uid).valueChanges()
   }
 
   removeContact(contact: Contacto,toastr: ToastsManager) {

@@ -16,26 +16,26 @@
             <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']">
                 <i class="icon-home"></i>Inicio</a>
         </li>
-        <li>
+        <li *ngIf="user.selectedBoss">
             <a [routerLink]="['/contacts']" [routerLinkActive]="['router-link-active']">
                 <i class="fa fa-address-book-o"></i>Contactos </a>
         </li>
-        <li>
+        <li *ngIf="user.selectedBoss">
             <a [routerLink]="['/safebox']" [routerLinkActive]="['router-link-active']">
                 <i class="fa fa-lock"></i> Safebox</a>
         </li>
-        <li>
+        <li *ngIf="user.selectedBoss">
             <a [routerLink]="['/todo']" [routerLinkActive]="['router-link-active']">
                 <i class="fa fa-calendar"></i>Eventos</a>
         </li>
     </ul>
-    <span class="heading">Botiquín</span>
+    <span *ngIf="user.selectedBoss" class="heading">Botiquín</span>
     <ul>
-        <li>
+        <li *ngIf="user.selectedBoss">
             <a [routerLink]="['/illnesses']" [routerLinkActive]="['router-link-active']">
                 <i class="fa fa-heartbeat"></i>Enfermedades</a>
         </li>
-        <li>
+        <li *ngIf="user.selectedBoss">
             <a [routerLink]="['/medicine']" [routerLinkActive]="['router-link-active']">
                 <i class="fa fa-medkit"></i>Medicamentos</a>
         </li>

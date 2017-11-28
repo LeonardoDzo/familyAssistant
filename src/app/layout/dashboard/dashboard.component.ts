@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
     pending: Pending = new Pending();
     public modalRef: BsModalRef;
     sub: Subscription;
-
+    types = ['evento','objetivo','galeria','caja fuerte','contactos','botiquin','inmuebles','salud','seguros','presupuesto','lista de tareas','fax']
     constructor(
         private userService: UserService,
         private modalService: BsModalService
@@ -36,6 +36,10 @@ export class DashboardComponent implements OnInit {
     getLabel(pending: Pending) {
         return (pending.priority == 0) ? 'green-label' : (pending.priority == 1) ?
             'yellow-label' : 'red-label';
+    }
+
+    getType(type: number) {
+        return this.types[type];
     }
 
     ngOnInit() {

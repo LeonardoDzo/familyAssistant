@@ -3,4 +3,5 @@ export class Pending {
     name: string;
     priority: number;
     done: boolean;
+    type: number;
 }

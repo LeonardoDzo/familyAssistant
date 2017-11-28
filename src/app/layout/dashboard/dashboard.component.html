@@ -1,8 +1,8 @@
 <div [@routerTransition]>
     <section class="dashboard-solicitude">
         <div class="row">
-            <div class="col-sm-6">
-                <div class="articles card">
+            <div class="col-xl-6">
+                <div class="articles card dashboard-card">
                     <div class="card-header d-flex align-items-center">
                         Solicitudes.
                     </div>
@@ -14,14 +14,17 @@
                 </div>
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-xl-6">
                 <div class="checklist card dashboard-card">
                     <div class="card-header d-flex align-items-center">
                         Pendientes.
                     </div>
                     <div class="card-body no-padding card-body-height">
-                        <div *ngFor="let pending of pendings" (click)="openModal(pendingTemplate,pending)" class="item d-flex {{getLabel(pending)}}">
+                        <div *ngFor="let pending of pendings" (click)="openModal(pendingTemplate,pending)" class="item d-flex {{getLabel(pending)}} justify-content-between">
                             <label>{{pending.name}}</label>
+                            <div class="badge badge-primary">
+                                {{getType(pending.type)}}
+                            </div>
                         </div>
                     </div>
                 </div>
