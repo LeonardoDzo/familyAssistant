@@ -7,7 +7,9 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthService {
-  constructor(public router: Router,private afa: AngularFireAuth,private afd: AngularFireDatabase) { }
+  constructor(public router: Router,private afa: AngularFireAuth,private afd: AngularFireDatabase) { 
+
+  }
 
   signup(email: string, password: string,name: string,toastr: ToastsManager,callback: (err: Error) => string) {
     this.afa
@@ -17,12 +19,10 @@ export class AuthService {
        this.afd.database.ref('assistants/' + user.uid).set({
           name: name,
           email: email,
-          password: password,
-          bosses: {},
           rfc: '',
           curp: '',
-          tipoSangre: '',
-          telefono: '',
+          bloodtype: '',
+          phone: '',
           nss: ''
         });
         this.router.navigate(['/dashboard']);
@@ -50,9 +50,5 @@ export class AuthService {
     this.afa
       .auth
       .signOut()
-      .then(() => {
-        localStorage.clear();
-      })
-      .catch();
   }
 }

@@ -3,4 +3,5 @@ export class Boss {
     solicitudeKey: string;
     name: string;
     url: string;
+    families: any;
 }

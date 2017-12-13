@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Subscription';
 import { Boss } from './../../models/boss';
 import { UserService } from 'app/shared/services/user.service';
 import { User } from 'app/shared/models/user';
@@ -20,7 +21,8 @@ export class HeaderComponent implements OnInit,AfterViewInit {
     pushRightClass: string = 'push-right';
     bosses: Boss[];
     selectedBoss: Boss = new Boss();
-
+    bossesSub: Subscription
+    userSub: Subscription
     constructor(
         private translate: TranslateService, 
         public router: Router,
@@ -36,13 +38,12 @@ export class HeaderComponent implements OnInit,AfterViewInit {
     }
 
     ngOnInit() {
-        this.us.getUser().then((user: User) => {
+        this.userSub = this.us.getUserObservable().subscribe((user: User) => {
             this.user = user;
         });
-
-        this.us.getBosses().subscribe((bossesIds) => {
+        this.bossesSub = this.us.getBosses().subscribe((bossesIds) => {
             this.bosses = [];
-            let promisses = []
+            let promisses = [];
             bossesIds.forEach((elem) => {
                 let userKey = elem.payload.toJSON().toString();
                 promisses.push(this.us.getBoss(userKey).then((bossJson) => {
@@ -51,26 +52,26 @@ export class HeaderComponent implements OnInit,AfterViewInit {
                     this.bosses.push(boss)
                 }));
             });
-
+            
             Promise.all(promisses).then(() => {
-                this.us.getSelectedBoss().subscribe((bossKey: string) => {
-                    if(!bossKey && this.bosses.length > 0) {
-                        this.us.setSelectedBoss(this.bosses[0].userKey);
-                        bossKey = this.bosses[0].userKey;
-                        this.us.getBoss(bossKey).then((bossJson) => {
-                            var boss = Object.assign(new Boss(),bossJson.val());
-                            this.selectedBoss = boss;
-                        });
-                    } else {
-                        this.us.getBoss(bossKey).then((bossJson) => {
-                            var boss = Object.assign(new Boss(),bossJson.val());
-                            this.selectedBoss = boss;
-                        });
-                    }
-                });
+                if(this.user.selectedBoss) {
+                    this.selectedBoss = this.bosses.find(b => {
+                        if(this.user.selectedBoss == b.userKey){
+                            return true
+                        }
+                        return false
+                    })
+                } else if(this.bosses.length > 0){
+                    this.selectedBoss = this.bosses[0];
+                    this.us.setSelectedBoss(this.bosses[0].userKey);
+                }
             });
-
         });
+    }
+
+    ngOnDestroy(){ 
+        this.bossesSub.unsubscribe;        
+        this.userSub.unsubscribe();
     }
 
     ngAfterViewInit() { 
@@ -108,5 +109,11 @@ export class HeaderComponent implements OnInit,AfterViewInit {
 
     changeSelectedBoss(boss: Boss) {
         this.us.setSelectedBoss(boss.userKey)
+        this.selectedBoss = this.bosses.find(b => {
+            if(boss.userKey == b.userKey){
+                return true
+            }
+            return false
+        });
     }
 }

@@ -7,7 +7,6 @@ import { AngularFireDatabase, DatabaseSnapshot, AngularFireList } from 'angularf
 import { Injectable } from '@angular/core';
 import { User } from 'app/shared/models/user';
 import { FirebaseApp } from 'angularfire2';
-import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class UserService {
@@ -36,11 +35,12 @@ export class UserService {
   addContact(contacto: Contacto,toastr: ToastsManager) {
     var uid = this.assistant.selectedBoss;
     let key = this.afd.database.ref('contacts/' + this.assistant.selectedBoss).push({
-      nombre: contacto.nombre,
-      telefono: contacto.telefono,
-      ocupacion: contacto.ocupacion,
-      direccion: contacto.direccion,
-      url: contacto.url
+      name: contacto.name,
+      phone: contacto.phone,
+      job: contacto.address,
+      address: contacto.address,
+      webpage: contacto.webpage,
+      email: contacto.email
     });
   }
 
@@ -52,12 +52,16 @@ export class UserService {
     });
   }
 
+  getFamily(key: string) {
+    return this.afd.database.ref(`families/${key}`).once('value')
+  }
+
   getUserObservable(): Observable<any> {
     var uid = this.afa.auth.currentUser.uid
     return this.afd.object(`/assistants/${uid}`).valueChanges()
   }
 
-  getBoss(uid: string) {
+  getBoss(uid: string)  {
     return this.afd.database.ref(`users/${uid}`).once('value');
   }
 
@@ -86,6 +90,13 @@ export class UserService {
     let uid = this.afa.auth.currentUser.uid;
     this.afd.database.ref(`assistants/${uid}`).update({
       selectedBoss: key
+    });
+  }
+
+  setFamilyActive(key: string) {
+    let uid = this.afa.auth.currentUser.uid;
+    this.afd.database.ref(`assistants/${uid}`).update({
+      familyActive: key
     });
   }
 
@@ -118,10 +129,10 @@ export class UserService {
   private upload(file: File,toastr: ToastsManager,uid:string) {
     var ref = this.app.storage().ref()
     var ext = this.getExt(file.name)
-    var imageRef = ref.child('images/' + uid + "." + ext)
+    var imageRef = ref.child(`assistants/${uid}/` + uid + "." + ext)
     imageRef.put(file).then((snapshot) => {
       this.afd.database.ref(`/assistants/${uid}`).update({
-        url: snapshot.downloadURL
+        photoURL: snapshot.downloadURL
       });
       toastr.success("La imagen fue actualizada correctamente.","Confirmación:")
     }).catch((err) => {
@@ -137,8 +148,8 @@ export class UserService {
     this.afd.database.ref(`/assistants/${uid}`).update({
       rfc: user.rfc,
       curp: user.curp,
-      tipoSangre: user.tipoSangre,
-      telefono: user.telefono,
+      bloodtype: user.bloodtype,
+      phone: user.phone,
       nss: user.nss
     }).then(() => {
       toastr.success("Se guardaron los datos correctamente.","Confirmación:")

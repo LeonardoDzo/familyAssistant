@@ -1,7 +1,7 @@
 <div class="item d-flex align-items-center justify-content-between">
   <div class="row d-flex align-items-center">
     <div class="image">
-      <img src="{{(!boss.url) ? 'assets/images/user.png' : boss.url}}" alt="...">
+      <img [src]="(!boss.photoURL) ? 'assets/images/user.png' : boss.photoURL" alt="...">
     </div>
     <div class="text">
       <h3 class="h5">{{boss.name}}</h3>

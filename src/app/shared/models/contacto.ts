@@ -1,12 +1,13 @@
 export class Contacto {
     key: string;
-    nombre: string;
-    telefono: string;
-    ocupacion: string;
-    direccion: string = '';
-    url: string = '';
+    name: string;
+    phone: string;
+    job: string;
+    email: string = '';
+    address: string = '';
+    webpage: string = '';
 
     getName(): string {
-        return this.nombre.slice(0,this.nombre.length);
+        return this.name.slice(0,this.name.length);
     }
 }

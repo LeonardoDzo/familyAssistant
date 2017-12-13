@@ -1,7 +1,7 @@
+import { CrudService } from './../../shared/services/crud.service';
 import { User } from 'app/shared/models/user';
 import { RegexService } from './../../shared/services/regex.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { UserService } from './../../shared/services/user.service';
 import { Contacto } from './../../shared/models/contacto';
 import { Component, OnInit, TemplateRef, ViewContainerRef, ViewChild } from '@angular/core';
 import { routerTransition } from '../../router.animations';
@@ -28,26 +28,36 @@ export class ContactosComponent implements OnInit {
   public totalItems = 0;
   public itemsPerPage = 10;
   public sub: Subscription;
-
+  folderName: string
+  
   constructor(
     public toastr: ToastsManager,
     vcr: ViewContainerRef,
     private modalService: BsModalService,
-    private userService: UserService,
     private regexService: RegexService,
+    private crudService: CrudService
   ) {
     this.toastr.setRootViewContainerRef(vcr);
+    this.crudService.setTable("contacts")
   }
 
   private init() {
     if(this.sub){
       this.sub.unsubscribe();
     }
-    this.sub = this.userService.getContacts().subscribe((contacts: Contacto[]) => {
+    this.sub = this.crudService.getObjects().subscribe((snapshots) => {
+      let contacts: Contacto[] = []
+
+      snapshots.forEach(elem => {
+        let contact = Object.assign(new Contacto(), elem.payload.toJSON())
+        contact.key = elem.key;
+        contacts.push(contact)
+      })
+
       contacts.sort((a,b) => {
-        if(a.nombre.toLowerCase() < b.nombre.toLowerCase()){
+        if(a.name.toLowerCase() < b.name.toLowerCase()){
           return -1;
-        } else if(a.nombre.toLowerCase() > b.nombre.toLowerCase()) {
+        } else if(a.name.toLowerCase() > b.name.toLowerCase()) {
           return 1;
         }
         return 0;
@@ -60,14 +70,14 @@ export class ContactosComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getUserObservable().subscribe((user: User) => {
+    this.crudService.getUser().subscribe((user: User) => {
       this.init();
     });
   }
 
   search($event) {
     this.contacts = this.realContacts.filter( item => {
-      return item.nombre.toLowerCase().toString().search($event.toLocaleLowerCase().toString()) != -1;
+      return item.name.toLowerCase().toString().search($event.toLocaleLowerCase().toString()) != -1;
     });
     this.currentPage = 1;
     this.totalItems = this.contacts.length;
@@ -75,24 +85,27 @@ export class ContactosComponent implements OnInit {
   }
 
   public removeContact() {
-    this.userService.removeContact(this.contacto,this.toastr);
+    this.crudService.removeObject(this.contacto);
     this.currentPage = 1;
     this.contacts = this.realContacts.slice(this.itemsPerPage*(this.currentPage - 1),this.itemsPerPage*this.currentPage);    
     this.modalRef.hide();
   }
 
   public openModal(template: TemplateRef<any>,contact: Contacto = new Contacto()) {
+    if(this.modalRef){
+      this.modalRef.hide();
+    }
     this.contacto = Object.assign(new Contacto(), contact);
     this.modalRef = this.modalService.show(template);
   }
 
   public addContact() {
-    this.userService.addContact(this.contacto,this.toastr);
+    this.crudService.addObject(this.contacto);
     this.errorMessage = [];
   }
 
   public updateContact() {
-    this.userService.updateContact(this.contacto,this.toastr);
+    this.crudService.editObject(this.contacto);
     this.errorMessage = [];
   }
   
@@ -105,6 +118,10 @@ export class ContactosComponent implements OnInit {
         this.updateContact();
       this.modalRef.hide();
     }
+  }
+
+  createFolder() {
+
   }
 
   public pageChanged($event: any) {

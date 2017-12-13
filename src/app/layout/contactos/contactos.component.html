@@ -8,7 +8,11 @@
 
           <div class="card-header d-flex align-items-center justify-content-between">
             <h3 class="h4">
-              <i class="fa fa-group"></i> Contactos</h3>
+              <i class="fa fa-group"></i> Contactos &nbsp;&nbsp;
+              <button class="btn btn-success" (click)="openModal(template)">
+                <i class="fa fa-plus"></i> Nuevo
+              </button>
+            </h3>
             <div class="search-bar">
               <form role="form" class="form-inline" #searchForm="ngForm">
                 <input (ngModelChange)="search($event)" class="form-control" type="text" placeholder="Buscar" name="searchString" [(ngModel)]="searchString">
@@ -28,28 +32,15 @@
                       <th>Nombre</th>
                       <th>Teléfono</th>
                       <th>Ocupación</th>
-                      <th>
-                        <a class="btn btn-success" (click)="openModal(template)">
-                          <i class="fa fa-plus fa-inverse"></i>
-                        </a>
-                      </th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let contact of contacts">
+                    <tr *ngFor="let contact of contacts" (click)="openModal(userTemplate,contact)" class="list-item">
                       <td>
-                        <a href="/contacts#" (click)="openModal(userTemplate,contact)">{{ contact.nombre }}</a>
+                        {{ contact.name }}
                       </td>
-                      <td>{{ contact.telefono }}</td>
-                      <td>{{ contact.ocupacion }}</td>
-                      <td>
-                        <a (click)="openModal(template,contact)" class="btn btn-primary">
-                          <i class="fa fa-pencil fa-inverse"></i>
-                        </a>
-                        <a class="btn btn-danger" (click)="openModal(confirmTemplate,contact)">
-                          <i class="fa fa-trash-o fa-inverse"></i>
-                        </a>
-                      </td>
+                      <td>{{ contact.phone }}</td>
+                      <td>{{ contact.job }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -70,8 +61,7 @@
             <div class="row">
               <div class="col"></div>
               <div class="col align-self-center">
-                <pagination [itemsPerPage]="itemsPerPage" [totalItems]="totalItems" 
-                  (pageChanged)="pageChanged($event)" previousText="&lsaquo;" 
+                <pagination [itemsPerPage]="itemsPerPage" [totalItems]="totalItems" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
                   nextText="&rsaquo;" [(ngModel)]="currentPage"></pagination>
               </div>
               <div class="col"></div>
@@ -99,27 +89,32 @@
       <form role="form" #addContactForm="ngForm">
         <fieldset class="form-group">
           <label>Nombre:</label>
-          <input class="form-control" name="nombre" [(ngModel)]="contacto.nombre">
+          <input class="form-control" name="nombre" [(ngModel)]="contacto.name">
         </fieldset>
 
         <fieldset class="form-group">
           <label>Teléfono:</label>
-          <input class="form-control" name="telefono" [(ngModel)]="contacto.telefono">
+          <input class="form-control" name="telefono" [(ngModel)]="contacto.phone">
         </fieldset>
 
         <fieldset class="form-group">
           <label>Ocupación:</label>
-          <input class="form-control" name="ocupacion" [(ngModel)]="contacto.ocupacion">
+          <input class="form-control" name="ocupacion" [(ngModel)]="contacto.job">
+        </fieldset>
+
+        <fieldset class="form-group">
+          <label>Correo:</label>
+          <input class="form-control" name="email" [(ngModel)]="contacto.email">
         </fieldset>
 
         <fieldset class="form-group">
           <label>Dirección:</label>
-          <input class="form-control" name="direccion" [(ngModel)]="contacto.direccion">
+          <input class="form-control" name="direccion" [(ngModel)]="contacto.address">
         </fieldset>
 
         <fieldset class="form-group">
-          <label>URL:</label>
-          <input class="form-control" name="url" [(ngModel)]="contacto.url">
+          <label>Pagina web:</label>
+          <input class="form-control" name="url" [(ngModel)]="contacto.webpage">
         </fieldset>
       </form>
     </div>
@@ -133,7 +128,41 @@
     <div class="modal-body">
       <div class="row justify-content-center">
         <div class="col-xl-6">
-          <app-contacto [contacto]="contacto"></app-contacto>
+          <div class="card contact hovercard">
+            <div class="cardheader">
+              <div class="btn-group pull-right" placement="bottom left" dropdown>
+                <a href="javascript:void(0)" dropdownToggle class="dropdown-toggle">
+                  <i class="fa fa-ellipsis-v"></i>
+                </a>
+                <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
+                  <li role="menuitem">
+                    <a (click)="openModal(template,contacto)" class="dropdown-item" href="javascript:void(0)">Editar</a>
+                  </li>
+                  <li role="menuitem">
+                    <a (click)="openModal(confirmTemplate,contacto)" class="dropdown-item" href="javascript:void(0)">Eliminar</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="avatar">
+              <img alt="" src="../../assets/images/user.png">
+            </div>
+            <div class="info">
+              <div class="title">
+                <p target="_blank">{{ contacto.name }}</p>
+              </div>
+              <div class="desc">
+                <b>Telefono:</b> {{ contacto.phone }}</div>
+              <div class="desc">
+                <b>Ocupación:</b> {{ contacto.job }}</div>
+              <div class="desc">
+                <b>Correo:</b> {{ contacto.email }}</div>
+              <div class="desc">
+                <b>Dirección:</b> {{ contacto.address }}</div>
+              <div class="desc">
+                <b>Pagina web:</b> {{ contacto.webpage }}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -143,10 +172,10 @@
   <ng-template #confirmTemplate>
     <div class="modal-header">
       <p>
-        <i class="fa fa-exclamation"></i>Alerta</p>
+        <i class="fa fa-exclamation"></i> Alerta</p>
     </div>
     <div class="modal-body">
-      ¿Está seguro que desea eliminar al contacto {{ contacto.nombre }}?
+      ¿Está seguro que desea eliminar al contacto {{ contacto.name }}?
     </div>
     <div class="modal-footer">
       <button class="btn btn-danger" (click)="removeContact()">Si</button>

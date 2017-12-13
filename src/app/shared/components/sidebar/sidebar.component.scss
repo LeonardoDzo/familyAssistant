@@ -7,6 +7,14 @@
     border-radius: 50%;
 }
 
+.dropdown-toggle::after {
+    display:none
+}
+
 .h4 {
-    cursor: pointer;
+	cursor: pointer;
+}
+
+.family {
+	cursor: pointer;
 }

@@ -14,7 +14,9 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import {ToastOptions} from 'ng2-toastr';
-import { BsDropdownModule } from 'ngx-bootstrap';
+import {BsDropdownModule} from 'ngx-bootstrap';
+import {HttpClientModule} from '@angular/common/http';
+
 import 'firebase/storage';
 import 'firebase/database';
 
@@ -30,12 +32,12 @@ export class CustomOption extends ToastOptions {
   }
 
 export const firebase = {
-    apiKey: "AIzaSyBLaihGHRC-MTKOs8prjsumm6kIC4njYsg",
-    authDomain: "proyecto-prueba-c4943.firebaseapp.com",
-    databaseURL: "https://proyecto-prueba-c4943.firebaseio.com",
-    projectId: "proyecto-prueba-c4943",
-    storageBucket: "proyecto-prueba-c4943.appspot.com",
-    messagingSenderId: "661241647332"
+    apiKey: "AIzaSyBEXLwmv3x2QR8cpnXXf2w55C30397dH1A",
+    authDomain: "familyoffice-63b4b.firebaseapp.com",
+    databaseURL: "https://familyoffice-63b4b.firebaseio.com",
+    projectId: "familyoffice-63b4b",
+    storageBucket: "familyoffice-63b4b.appspot.com",
+    messagingSenderId: "659477423500"
 }
 
 @NgModule({
@@ -54,6 +56,7 @@ export const firebase = {
         AppRoutingModule,
         BsDropdownModule.forRoot(),
         ToastModule.forRoot(),
+        HttpClientModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

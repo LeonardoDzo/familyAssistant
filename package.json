@@ -30,13 +30,17 @@
     "@types/firebase": "^2.4.32",
     "angular2-uuid": "^1.1.1",
     "angularfire2": "^5.0.0-rc.3",
+    "blueimp-canvas-to-blob": "^3.14.0",
     "core-js": "^2.5.1",
     "firebase": "^4.6.2",
     "font-awesome": "^4.7.0",
     "ng2-charts": "^1.6.0",
+    "ng2-image-compress": "^1.0.17",
+    "ng2-img-tools": "^1.0.4",
     "ng2-toastr": "^4.1.2",
     "ngx-bootstrap": "^1.9.3",
     "rxjs": "^5.5.2",
+    "underscore": "^1.8.3",
     "zone.js": "^0.8.18"
   },
   "devDependencies": {

@@ -1,3 +1,4 @@
+import { Http } from '@angular/http';
 import { Subscription } from 'rxjs/Subscription';
 import { User } from './../../shared/models/user';
 import { Pending } from './../../shared/models/pending';
@@ -7,6 +8,8 @@ import { routerTransition } from '../../router.animations';
 import { UserService } from 'app/shared/services/user.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import { HttpClient } from 'selenium-webdriver/http';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
     selector: 'app-dashboard',
@@ -19,11 +22,16 @@ export class DashboardComponent implements OnInit {
     pendings: Pending[];
     pending: Pending = new Pending();
     public modalRef: BsModalRef;
-    sub: Subscription;
+    pendingsSub: Subscription;
+    solicitudesSub: Subscription;
     types = ['evento','objetivo','galeria','caja fuerte','contactos','botiquin','inmuebles','salud','seguros','presupuesto','lista de tareas','fax']
+    sub: Subscription;
+    private ngUnsubscribe: Subject<void> = new Subject<void>();
+
     constructor(
         private userService: UserService,
-        private modalService: BsModalService
+        private modalService: BsModalService,
+        private http: Http
     ) {
         
     }
@@ -42,28 +50,43 @@ export class DashboardComponent implements OnInit {
         return this.types[type];
     }
 
+    ngOnDestroy(){
+        this.pendingsSub.unsubscribe();
+        this.solicitudesSub.unsubscribe();
+        this.sub.unsubscribe();
+    }
+
     ngOnInit() {
-        this.userService.getSolicitudes().subscribe((bossesIds) => {
-            this.bosses = [];
-            bossesIds.forEach((elem) => {
-                let userKey = elem.payload.toJSON().toString();
-                let solicitudeKey = elem.key;
-                this.userService.getBoss(userKey).then((bossJson) => {
-                    var boss = Object.assign(new Boss(),bossJson.val())
-                    boss.userKey = userKey;
-                    boss.solicitudeKey = solicitudeKey;
-                    this.bosses.push(boss)
-                });
+
+        this.sub = this.userService.getUserObservable().subscribe((user: User)=> {
+            
+            if(this.solicitudesSub){
+                this.solicitudesSub.unsubscribe();
+            }
+            this.userService.getSolicitudes().subscribe((bossesIds) => {
+                this.bosses = [];
+                bossesIds.forEach((elem) => {
+                    let userKey = elem.payload.toJSON().toString();
+                    let solicitudeKey = elem.key;
+                    this.userService.getBoss(userKey).then((bossJson) => {
+                        var boss = Object.assign(new Boss(),bossJson.val())
+                        boss.userKey = userKey;
+                        boss.solicitudeKey = solicitudeKey;
+                        this.bosses.push(boss)
+                    });
+                })
             })
-        })
-        this.userService.getUserObservable().subscribe((user: User)=> {
-            if(this.sub){
-                this.sub.unsubscribe();
+            if(this.pendingsSub){
+                this.pendingsSub.unsubscribe();
             }
             if(user.selectedBoss)
-                this.sub = this.userService.getPendings(user.selectedBoss).subscribe((pendings: Pending[]) => {
+                this.pendingsSub = this.userService.getPendings(user.selectedBoss)
+                .subscribe((pendings: Pending[]) => {
                     this.pendings = pendings;
                 });
+        },
+        (error) => {
+            console.log(error)
         })
     }
 }

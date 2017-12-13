@@ -29,12 +29,11 @@
                         </a>
                     </li>
 
-                    <li *ngIf="user.selectedBoss" class="nav-item dropdown" ngbDropdown>
-                        <a id="bosses" rel="nofollow" data-target="#" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false" class="nav-link bosses" ngbDropdownToggle>
-                            <i class="fa fa-user"></i> {{selectedBoss.name}}
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" class="nav-link" [routerLink]="['/edit']">
+                            <i class="fa fa-user"></i> {{user.name}}
                         </a>
-                        <ul aria-labelledby="bosses" class="dropdown-menu">
+                        <!--<ul aria-labelledby="bosses" class="dropdown-menu">
                             <li *ngFor="let boss of bosses">
                                 <a (click)="changeSelectedBoss(boss)" rel="nofollow" href="javascript:void(0)" class="dropdown-item">
                                     <div class="notification">
@@ -44,14 +43,14 @@
                                     </div>
                                 </a>
                             </li>
-                        </ul>
+                        </ul>-->
                     </li>
 
-                    <li class="nav-item">
+                    <!--<li class="nav-item">
                         <a [routerLink]="['/edit']" class="nav-link">
                             <i class="fa fa-gear"></i>
                         </a>
-                    </li>
+                    </li>-->
 
                     <li class="nav-item">
                         <a [routerLink]="['/login']" (click)="logout()" class="nav-link logout">Logout

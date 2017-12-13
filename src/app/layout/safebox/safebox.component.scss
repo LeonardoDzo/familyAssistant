@@ -3,6 +3,10 @@
     overflow: hidden;
 }
 
+.btn-folder {
+    color: white;
+}
+
 .card {
     max-width: 100%;
     margin: 10px 0 20px 0;
@@ -15,6 +19,7 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     word-break: break-word;
+    word-break: break-all;
 }
 
 .card.hovercard {
@@ -38,6 +43,10 @@
     display: block;
 }
 
+.btn-file input[type=file]:hover {
+    background-color: #737373;
+}
+
 .image {
     align-self: center;
     max-height: 100px;
@@ -59,6 +68,18 @@
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
 }
 
+.file-link {
+    text-decoration: none;
+    color: #737373;
+    height: 100%;
+}
+
+.link-nav {
+    color: #686a76;
+    font-size: 14px;
+    cursor: pointer;
+}
+
 .card.hovercard .info {
     padding: 4px 8px 10px;
     max-height: 60px;
@@ -78,3 +99,11 @@
     font-size: 10px;
     color: #737373;
 }
+
+.breadcrumb {
+    padding-left: 30px;
+}
+
+.breadcrumb-item a {
+    text-decoration: none;
+} 

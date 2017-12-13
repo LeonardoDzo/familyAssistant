@@ -1,5 +1,5 @@
+import { CrudService } from './../../shared/services/crud.service';
 import { Subscription } from 'rxjs/Subscription';
-import { MedicineService } from './../../shared/services/medicine.service';
 import { RegexService } from './../../shared/services/regex.service';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { routerTransition } from 'app/router.animations';
@@ -26,15 +26,18 @@ export class MedicineComponent implements OnInit {
   sub: Subscription;
 
   constructor(
-    private medicineService: MedicineService,
     private modalService: BsModalService,
-    private regexService: RegexService
-  ) { }
+    private regexService: RegexService,
+    private crudService: CrudService
+  ) { 
+    this.crudService.setTable("medicines")
+  }
+
   private init() {
     if(this.sub) {
       this.sub.unsubscribe();
     }
-    this.sub = this.medicineService.getMedicines().subscribe((snapshots) => {
+    this.sub = this.crudService.getObjects().subscribe((snapshots) => {
       let medicines: Medicine[] = []
       snapshots.forEach((elem) => {
         let medicine = Object.assign(new Medicine(), elem.payload.toJSON())
@@ -58,7 +61,7 @@ export class MedicineComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.medicineService.getUser().subscribe(()=> {
+    this.crudService.getUser().subscribe(()=> {
       this.init();
     });
   }
@@ -74,6 +77,9 @@ export class MedicineComponent implements OnInit {
   }
 
   public openModal(template: TemplateRef<any>,medicine: Medicine = new Medicine()) {
+    if(this.modalRef) {
+      this.modalRef.hide();
+    }
     this.medicine = Object.assign(new Medicine(), medicine);
     this.modalRef = this.modalService.show(template);
     this.errorMessage = [];
@@ -83,15 +89,15 @@ export class MedicineComponent implements OnInit {
     this.errorMessage = this.regexService.medicineValidation(this.medicine)
     if(this.errorMessage.length < 1){
       if(!this.medicine.key)
-        this.medicineService.addMedicine(this.medicine);
+        this.crudService.addObject(this.medicine);
       else
-        this.medicineService.editMedicine(this.medicine)
+        this.crudService.editObject(this.medicine)
       this.modalRef.hide();
     }
   }
 
   removeMedicine() {
-    this.medicineService.removeMedicine(this.medicine)
+    this.crudService.removeObject(this.medicine)
     this.modalRef.hide();
   }
 

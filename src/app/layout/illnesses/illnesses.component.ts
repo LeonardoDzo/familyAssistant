@@ -1,6 +1,6 @@
+import { CrudService } from './../../shared/services/crud.service';
 import { Subscription } from 'rxjs/Subscription';
 import { RegexService } from './../../shared/services/regex.service';
-import { IllnessService } from './../../shared/services/illness.service';
 import { Illness } from './../../shared/models/illness';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { routerTransition } from '../../router.animations';
@@ -27,14 +27,17 @@ export class IllnessesComponent implements OnInit {
 
   constructor(
     private modalService: BsModalService,
-    private illnessService: IllnessService,
-    private regexService: RegexService
-  ) { }
+    private regexService: RegexService,
+    private crudService: CrudService
+  ) { 
+    this.crudService.setTable("illnesses")
+  }
+
   private init() {
     if(this.sub) {
       this.sub.unsubscribe();
     }
-    this.sub = this.illnessService.getIllnesses().subscribe((snapshots) => {
+    this.sub = this.crudService.getObjects().subscribe((snapshots) => {
       //Se obtiene el arreglo de enfermedades.
       let illnesses: Illness[] = []
       snapshots.forEach((elem) => {
@@ -60,12 +63,15 @@ export class IllnessesComponent implements OnInit {
     })
   }
   ngOnInit() {
-    this.illnessService.getUser().subscribe(() => {
+    this.crudService.getUser().subscribe(() => {
       this.init();
     })
   }
 
   public openModal(template: TemplateRef<any>,illness: Illness = new Illness()) {
+    if(this.modalRef){
+      this.modalRef.hide()
+    }
     this.illness = Object.assign(new Illness(), illness);
     this.modalRef = this.modalService.show(template);
     this.errorMessage = [];
@@ -85,16 +91,16 @@ export class IllnessesComponent implements OnInit {
     this.errorMessage = this.regexService.illnessValidation(this.illness)
     if(this.errorMessage.length < 1){
       if(!this.illness.key)
-        this.illnessService.addIllness(this.illness)
+        this.crudService.addObject(this.illness)
       else
-        this.illnessService.editIllness(this.illness)
+        this.crudService.editObject(this.illness)
       this.modalRef.hide()
       this.errorMessage = [];
     }
   }
 
   public removeIllness() {
-    this.illnessService.removeIllness(this.illness)
+    this.crudService.removeObject(this.illness)
     this.modalRef.hide()
   }
 

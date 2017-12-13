@@ -3,34 +3,93 @@
     <div class="container-fluid">
       <h2 class="no-margin-bottom">
         <i class="fa fa-lock"></i> Caja Fuerte &nbsp; &nbsp;
-        <span class="btn btn-success btn-file {{ upload.isUploading? 'disabled' : '' }}">
-          <i class="fa fa-upload"></i> Subir
-          <input name="file" (change)="uploadFile($event)" type="file" id="fileInput">
-        </span>
-        <span *ngIf="upload.isUploading" class="btn-file">
-          &nbsp;
-          <i class="fa fa-spinner fa-pulse"></i> Subiendo el archivo {{ upload.progress }}%
-        </span>
+        <div class="btn-group" dropdown>
+          <button type="button" class="btn btn-outline-danger dropdown-toggle" dropdownToggle>
+            Agregar
+          </button>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem">
+              <span class="btn-file">
+                <a class="dropdown-item" href="javascript:void(0)">Nuevo archivo
+                  <input name="file" (change)="uploadFile($event)" type="file" id="fileInput">
+                </a>
+              </span>
+            </li>
+
+            <li class="divider dropdown-divider"></li>
+
+            <li role="menuitem">
+              <a (click)="openModal(createfolder)" class="dropdown-item" href="javascript:void(0)">Nueva carpeta</a>
+            </li>
+          </ul>
+        </div>
         <span class="search-bar pull-right">
-            <form role="form" class="form-inline">
-              <input (ngModelChange)="search($event)" class="form-control" type="text" placeholder="Buscar" name="searchString" [(ngModel)]="searchString">
-            </form>
-          </span>
+          <form role="form" class="form-inline">
+            <input (ngModelChange)="search($event)" class="form-control" type="text" placeholder="Buscar" name="searchString" [(ngModel)]="searchString">
+          </form>
+        </span> &nbsp;&nbsp;
+        <!--<span *ngFor="let route of navigation">
+          <div (click)="changeParent(route)" class="link-nav">{{route}}/</div>
+        </span>-->
+        <!--<span *ngIf="upload.isUploading" class="btn-file">
+            &nbsp;
+            <i class="fa fa-spinner fa-pulse"></i> Subiendo el archivo {{ upload.progress }}%
+          </span>-->
       </h2>
     </div>
   </header>
+  <ol class="breadcrumb">
+    <li *ngFor="let route of navigation" class="breadcrumb-item">
+      <a (click)="changeParent(route.id)" href="javascript:void(0)">
+        {{ route.filename }}
+      </a>
+    </li>
+  </ol>
   <section class="tables">
     <div class="container-fluid">
       <div class="row">
-        <div class="card hovercard file-div" *ngFor="let file of files">
-          <img class="image" src="{{ getImageLink(file) }}">
-            <div class="title">
-              <div class="desc">
-                <a href="{{ file.downloadUrl }}">{{ file.filename }}</a>
+        <div *ngFor="let file of files">
+          <div *ngIf="!fs.isFolder(file)">
+            <a class="file-link" href="{{ file.downloadUrl }}">
+              <div class="card hovercard file-div">
+                <img class="image" src="{{ getImageLink(file) }}">
+                <div class="title">
+                  <div class="desc">
+                    {{ file.filename }}
+                  </div>
+                </div>
               </div>
-            </div>
+            </a>
+          </div>
+          <div *ngIf="fs.isFolder(file)">
+            <a (click)="changeFolder(file)" class="file-link" href="javascript:void(0)">
+              <div class="card hovercard file-div">
+                <img class="image" src="assets/images/folder.png">
+                <div class="title">
+                  <div class="desc">
+                    {{ file.filename }}
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </section>
 </div>
+
+<ng-template #createfolder>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Nueva carpeta</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <input class="form-control" type="text" name="name" placeholder="Nombre de la carpeta" [(ngModel)]="folderName">
+  </div>
+  <div class="modal-footer">
+    <button (click)="createFolder()" class="btn btn-success">Crear</button>
+  </div>
+</ng-template>

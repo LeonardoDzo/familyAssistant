@@ -1,4 +1,4 @@
-import { Event } from './../models/event';
+import { Todo } from './../models/todo';
 import { Illness } from '../models/illness';
 import { Contacto } from '../models/contacto';
 import { Injectable } from '@angular/core';
@@ -13,14 +13,14 @@ export class RegexService {
 
   constructor() { }
 
-  todoValidation(event: Event) {
+  todoValidation(todo: Todo) {
     let errorMessages = [];
 
-    if(!event.date) {
+    if(!todo.date) {
       errorMessages.push("Debe seleccionar una fecha...")
     }
 
-    if(!event.name) {
+    if(!todo.name) {
       errorMessages.push("El pendiente debe tener un nombre...")
     }
 
@@ -62,19 +62,19 @@ export class RegexService {
   contactValidation(contacto: Contacto): string[] {
     var errorMessages: string[] = [];
 
-    if(!contacto.nombre) {
+    if(!contacto.name) {
       errorMessages.push('El campo nombre es obligatorio.');
-    } else if(!contacto.nombre.match(this.nameRegExp)) {
+    } else if(!contacto.name.match(this.nameRegExp)) {
       errorMessages.push('El campo nombre tiene formato incorrecto.');
     }
 
-    if(!contacto.telefono) {
+    if(!contacto.phone) {
       errorMessages.push('El campo teléfono es obligatorio.')
-    } else if(!contacto.telefono.match(this.phoneNumberRegExp)) {
+    } else if(!contacto.phone.match(this.phoneNumberRegExp)) {
       errorMessages.push('El campo teléfono tiene formato incorrecto.');
     }
 
-    if(!contacto.ocupacion) {
+    if(!contacto.job) {
       errorMessages.push('El campo ocupación es obligatorio.')
     }
 

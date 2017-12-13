@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs/Subscription';
 import { TodoService } from './../../shared/services/todo.service';
-import { Event } from './../../shared/models/event';
+import { Todo } from './../../shared/models/todo';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { routerTransition } from 'app/router.animations';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -17,8 +17,8 @@ export class TodoComponent implements OnInit {
   public modalRef: BsModalRef;
   bsValue: Date = new Date();
   bsConfig: Partial<BsDatepickerConfig>;
-  event: Event = new Event();
-  events: Event[];
+  todo: Todo = new Todo();
+  todos: Todo[];
   sub: Subscription;
   months = ["En", "Febr", "Mzo", 
             "Abr", "May", "Jun", 
@@ -30,20 +30,20 @@ export class TodoComponent implements OnInit {
   ) { }
 
   private init() {
-    this.todoService.getEvents().subscribe((snapshot) => {
-      let events: Event[] = [];
+    this.todoService.getTodos().subscribe((snapshot) => {
+      let todos: Todo[] = [];
       snapshot.forEach((elem) => {
-        let event = Object.assign(new Event(),elem.payload.toJSON());
-        event.date = new Date(event.dateTime);
-        event.key = elem.key
-        events.push(event);
+        let todo = Object.assign(new Todo(),elem.payload.toJSON());
+        todo.date = new Date(todo.dateTime);
+        todo.key = elem.key
+        todos.push(todo);
       });
 
-      events.sort((a,b) => {
+      todos.sort((a,b) => {
         return a.dateTime - b.dateTime;
       });
 
-      this.events = events;
+      this.todos = todos;
     });
   }
 
@@ -55,25 +55,25 @@ export class TodoComponent implements OnInit {
     })
   }
 
-  public openModal(template: TemplateRef<any>, event: Event = new Event()) {
-    this.event = Object.assign(new Event(),event);
+  public openModal(template: TemplateRef<any>, todo: Todo = new Todo()) {
+    this.todo = Object.assign(new Todo(),todo);
     this.modalRef = this.modalService.show(template);
   }
 
   fileChanged(files: any){
-    this.event.file = files[0];
+    this.todo.file = files[0];
   }
 
-  removeEvent() {
-    this.todoService.removeEvent(this.event);
+  removeTodo() {
+    this.todoService.removeTodo(this.todo);
     this.modalRef.hide();
   }
 
   submitModal() {
-    if(!this.event.key)
-      this.todoService.addEvent(this.event)
+    if(!this.todo.key)
+      this.todoService.addTodo(this.todo)
     else
-      this.todoService.updateEvent(this.event)
+      this.todoService.updateTodo(this.todo)
     this.modalRef.hide()
   }
 

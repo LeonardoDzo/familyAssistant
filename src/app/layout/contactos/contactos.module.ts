@@ -9,6 +9,8 @@ import { ContactosComponent } from './contactos.component';
 import { PageHeaderModule } from './../../shared';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { BsDropdownModule } from 'ngx-bootstrap';
+
 
 @NgModule({
   imports: [
@@ -18,7 +20,8 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     FormsModule,
     ContactoModule,
     TabsModule.forRoot(),
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    BsDropdownModule.forRoot()
   ],
   declarations: [
     ContactosComponent

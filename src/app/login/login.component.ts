@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit,AfterViewInit {
     
         $('input.input-material').on('blur', function () {
             $(this).siblings('.label-material').removeClass('active');
-    
+          
             if ($(this).val() !== '') {
                 $(this).siblings('.label-material').addClass('active');
             } else {

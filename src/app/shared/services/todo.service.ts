@@ -1,5 +1,5 @@
 import { User } from 'app/shared/models/user';
-import { Event } from './../models/event';
+import { Todo } from './../models/todo';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';
@@ -24,36 +24,36 @@ export class TodoService {
     return this.afd.object(`assistants/${uid}`).valueChanges();
   }
 
-  addEvent(event: Event) {
+  addTodo(todo: Todo) {
     let uid = this.assistant.selectedBoss;
     let key = this.afd.database.ref("todo/" + uid).push({
-      dateTime: event.date.getTime(),
-      name: event.name,
-      description: event.description,
-      active: (event.active) ? event.active: false
+      dateTime: todo.date.getTime(),
+      name: todo.name,
+      description: todo.description,
+      active: (todo.active) ? todo.active: false
     }).key;
 
-    if(event.file) {
-      this.upload(event.file,uid,key)
+    if(todo.file) {
+      this.upload(todo.file,uid,key)
     }
   }
 
-  removeEvent(event: Event) {
+  removeTodo(todo: Todo) {
     let uid = this.assistant.selectedBoss;
-    this.afd.database.ref("todo/" + uid + "/" + event.key).remove()
+    this.afd.database.ref("todo/" + uid + "/" + todo.key).remove()
   }
 
-  updateEvent(event: Event) {
+  updateTodo(todo: Todo) {
     let uid = this.assistant.selectedBoss;
-    this.afd.database.ref("todo/" + uid + "/" + event.key).update({
-      dateTime: event.date.getTime(),
-      name: event.name,
-      description: event.description,
-      active: (event.active) ? event.active: false
+    this.afd.database.ref("todo/" + uid + "/" + todo.key).update({
+      dateTime: todo.date.getTime(),
+      name: todo.name,
+      description: todo.description,
+      active: (todo.active) ? todo.active: false
     });
 
-    if(event.file) {
-      this.upload(event.file,uid,event.key)
+    if(todo.file) {
+      this.upload(todo.file,uid,todo.key)
     }
   }
 
@@ -73,7 +73,7 @@ export class TodoService {
     });
   }
 
-  getEvents() {
+  getTodos() {
     let uid = this.assistant.selectedBoss;
     return this.afd.list("todo/" + uid).snapshotChanges()
   }

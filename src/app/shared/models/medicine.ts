@@ -4,5 +4,5 @@ export class Medicine {
     indications: string;
     dosage: string;
     restrictions: string;
-    moreInfo: string
+    moreInfo: string;
 }
