@@ -14,9 +14,7 @@ export class AuthGuard implements CanActivate {
                 if(!user){
                     this.router.navigate(['/login']);
                 }
-                this.db.database.ref('assistants').once('value').then((snapshot) => {
-                    resolve(user != null && snapshot.hasChild(`${user.uid}`))
-                })
+                resolve(user != null)
             });
         })
     }

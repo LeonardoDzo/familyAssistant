@@ -13,6 +13,8 @@ export class CrudService {
   ) { 
     this.getUser().subscribe((user: User) => {
       this.assistant = user;
+    }, error => {
+      
     });
   }
 

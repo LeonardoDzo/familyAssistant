@@ -2,16 +2,16 @@
     <!-- Sidebar Header-->
     <div *ngIf="familyActive" class="sidebar-header d-flex align-items-center">
         <div class="">
-            <img src="{{(!familyActive.photoURL) ? 'assets/images/background_family.jpg' : 'familyActive.photoURL'}}" alt="..." class="imagen">
+            <img src="{{(!familyActive.photoURL) ? 'assets/images/background_family.jpg' : familyActive.photoURL}}" alt="..." class="imagen">
         </div>
         <div class="title">
             <div ngbDropdown class="d-inline-block">
-              <h3 class="h4" id="dropdownBasic1" ngbDropdownToggle>{{selectedBoss.name}}</h3>
+              <h3 class="h4" id="dropdownBasic1" ngbDropdownToggle>{{selectedBoss.name}} <i class="fa fa-caret-down"></i></h3>
               <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                 <button (click)="changeSelectedBoss(boss)" *ngFor="let boss of bosses" class="dropdown-item">{{boss.name}}</button>
               </div>
             </div>
-            <p class="family" (click)="openModal(template)">{{familyActive.name}}</p>
+            <p class="family" (click)="openModal(template)">{{familyActive.name}} <i class="fa fa-exchange"></i></p>
         </div>
     </div>
     <!-- Sidebar Navidation Menus-->

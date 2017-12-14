@@ -21,41 +21,24 @@
           </div>
 
           <div class="card-body">
-            <tabset>
-              <tab class="active">
-                <ng-template tabHeading>
-                  <i class="fa fa-th-list"></i>
-                </ng-template>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>Nombre</th>
-                      <th>Teléfono</th>
-                      <th>Ocupación</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let contact of contacts" (click)="openModal(userTemplate,contact)" class="list-item">
-                      <td>
-                        {{ contact.name }}
-                      </td>
-                      <td>{{ contact.phone }}</td>
-                      <td>{{ contact.job }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </tab>
-              <tab>
-                <ng-template tabHeading>
-                  <i class="fa fa-th"></i>
-                </ng-template>
-                <div class="row">
-                  <div *ngFor="let contact of contacts" class="col-md-3">
-                    <app-contacto [contacto]="contact"></app-contacto>
-                  </div>
-                </div>
-              </tab>
-            </tabset>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Teléfono</th>
+                  <th>Ocupación</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let contact of contacts" (click)="openModal(userTemplate,contact,'modal-lg')" class="list-item">
+                  <td>
+                    {{ contact.name }}
+                  </td>
+                  <td>{{ contact.phone }}</td>
+                  <td>{{ contact.job }}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <div class="card-footer">
             <div class="row">
@@ -125,8 +108,54 @@
 
   <!--Modal user info-->
   <ng-template #userTemplate>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Información de contacto</h4>
+      <div class="btn-group pull-right" placement="bottom left" dropdown>
+        <a href="javascript:void(0)" dropdownToggle class="dropdown-toggle">
+          <i class="fa fa-ellipsis-v"></i>
+        </a>
+        <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
+          <li role="menuitem">
+            <a (click)="openModal(template,contacto)" class="dropdown-item" href="javascript:void(0)">Editar</a>
+          </li>
+          <li role="menuitem">
+            <a (click)="openModal(confirmTemplate,contacto)" class="dropdown-item" href="javascript:void(0)">Eliminar</a>
+          </li>
+          <li role="menuitem">
+            <a (click)="modalRef.hide()" class="dropdown-item" href="javascript:void(0)">Cerrar</a>
+          </li>
+        </ul>
+      </div>
+    </div>
     <div class="modal-body">
-      <div class="row justify-content-center">
+      <div class="row">
+        <div class="card-block col-lg-4">
+          <div class="avatar">
+            <img class="imagen" alt="" src="assets/images/user.png">
+          </div>
+          <div class="info">
+            <div class="title">
+              <a target="_blank">{{ contacto.name }}</a>
+            </div>
+            <div class="desc">{{ contacto.phone }}</div>
+          </div>
+        </div>
+        <div class="col-lg-7 info-div">
+          <div class="info">
+            <div class="desc">
+              <p>
+                <b>Correo: </b> {{contacto.email}}</p>
+              <p>
+                <b>Ocupación: </b> {{contacto.job}}</p>
+              <p>
+                <b>Dirección: </b> {{contacto.address}}</p>
+              <p>
+                <b>Pagina web: </b> {{contacto.webpage}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--<div class="row justify-content-center">
         <div class="col-xl-6">
           <div class="card contact hovercard">
             <div class="cardheader">
@@ -164,7 +193,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
     </div>
   </ng-template>
 

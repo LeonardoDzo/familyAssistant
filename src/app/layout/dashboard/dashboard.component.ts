@@ -51,19 +51,23 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnDestroy(){
-        this.pendingsSub.unsubscribe();
-        this.solicitudesSub.unsubscribe();
+        if(this.pendingsSub){
+            this.pendingsSub.unsubscribe();
+        }
+
+        if(this.solicitudesSub){
+            this.solicitudesSub.unsubscribe();
+        }
+
         this.sub.unsubscribe();
     }
 
     ngOnInit() {
-
         this.sub = this.userService.getUserObservable().subscribe((user: User)=> {
-            
             if(this.solicitudesSub){
                 this.solicitudesSub.unsubscribe();
             }
-            this.userService.getSolicitudes().subscribe((bossesIds) => {
+            this.solicitudesSub = this.userService.getSolicitudes().subscribe((bossesIds) => {
                 this.bosses = [];
                 bossesIds.forEach((elem) => {
                     let userKey = elem.payload.toJSON().toString();
@@ -75,18 +79,21 @@ export class DashboardComponent implements OnInit {
                         this.bosses.push(boss)
                     });
                 })
+            }, error => {
+
             })
             if(this.pendingsSub){
                 this.pendingsSub.unsubscribe();
             }
-            if(user.selectedBoss)
-                this.pendingsSub = this.userService.getPendings(user.selectedBoss)
+            if(user.selectedBoss){
+                this.pendingsSub = this.pendingsSub = this.userService.getPendings(user.selectedBoss)
                 .subscribe((pendings: Pending[]) => {
                     this.pendings = pendings;
+                }, error => {
+
                 });
-        },
-        (error) => {
-            console.log(error)
-        })
+            }
+        }
+    )
     }
 }

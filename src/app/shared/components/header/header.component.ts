@@ -66,6 +66,8 @@ export class HeaderComponent implements OnInit,AfterViewInit {
                     this.us.setSelectedBoss(this.bosses[0].userKey);
                 }
             });
+        }, error => {
+            
         });
     }
 
@@ -85,7 +87,7 @@ export class HeaderComponent implements OnInit,AfterViewInit {
     }
 
     logout() {
-        this.as.logout()
+        this.as.logout();
     }
 
     /*isToggled(): boolean {

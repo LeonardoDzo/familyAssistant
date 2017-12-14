@@ -32,7 +32,8 @@ export class SidebarComponent implements OnInit {
     ) { }
 
     openModal(template: TemplateRef<any>) {
-        this.modalRef = this.modalService.show(template);
+        if(this.families.length > 1)
+            this.modalRef = this.modalService.show(template);
     }
 
     initFam() {
@@ -61,6 +62,8 @@ export class SidebarComponent implements OnInit {
     ngOnInit() {
         this.userSub = this.us.getUserObservable().subscribe((user: User) => {
             this.user = user;
+        },error => {
+            
         });
 
         this.bossesSub = this.us.getBosses().subscribe((bossesIds) => {
@@ -89,6 +92,8 @@ export class SidebarComponent implements OnInit {
                 }
                 this.initFam()
             });
+        }, error => {
+
         });
     }
 

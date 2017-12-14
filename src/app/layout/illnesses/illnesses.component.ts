@@ -60,11 +60,16 @@ export class IllnessesComponent implements OnInit {
       this.realIllnesses = illnesses;
       this.totalItems = illnesses.length;
       this.illnesses = this.realIllnesses.slice(0,this.itemsPerPage);
+    }, error => {
+
     })
   }
+  
   ngOnInit() {
     this.crudService.getUser().subscribe(() => {
       this.init();
+    }, error => {
+
     })
   }
 

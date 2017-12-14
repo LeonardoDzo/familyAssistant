@@ -111,19 +111,23 @@
       </ul>
     </div>
   </div>
-  <div class="modal-body center">
-    <div>
-      <b>Nombre: </b> {{ illness.nombre }}</div>
-    <br>
-    <div>
-      <b>Medicamento: </b>{{ illness.medicine }}</div>
-    <br>
-    <div>
-      <b>info: </b>{{ illness.masinfo }}</div>
-    <br>
-    <div>
-      <b>Dosis: </b>{{ illness.dosis }}</div>
-  </div>
+  <div class="modal-body">
+    <div class="row justify-content-center">
+        <div>
+            <div>
+              <b>Nombre: </b> {{ illness.nombre }}</div>
+            <br>
+            <div>
+              <b>Medicamento: </b>{{ illness.medicine }}</div>
+            <br>
+            <div>
+              <b>info: </b>{{ illness.masinfo }}</div>
+            <br>
+            <div>
+              <b>Dosis: </b>{{ illness.dosis }}</div>
+          </div>
+        </div>
+    </div>
 </ng-template>
 
 <ng-template #confirmTemplate>

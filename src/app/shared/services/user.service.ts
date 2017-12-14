@@ -16,6 +16,8 @@ export class UserService {
   constructor(private afd: AngularFireDatabase,private afa: AngularFireAuth,public app: FirebaseApp) { 
     this.getUserObservable().subscribe((user: User) => {
       this.assistant = user;
+    }, error => {
+      
     });
   }
 

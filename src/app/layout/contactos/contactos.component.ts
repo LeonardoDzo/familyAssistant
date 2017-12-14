@@ -29,7 +29,13 @@ export class ContactosComponent implements OnInit {
   public itemsPerPage = 10;
   public sub: Subscription;
   folderName: string
-  
+  config = {
+    animated: true,
+    keyboard: true,
+    backdrop: true,
+    ignoreBackdropClick: false
+  };
+
   constructor(
     public toastr: ToastsManager,
     vcr: ViewContainerRef,
@@ -38,7 +44,7 @@ export class ContactosComponent implements OnInit {
     private crudService: CrudService
   ) {
     this.toastr.setRootViewContainerRef(vcr);
-    this.crudService.setTable("contacts")
+    this.crudService.setTable("contacts");
   }
 
   private init() {
@@ -66,12 +72,16 @@ export class ContactosComponent implements OnInit {
       this.realContacts = contacts;
       this.totalItems = contacts.length;
       this.contacts = this.realContacts.slice(0,this.itemsPerPage);
+     }, error => {
+       
      });
   }
 
   ngOnInit() {
     this.crudService.getUser().subscribe((user: User) => {
       this.init();
+    }, error => {
+
     });
   }
 
@@ -91,12 +101,15 @@ export class ContactosComponent implements OnInit {
     this.modalRef.hide();
   }
 
-  public openModal(template: TemplateRef<any>,contact: Contacto = new Contacto()) {
+  public openModal(template: TemplateRef<any>,contact: Contacto = new Contacto(),clase: string = '') {
     if(this.modalRef){
       this.modalRef.hide();
     }
     this.contacto = Object.assign(new Contacto(), contact);
-    this.modalRef = this.modalService.show(template);
+    this.modalRef = this.modalService.show(
+      template,
+      Object.assign({}, this.config, { class: clase })
+    );
   }
 
   public addContact() {
@@ -118,10 +131,6 @@ export class ContactosComponent implements OnInit {
         this.updateContact();
       this.modalRef.hide();
     }
-  }
-
-  createFolder() {
-
   }
 
   public pageChanged($event: any) {
