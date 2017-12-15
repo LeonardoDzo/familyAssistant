@@ -18,7 +18,7 @@ import { CrudService } from 'app/shared/services/crud.service';
         NgbDropdownModule.forRoot(),
         LayoutRoutingModule,
         TranslateModule,
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
     ],
     declarations: [
         LayoutComponent,

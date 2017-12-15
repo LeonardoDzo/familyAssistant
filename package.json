@@ -29,6 +29,7 @@
     "@ngx-translate/core": "^7.2.2",
     "@ngx-translate/http-loader": "^0.1.0",
     "@types/firebase": "^2.4.32",
+    "angular-calendar": "^0.22.1",
     "angular2-uuid": "^1.1.1",
     "angularfire2": "^5.0.0-rc.3",
     "blueimp-canvas-to-blob": "^3.14.0",

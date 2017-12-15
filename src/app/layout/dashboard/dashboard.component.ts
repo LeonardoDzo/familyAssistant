@@ -27,6 +27,8 @@ export class DashboardComponent implements OnInit {
     types = ['evento','objetivo','galeria','caja fuerte','contactos','botiquin','inmuebles','salud','seguros','presupuesto','lista de tareas','fax']
     sub: Subscription;
     private ngUnsubscribe: Subject<void> = new Subject<void>();
+    viewDate: Date = new Date();
+    events = [];
 
     constructor(
         private userService: UserService,

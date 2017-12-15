@@ -138,17 +138,7 @@ export class SafeboxComponent implements OnInit {
   }
 
   uploadFile($event) {
-    const file: File = $event.target.files[0];
-    let fr = new FileReader();
-    fr.onload = () => {
-      console.log(file)
-      console.log(fr.result)
-      let compressed = pako.deflate(new Uint8Array(fr.result));
-      let blob = new File(compressed,file.name);
-      console.log(blob)
-    }
-    fr.readAsArrayBuffer(file);
-    /*let images: Array<IImage> = [];
+    let images: Array<IImage> = [];
     const files: FileList = $event.target.files;
     if(this.fs.isImage(files)){
       this.upload.isUploading = true;
@@ -164,6 +154,6 @@ export class SafeboxComponent implements OnInit {
       })
     } else {
       this.fs.upload(this.parent,files[0],this.upload,this.toastr);
-    }*/
+    }
   }
 }

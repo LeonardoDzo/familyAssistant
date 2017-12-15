@@ -26,7 +26,8 @@
                 "styles/custom.css",
                 "styles/fontastic.css",
                 "styles/style.default.css",
-                "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css"
+                "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+                "../node_modules/angular-calendar/css/angular-calendar.css"
             ],
             "scripts": [
                 "../node_modules/chart.js/dist/Chart.js",
