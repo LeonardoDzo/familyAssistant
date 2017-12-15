@@ -24,6 +24,7 @@ export class MedicineComponent implements OnInit {
   public totalItems = 0;
   public itemsPerPage = 10;
   sub: Subscription;
+  userSub: Subscription;
 
   constructor(
     private modalService: BsModalService,
@@ -41,7 +42,7 @@ export class MedicineComponent implements OnInit {
       let medicines: Medicine[] = []
       snapshots.forEach((elem) => {
         let medicine = Object.assign(new Medicine(), elem.payload.toJSON())
-        medicine.key = elem.key;
+        medicine.id = elem.key;
         medicines.push(medicine)
       })
 
@@ -61,9 +62,18 @@ export class MedicineComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.crudService.getUser().subscribe(()=> {
+    this.userSub = this.crudService.getUser().subscribe(()=> {
       this.init();
     });
+  }
+
+  ngOnDestroy() {
+    if(this.sub){
+      this.sub.unsubscribe();
+    }
+    this.userSub.unsubscribe();
+
+    this.crudService.destroy();
   }
 
   public search($event) {
@@ -88,7 +98,7 @@ export class MedicineComponent implements OnInit {
   submitModal() {
     this.errorMessage = this.regexService.medicineValidation(this.medicine)
     if(this.errorMessage.length < 1){
-      if(!this.medicine.key)
+      if(!this.medicine.id)
         this.crudService.addObject(this.medicine);
       else
         this.crudService.editObject(this.medicine)

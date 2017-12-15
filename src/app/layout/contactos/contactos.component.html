@@ -58,7 +58,7 @@
   <!--Modal para agregar usuario-->
   <ng-template #template>
     <div class="modal-header">
-      <h4 class="modal-title pull-left">{{(!contacto.key) ? 'Agregar contacto' : 'Editar'}}</h4>
+      <h4 class="modal-title pull-left">{{(!contacto.id) ? 'Agregar contacto' : 'Editar'}}</h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -102,7 +102,7 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button (click)="submitModal()" class="btn btn-primary">{{ (!contacto.key) ? 'Agregar' : 'Guardar' }}</button>
+      <button (click)="submitModal()" class="btn btn-primary">{{ (!contacto.id) ? 'Agregar' : 'Guardar' }}</button>
     </div>
   </ng-template>
 

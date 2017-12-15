@@ -24,6 +24,7 @@ export class IllnessesComponent implements OnInit {
   public totalItems = 0;
   public itemsPerPage = 10;
   sub: Subscription;
+  userSub: Subscription;
 
   constructor(
     private modalService: BsModalService,
@@ -42,7 +43,7 @@ export class IllnessesComponent implements OnInit {
       let illnesses: Illness[] = []
       snapshots.forEach((elem) => {
         let illness = Object.assign(new Illness(), elem.payload.toJSON())
-        illness.key = elem.key;
+        illness.id = elem.key;
         illnesses.push(illness)
       });
       
@@ -66,11 +67,19 @@ export class IllnessesComponent implements OnInit {
   }
   
   ngOnInit() {
-    this.crudService.getUser().subscribe(() => {
+    this.userSub = this.crudService.getUser().subscribe(() => {
       this.init();
     }, error => {
 
     })
+  }
+
+  ngOnDestroy(){
+    if(this.sub) {
+      this.sub.unsubscribe();
+    }
+    this.userSub.unsubscribe();
+    this.crudService.destroy();
   }
 
   public openModal(template: TemplateRef<any>,illness: Illness = new Illness()) {
@@ -95,7 +104,7 @@ export class IllnessesComponent implements OnInit {
   public submitModal() {
     this.errorMessage = this.regexService.illnessValidation(this.illness)
     if(this.errorMessage.length < 1){
-      if(!this.illness.key)
+      if(!this.illness.id)
         this.crudService.addObject(this.illness)
       else
         this.crudService.editObject(this.illness)

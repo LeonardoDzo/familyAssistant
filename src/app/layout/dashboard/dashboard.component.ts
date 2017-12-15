@@ -60,6 +60,8 @@ export class DashboardComponent implements OnInit {
         }
 
         this.sub.unsubscribe();
+
+        this.userService.destroy();
     }
 
     ngOnInit() {

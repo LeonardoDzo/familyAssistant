@@ -5,18 +5,26 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';
 import { FirebaseApp } from 'angularfire2';
 import { UUID } from 'angular2-uuid';
+import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class TodoService {
   assistant: User;
+  private sub: Subscription;
   constructor(
     private afa: AngularFireAuth,
     private afd: AngularFireDatabase,
     public app: FirebaseApp
   ) { 
-    this.getUser().subscribe((user: User) => {
+    this.sub = this.getUser().subscribe((user: User) => {
       this.assistant = user;
+    }, error => {
+      
     })
+  }
+
+  destroy() {
+    this.sub.unsubscribe();
   }
 
   getUser() {

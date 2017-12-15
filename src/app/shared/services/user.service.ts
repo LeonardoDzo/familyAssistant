@@ -7,18 +7,23 @@ import { AngularFireDatabase, DatabaseSnapshot, AngularFireList } from 'angularf
 import { Injectable } from '@angular/core';
 import { User } from 'app/shared/models/user';
 import { FirebaseApp } from 'angularfire2';
+import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class UserService {
   contacts: Observable<Contacto[]> = null;
   assistant: User = new User();
-  
+  private sub: Subscription;
   constructor(private afd: AngularFireDatabase,private afa: AngularFireAuth,public app: FirebaseApp) { 
-    this.getUserObservable().subscribe((user: User) => {
+    this.sub = this.getUserObservable().subscribe((user: User) => {
       this.assistant = user;
     }, error => {
       
     });
+  }
+
+  destroy() {
+    this.sub.unsubscribe();
   }
 
   getContacts() {
@@ -28,7 +33,7 @@ export class UserService {
 
   removeContact(contact: Contacto,toastr: ToastsManager) {
     var uid = this.assistant.selectedBoss;
-    var key = contact.key;
+    var key = contact.id;
     this.afd.database.ref('contacts/' + uid + '/' + key).remove().then(() => {
       toastr.error("El usuario ha sido eliminado...",null);
     });
@@ -48,7 +53,7 @@ export class UserService {
 
   updateContact(contacto: Contacto,toastr: ToastsManager) {
     var uid = this.assistant.selectedBoss;
-    var key = contacto.key;
+    var key = contacto.id;
     this.afd.database.ref('contacts/' + uid + '/' + key).update(contacto).then(() => {
       toastr.success("Los datos se han guardado correctamente.",null);
     });

@@ -10,6 +10,8 @@ import { ImageCompressService, ResizeOptions, ImageUtilityService, IImage, Sourc
 import { NgIf } from '@angular/common';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import * as pako from "pako"
+
 
 @Component({
   selector: 'app-safebox',
@@ -30,7 +32,7 @@ export class SafeboxComponent implements OnInit {
   public modalRef: BsModalRef;
   folderName: string
   navigation: FileDatabase[] = []
-
+  userSub: Subscription;
   constructor(
     private fs: FilesService,
     private toastr: ToastsManager,
@@ -58,6 +60,8 @@ export class SafeboxComponent implements OnInit {
       this.files = files.filter((elem) => {
         return elem.parent == this.parent
       });
+    }, error => {
+
     });
   }
 
@@ -65,7 +69,6 @@ export class SafeboxComponent implements OnInit {
     let ind = this.navigation.findIndex((obj) => {
       return obj.id == parent;
     })
-    console.log()
     this.navigation = this.navigation.slice(0,ind+1)
     this.parent = parent
     this.files = this.realFiles.filter((elem) => {
@@ -78,16 +81,26 @@ export class SafeboxComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fs.getUser().subscribe(() => {
+    this.userSub = this.fs.getUser().subscribe(() => {
       this.navigation = [new FileDatabase('root','root','folder')]
       this.parent = "root"
       this.init();
+    }, error => {
+
     });
     this.upload = {progress: 0, isUploading: false}
     this.options = new ResizeOptions()
     this.options.Resize_Max_Height = 200;
     this.options.Resize_Max_Width = 300;
     this.options.Resize_Quality = 100;
+  }
+
+  ngOnDestroy() {
+    if(this.sub) {
+      this.sub.unsubscribe();
+    }
+    this.userSub.unsubscribe();
+    this.fs.destroy();
   }
 
   search($event) {
@@ -125,14 +138,23 @@ export class SafeboxComponent implements OnInit {
   }
 
   uploadFile($event) {
-    let images: Array<IImage> = [];
+    const file: File = $event.target.files[0];
+    let fr = new FileReader();
+    fr.onload = () => {
+      console.log(file)
+      console.log(fr.result)
+      let compressed = pako.deflate(new Uint8Array(fr.result));
+      let blob = new File(compressed,file.name);
+      console.log(blob)
+    }
+    fr.readAsArrayBuffer(file);
+    /*let images: Array<IImage> = [];
     const files: FileList = $event.target.files;
     if(this.fs.isImage(files)){
       this.upload.isUploading = true;
       ImageUtilityService.filesArrayToSourceImages([files[0]]).subscribe(sourceImage => {
         ImageCompressService.compressImage(sourceImage,this.options,
           (sourceImageCompressed: IImage) => {
-            console.log(sourceImageCompressed)
             let compressedImageFile = this.dataURLtoFile(
               sourceImageCompressed.compressedImage.imageDataUrl,
               files[0].name
@@ -142,6 +164,6 @@ export class SafeboxComponent implements OnInit {
       })
     } else {
       this.fs.upload(this.parent,files[0],this.upload,this.toastr);
-    }
+    }*/
   }
 }

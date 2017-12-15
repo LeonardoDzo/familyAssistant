@@ -9,31 +9,40 @@ import { Http } from '@angular/http';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { UUID } from 'angular2-uuid';
+import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class FilesService {
   extensiones: string[];
   archivos: string[];
   assistant: User = new User();
-
+  private subs: Subscription[] = [];
   constructor(
     public app: FirebaseApp,
     public http: Http,
     private afa: AngularFireAuth,
     private afd: AngularFireDatabase
   ) {
-    this.http.get('assets/extensiones-imagenes.json').subscribe(res => {
+    this.subs.push(this.http.get('assets/extensiones-imagenes.json').subscribe(res => {
       this.extensiones = res.json();
-    });
+    }));
 
-    this.http.get('assets/extensiones-archivos.json').subscribe(res => {
+    this.subs.push(this.http.get('assets/extensiones-archivos.json').subscribe(res => {
       this.archivos = res.json();
-    });
+    }));
 
     let uid = this.afa.auth.currentUser.uid;
-    this.getUser().subscribe((user: User) => {
+    this.subs.push(this.getUser().subscribe((user: User) => {
       this.assistant = user;
-    });
+    }, error => {
+      
+    }));
+  }
+
+  destroy() {
+    this.subs.forEach(sub => {
+      sub.unsubscribe();
+    })
   }
 
   getUser() {

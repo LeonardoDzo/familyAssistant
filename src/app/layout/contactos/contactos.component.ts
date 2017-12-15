@@ -29,6 +29,7 @@ export class ContactosComponent implements OnInit {
   public itemsPerPage = 10;
   public sub: Subscription;
   folderName: string
+  userSub: Subscription;
   config = {
     animated: true,
     keyboard: true,
@@ -56,7 +57,7 @@ export class ContactosComponent implements OnInit {
 
       snapshots.forEach(elem => {
         let contact = Object.assign(new Contacto(), elem.payload.toJSON())
-        contact.key = elem.key;
+        contact.id = elem.key;
         contacts.push(contact)
       })
 
@@ -78,11 +79,19 @@ export class ContactosComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.crudService.getUser().subscribe((user: User) => {
+    this.userSub = this.crudService.getUser().subscribe((user: User) => {
       this.init();
     }, error => {
 
     });
+  }
+  
+  ngOnDestroy() {
+    if(this.sub){
+      this.sub.unsubscribe();
+    }
+    this.userSub.unsubscribe();
+    this.crudService.destroy();
   }
 
   search($event) {
@@ -125,7 +134,7 @@ export class ContactosComponent implements OnInit {
   public submitModal() {
     this.errorMessage = this.regexService.contactValidation(this.contacto);
     if(this.errorMessage.length < 1) {
-      if(!this.contacto.key)
+      if(!this.contacto.id)
         this.addContact();
       else 
         this.updateContact();

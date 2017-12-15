@@ -1,5 +1,5 @@
 export class Contacto {
-    key: string;
+    id: string;
     name: string;
     phone: string;
     job: string;

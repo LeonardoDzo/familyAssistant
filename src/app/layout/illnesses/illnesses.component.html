@@ -54,7 +54,7 @@
 
 <ng-template #addTemplate>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">{{(!illness.key)? 'Agregar enfermedad' : 'Editar enfermedad'}}</h4>
+    <h4 class="modal-title pull-left">{{(!illness.id)? 'Agregar enfermedad' : 'Editar enfermedad'}}</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -87,7 +87,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button (click)="submitModal()" class="btn btn-primary">{{(!illness.key)? 'Agregar' : 'Guardar'}}</button>
+    <button (click)="submitModal()" class="btn btn-primary">{{(!illness.id)? 'Agregar' : 'Guardar'}}</button>
   </div>
 </ng-template>
 

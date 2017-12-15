@@ -1,5 +1,5 @@
 export class Illness {
-    key: string;
+    id: string;
     dosis: string = "";
     masinfo: string = "";
     medicine: string = "";

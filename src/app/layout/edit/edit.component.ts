@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { UserService } from 'app/shared/services/user.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-edit',
@@ -18,6 +19,7 @@ import { UserService } from 'app/shared/services/user.service';
 export class EditComponent implements OnInit {
   user = new User();
   userObs = new Observable<User>();
+  private sub: Subscription;
   @ViewChild('fileInput') fileInput;
   url: string;
 
@@ -27,9 +29,16 @@ export class EditComponent implements OnInit {
   
   ngOnInit() { 
     this.userObs = this.userSvc.getUserObservable();
-    this.userObs.subscribe((user: User) => {
+    this.sub = this.userObs.subscribe((user: User) => {
       this.user = user;
+    }, error => {
+
     })
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+    this.userSvc.destroy();
   }
 
   edit() {

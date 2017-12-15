@@ -1,5 +1,5 @@
 export class Medicine {
-    key: string;
+    id: string;
     name: string;
     indications: string;
     dosage: string;

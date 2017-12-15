@@ -19,6 +19,7 @@ export class TodoComponent implements OnInit {
   bsConfig: Partial<BsDatepickerConfig>;
   todo: Todo = new Todo();
   todos: Todo[];
+  userSub: Subscription;
   sub: Subscription;
   months = ["En", "Febr", "Mzo", 
             "Abr", "May", "Jun", 
@@ -30,7 +31,10 @@ export class TodoComponent implements OnInit {
   ) { }
 
   private init() {
-    this.todoService.getTodos().subscribe((snapshot) => {
+    if(this.sub) {
+      this.sub.unsubscribe();
+    }
+    this.sub = this.todoService.getTodos().subscribe((snapshot) => {
       let todos: Todo[] = [];
       snapshot.forEach((elem) => {
         let todo = Object.assign(new Todo(),elem.payload.toJSON());
@@ -50,9 +54,17 @@ export class TodoComponent implements OnInit {
   ngOnInit() {
     this.bsConfig = Object.assign({}, { containerClass: "theme-red" });
 
-    this.todoService.getUser().subscribe(() => {
+    this.userSub = this.todoService.getUser().subscribe(() => {
       this.init();
     })
+  }
+
+  ngOnDestroy() {
+    if(this.sub) {
+      this.sub.unsubscribe();
+    }
+    this.userSub.unsubscribe();
+    this.todoService.destroy();
   }
 
   public openModal(template: TemplateRef<any>, todo: Todo = new Todo()) {
