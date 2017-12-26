@@ -11,6 +11,8 @@ import { LayoutComponent } from './layout.component';
 import { HeaderComponent, SidebarComponent } from '../shared';
 import { ModalModule } from 'ngx-bootstrap';
 import { CrudService } from 'app/shared/services/crud.service';
+import { EventService } from 'app/shared/services/event.service';
+import { CalendarModule } from 'angular-calendar';
 
 @NgModule({
     imports: [
@@ -30,7 +32,8 @@ import { CrudService } from 'app/shared/services/crud.service';
         RegexService,
         FilesService,
         TodoService,
-        CrudService
+        CrudService,
+        EventService
     ]
 })
 export class LayoutModule { }

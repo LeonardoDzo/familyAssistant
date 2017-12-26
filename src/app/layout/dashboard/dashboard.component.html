@@ -1,6 +1,61 @@
 <div [@routerTransition]>
     <section class="dashboard-solicitude">
         <div class="row">
+            <div class="col-xl-12">
+                <div class="card dashboard-card">
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-md-4">
+                                <div class="btn-group">
+                                    <div class="btn btn-outline-danger" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+                                        Anterior
+                                    </div>
+                                    <div class="btn btn-outline-danger" mwlCalendarToday [(viewDate)]="viewDate">
+                                        Hoy
+                                    </div>
+                                    <div class="btn btn-outline-danger" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+                                        Siguiente
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <h3>{{monthNames[viewDate.getMonth()] + ' ' + viewDate.getFullYear()}}</h3>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="btn-group">
+                                    <div class="btn btn-danger" (click)="view = 'month'" [class.active]="view === 'month'">
+                                        Mes
+                                    </div>
+                                    <div class="btn btn-danger" (click)="view = 'week'" [class.active]="view === 'week'">
+                                        Semana
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div [ngSwitch]="view">
+                            <mwl-calendar-month-view
+                                *ngSwitchCase="'month'" 
+                                [viewDate]="viewDate" 
+                                [events]="calendarEvents" 
+                                [refresh]="refresh" 
+                                (dayClicked)="dayClicked($event.day)"
+                                [activeDayIsOpen]="activeDayIsOpen" [locale]="es-mx">
+                            </mwl-calendar-month-view>
+                            <mwl-calendar-week-view
+                                *ngSwitchCase="'week'"
+                                [viewDate]="viewDate"
+                                [events]="calendarEvents"
+                                [refresh]="refresh"
+                                (eventClicked)="handleEvent('Clicked', $event.event)"
+                                (eventTimesChanged)="eventTimesChanged($event)" [locale]="es-mx">
+                          </mwl-calendar-week-view>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-xl-6">
                 <div class="articles card dashboard-card">
                     <div class="card-header d-flex align-items-center">
@@ -27,17 +82,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xl-6">
-                <div class="articles card dashboard-card">
-                    <div class="card-header d-flex align-items-center">
-                        Eventos.
-                    </div>
-                    <mwl-calendar-month-view [viewDate]="viewDate" [events]="events">
-                    </mwl-calendar-month-view>  
                 </div>
             </div>
         </div>
