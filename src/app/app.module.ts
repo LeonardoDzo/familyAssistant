@@ -16,9 +16,10 @@ import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import {ToastOptions} from 'ng2-toastr';
 import {BsDropdownModule} from 'ngx-bootstrap';
 import {HttpClientModule} from '@angular/common/http';
-
+import { AgmCoreModule } from '@agm/core';
 import 'firebase/storage';
 import 'firebase/database';
+import { DayViewComponent } from './shared/components/day-view/day-view.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
@@ -42,7 +43,8 @@ export const firebase = {
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        DayViewComponent
     ],
     imports: [
         BrowserModule,

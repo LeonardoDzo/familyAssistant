@@ -48,11 +48,11 @@ export class ContactosComponent implements OnInit {
     this.crudService.setTable("contacts");
   }
 
-  private init() {
+  private init(user: User) {
     if(this.sub){
       this.sub.unsubscribe();
     }
-    this.sub = this.crudService.getObjects().subscribe((snapshots) => {
+    this.sub = this.crudService.getObjects(user).subscribe((snapshots) => {
       let contacts: Contacto[] = []
 
       snapshots.forEach(elem => {
@@ -80,7 +80,7 @@ export class ContactosComponent implements OnInit {
 
   ngOnInit() {
     this.userSub = this.crudService.getUser().subscribe((user: User) => {
-      this.init();
+      this.init(user);
     }, error => {
 
     });

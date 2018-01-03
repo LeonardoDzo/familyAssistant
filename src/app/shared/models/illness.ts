@@ -1,7 +1,7 @@
 export class Illness {
     id: string;
-    dosis: string = "";
-    masinfo: string = "";
+    dosage: string = "";
+    moreInfo: string = "";
     medicine: string = "";
-    nombre: string = "";
+    name: string = "";
 }

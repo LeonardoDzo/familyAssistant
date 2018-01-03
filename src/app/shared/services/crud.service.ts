@@ -42,8 +42,8 @@ export class CrudService {
     });
   }
 
-  getObjects() {
-    let uid = this.assistant.familyActive;
+  getObjects(user: User) {
+    let uid = user.familyActive;
     return this.afd.list(this.table + "/" + uid).snapshotChanges()
   }
 

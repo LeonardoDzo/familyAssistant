@@ -1,3 +1,4 @@
+import { User } from './../../shared/models/user';
 import { CrudService } from './../../shared/services/crud.service';
 import { Subscription } from 'rxjs/Subscription';
 import { RegexService } from './../../shared/services/regex.service';
@@ -34,11 +35,11 @@ export class MedicineComponent implements OnInit {
     this.crudService.setTable("medicines")
   }
 
-  private init() {
+  private init(user: User) {
     if(this.sub) {
       this.sub.unsubscribe();
     }
-    this.sub = this.crudService.getObjects().subscribe((snapshots) => {
+    this.sub = this.crudService.getObjects(user).subscribe((snapshots) => {
       let medicines: Medicine[] = []
       snapshots.forEach((elem) => {
         let medicine = Object.assign(new Medicine(), elem.payload.toJSON())
@@ -58,12 +59,13 @@ export class MedicineComponent implements OnInit {
       this.realMedicines = medicines;
       this.totalItems = medicines.length;
       this.medicines = this.realMedicines;
+      console.log(medicines)
     })
   }
 
   ngOnInit() {
-    this.userSub = this.crudService.getUser().subscribe(()=> {
-      this.init();
+    this.userSub = this.crudService.getUser().subscribe((user: User)=> {
+      this.init(user);
     });
   }
 
@@ -116,5 +118,4 @@ export class MedicineComponent implements OnInit {
     this.medicines = this.realMedicines.slice(this.itemsPerPage*(this.currentPage - 1),this.itemsPerPage*this.currentPage);
     window.scrollTo(0, 0);
   }
-
 }

@@ -28,7 +28,7 @@
               <tbody>
                 <tr *ngFor="let illness of illnesses" (click)="openModal(infoTemplate,illness)">
                   <td>
-                    {{ illness.nombre }}
+                    {{ illness.name }}
                   </td>
                   <td>{{ illness.medicine }}</td>
                 </tr>
@@ -68,17 +68,17 @@
     <form role="form" #addIllnessForm>
       <fieldset class="form-group">
         <label>Nombre</label>
-        <input class="form-control" name="nombre" [(ngModel)]="illness.nombre">
+        <input class="form-control" name="nombre" [(ngModel)]="illness.name">
       </fieldset>
 
       <fieldset class="form-group">
         <label>Dosis</label>
-        <input class="form-control" name="dosis" [(ngModel)]="illness.dosis">
+        <input class="form-control" name="dosis" [(ngModel)]="illness.dosage">
       </fieldset>
 
       <fieldset class="form-group">
         <label>Info</label>
-        <input class="form-control" name="info" [(ngModel)]="illness.masinfo">
+        <input class="form-control" name="info" [(ngModel)]="illness.moreInfo">
       </fieldset>
       <fieldset class="form-group">
         <label>Medicamentos</label>
@@ -115,16 +115,16 @@
     <div class="row justify-content-center">
         <div>
             <div>
-              <b>Nombre: </b> {{ illness.nombre }}</div>
+              <b>Nombre: </b> {{ illness.name }}</div>
             <br>
             <div>
               <b>Medicamento: </b>{{ illness.medicine }}</div>
             <br>
             <div>
-              <b>info: </b>{{ illness.masinfo }}</div>
+              <b>info: </b>{{ illness.moreInfo }}</div>
             <br>
             <div>
-              <b>Dosis: </b>{{ illness.dosis }}</div>
+              <b>Dosis: </b>{{ illness.dosage }}</div>
           </div>
         </div>
     </div>
@@ -136,7 +136,7 @@
       <i class="fa fa-exclamation"></i>Alerta</p>
   </div>
   <div class="modal-body">
-    ¿Está seguro que desea eliminar la enfermedad {{ illness.nombre }}?
+    ¿Está seguro que desea eliminar la enfermedad {{ illness.name }}?
   </div>
   <div class="modal-footer">
     <button class="btn btn-danger" (click)="removeIllness()">Si</button>

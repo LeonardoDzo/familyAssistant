@@ -4,7 +4,7 @@ import { User } from './../../shared/models/user';
 import { Pending } from './../../shared/models/pending';
 import { Boss } from './../../shared/models/boss';
 import { Event } from './../../shared/models/event';
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, EventEmitter, NgZone, ElementRef, ViewChild } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { UserService } from 'app/shared/services/user.service';
 import { EventService } from 'app/shared/services/event.service';
@@ -13,6 +13,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { HttpClient } from 'selenium-webdriver/http';
 import { Subject } from 'rxjs/Subject';
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
+
 import {
   startOfDay,
   endOfDay,
@@ -21,8 +22,17 @@ import {
   endOfMonth,
   isSameDay,
   isSameMonth,
-  addHours
+  addHours,
+  areRangesOverlapping,
+  startOfMonth,
+  addMonths,
+  addWeeks,
+  subMonths
 } from 'date-fns';
+import { MapsAPILoader } from '@agm/core';
+import { FormControl } from '@angular/forms';
+
+declare var google;
 
 @Component({
     selector: 'app-dashboard',
@@ -44,26 +54,17 @@ export class DashboardComponent implements OnInit {
     sub: Subscription;
     eventsSub: Subscription;
     viewDate: Date = new Date();
-    events: Event[] = [];
+    events: CalendarEvent[] = [];
     calendarEvents: CalendarEvent[] = [];
     refresh: Subject<any> = new Subject();
     activeDayIsOpen: boolean = false;
     view: string = 'month';
-    actions: CalendarEventAction[] = [
-        {
-          label: '<i class="fa fa-fw fa-pencil"></i>',
-          onClick: ({ event }: { event: CalendarEvent }): void => {
-              console.log(event)
-          }
-        },
-        {
-          label: '<i class="fa fa-fw fa-times"></i>',
-          onClick: ({ event }: { event: CalendarEvent }): void => {
-              console.log(event)
-          }
-        }
-    ];
-
+    event: Event;
+    bsValue: Date = new Date();
+    longitude: number = -110.970053;
+    latitude: number = 29.089511;
+    zoom: number = 12;
+    dateModel: any;
     constructor(
         private userService: UserService,
         private modalService: BsModalService,
@@ -77,7 +78,22 @@ export class DashboardComponent implements OnInit {
         this.pending = Object.assign(new Pending(),pending);
         this.modalRef = this.modalService.show(template);
     }
-    
+
+    displayInfo($event,template: TemplateRef<any>) {
+        this.event = $event.event.meta;
+        this.modalRef = this.modalService.show(template);
+    }
+
+    public openModalEvent(template: TemplateRef<any>) {
+        this.event = new Event();
+        this.dateModel = {
+            start: new Date(),
+            end: new Date(),
+            repeatEnd: new Date()
+        }
+        this.modalRef = this.modalService.show(template);
+    }
+
     getLabel(pending: Pending) {
         return (pending.priority == 0) ? 'green-label' : (pending.priority == 1) ?
             'yellow-label' : 'red-label';
@@ -127,6 +143,8 @@ export class DashboardComponent implements OnInit {
     }
 
     dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+        //this.viewDate = date;
+        //this.view = "day";
         if (isSameMonth(date, this.viewDate)) {
             if (
                 (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -168,17 +186,62 @@ export class DashboardComponent implements OnInit {
                         start: new Date(event.val().startdate),
                         end: new Date(event.val().enddate),
                         title: event.val().title,
-                        color: { primary: '#08088A', secondary: '#E0E0F8'},
-                        actions: this.actions,
+                        color: this.getColor(eventObj.eventtype),
                         meta: eventObj
                     });
+                    if(eventObj.repeatmodel)
+                        this.repeatEvents(eventObj)
                 }));
             });
             Promise.all(promises).then(() => {
-                console.log(this.calendarEvents)
+                let startMonthDate = startOfMonth(subMonths(this.viewDate,1))
+                let endMonthDate = endOfMonth(addMonths(this.viewDate,1))
+                this.events = this.calendarEvents.filter((event) => {
+                    return areRangesOverlapping(event.start,event.end,startMonthDate,endMonthDate);
+                });
                 this.refresh.next();
             });
         });
+    }
+
+    private getColor(type: number) {
+        return (type == 0)? { primary: "#A4A4A4",secondary: "#E6E6E6" } :
+               (type == 1)? { primary: "#FE2E64",secondary: "#F5A9BC" } :
+               { primary: "#642EFE",secondary: "#D8CEF6" }
+    }
+
+    private repeatEvents(event: Event) {
+        let endtodayrepeat = addMonths(new Date(),1).getTime()
+        let repeatmodel = event.repeatmodel;
+        let endrepeat = event.repeatmodel.end;
+        let newevent: Event = Object.assign(new Event(),event)
+        while(newevent.enddate<=endrepeat && newevent.enddate<=endtodayrepeat) {
+            let newstart = (repeatmodel.interval == 1)? addDays(newevent.startdate,repeatmodel.frequency) :
+                           (repeatmodel.interval == 2) ? addWeeks(newevent.startdate,repeatmodel.frequency) :
+                           addMonths(newevent.startdate,repeatmodel.frequency)
+            let newend = (repeatmodel.interval == 1)? addDays(newevent.enddate,repeatmodel.frequency) :
+                         (repeatmodel.interval == 2) ? addWeeks(newevent.enddate,repeatmodel.frequency) :
+                         addMonths(newevent.enddate,repeatmodel.frequency)
+            newevent.startdate = newstart.getTime()
+            newevent.enddate = newend.getTime()
+            this.calendarEvents.push({
+                start: new Date(newevent.startdate),
+                end: new Date(newevent.enddate),
+                title: newevent.title,
+                color: this.getColor(newevent.eventtype),
+                meta: Object.assign(new Event(),newevent)
+            })
+        }
+    }
+
+    viewDateChanged(date: Date) {
+        let startMonthDate = startOfMonth(subMonths(this.viewDate,1))
+        let endMonthDate = endOfMonth(addMonths(this.viewDate,1))
+        this.events = this.calendarEvents.filter((event) => {
+            return areRangesOverlapping(event.start,event.end,startMonthDate,endMonthDate);
+        });
+        this.refresh.next();
+        this.activeDayIsOpen = false;
     }
 
     ngOnInit() {
@@ -186,6 +249,6 @@ export class DashboardComponent implements OnInit {
             this.readSolicitudes()
             this.readPendings(user)
             this.readEvents()
-        })
+        });
     }
 }

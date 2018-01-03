@@ -15,7 +15,14 @@ import {
 } from './components';
 import { StatModule } from '../../shared';
 import { CalendarModule } from 'angular-calendar';
-
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { BsDatepickerModule } from 'ngx-bootstrap';
+import { AgmCoreModule } from '@agm/core';
+import { NewEventModalComponent } from './new-event-modal/new-event-modal.component';
+import { EventInfoModalComponent } from './event-info-modal/event-info-modal.component';
+import {SelectModule} from 'ng2-select';
+import {MatSelectModule, MatSelect} from '@angular/material/select';
 @NgModule({
     imports: [
         CommonModule,
@@ -23,14 +30,26 @@ import { CalendarModule } from 'angular-calendar';
         NgbAlertModule.forRoot(),
         DashboardRoutingModule,
         StatModule,
-        CalendarModule.forRoot()
+        CalendarModule.forRoot(),
+        FormsModule,
+        ReactiveFormsModule,
+        TimepickerModule.forRoot(),
+        BsDatepickerModule.forRoot(),
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyCXGhKTVOXYJesrwqmLewB-e-Qa20Nqtvo',
+            libraries: ["places"]
+        }),
+        SelectModule,
+        MatSelectModule
     ],
     declarations: [
         DashboardComponent,
         TimelineComponent,
         NotificationComponent,
         ChatComponent,
-        SolicitudeComponent
+        SolicitudeComponent,
+        NewEventModalComponent,
+        EventInfoModalComponent
     ]
 })
 export class DashboardModule { }

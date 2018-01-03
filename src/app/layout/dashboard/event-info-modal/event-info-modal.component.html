@@ -1,0 +1,34 @@
+<div class="modal-header">
+  <b>Info</b>
+</div>
+<div class="modal-body">
+  <div class="row justify-content-center">
+    <div>
+      <div>
+        <b>Título: </b> {{ event.title }}</div>
+      <br>
+      <div>
+        <b>Detalles: </b> {{ event.details }}</div>
+      <br>
+      <div>
+        <b>Tipo de evento: </b> {{ (event.eventtype==0)? 'ninguno' : (event.eventtype==1)? 'cumpleaños': 'reunion' }}</div>
+      <br>
+      <div>
+        <b>Fecha de inicio: </b> {{ getDateString(startdate) }}</div>
+      <br>
+      <div>
+        <b>Fecha de finalización: </b> {{ getDateString(enddate) }}</div>
+      <br>
+      <div *ngIf="event.location">
+        <b>Localización del evento</b><br>
+        <agm-map [latitude]="event.location.latitude" 
+          [longitude]="event.location.longitude" 
+          [zoom]="17"
+          [draggableCursor]="'default'"
+          [streetViewControl]="false">
+        <agm-marker [latitude]="event.location.latitude" [longitude]="event.location.longitude"></agm-marker>
+      </agm-map>
+      </div>
+    </div>
+  </div>
+</div>

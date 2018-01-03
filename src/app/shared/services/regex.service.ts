@@ -48,7 +48,7 @@ export class RegexService {
   illnessValidation(illness: Illness) {
     var errorMessages = [];
 
-    if(!illness.nombre) {
+    if(!illness.name) {
       errorMessages.push('El campo nombre es obligatorio.')
     }
 

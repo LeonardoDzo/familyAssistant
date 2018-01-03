@@ -1,3 +1,4 @@
+import { User } from './../../shared/models/user';
 import { CrudService } from './../../shared/services/crud.service';
 import { Subscription } from 'rxjs/Subscription';
 import { RegexService } from './../../shared/services/regex.service';
@@ -34,11 +35,11 @@ export class IllnessesComponent implements OnInit {
     this.crudService.setTable("illnesses")
   }
 
-  private init() {
+  private init(user: User) {
     if(this.sub) {
       this.sub.unsubscribe();
     }
-    this.sub = this.crudService.getObjects().subscribe((snapshots) => {
+    this.sub = this.crudService.getObjects(user).subscribe((snapshots) => {
       //Se obtiene el arreglo de enfermedades.
       let illnesses: Illness[] = []
       snapshots.forEach((elem) => {
@@ -49,9 +50,9 @@ export class IllnessesComponent implements OnInit {
       
       //Se ordena el arreglo de enfermedades.
       illnesses.sort((a,b) => {
-        if(a.nombre.toLowerCase() < b.nombre.toLowerCase()){
+        if(a.name.toLowerCase() < b.name.toLowerCase()){
           return -1;
-        } else if(a.nombre.toLowerCase() > b.nombre.toLowerCase()) {
+        } else if(a.name.toLowerCase() > b.name.toLowerCase()) {
           return 1;
         }
         return 0;
@@ -67,8 +68,8 @@ export class IllnessesComponent implements OnInit {
   }
   
   ngOnInit() {
-    this.userSub = this.crudService.getUser().subscribe(() => {
-      this.init();
+    this.userSub = this.crudService.getUser().subscribe((user: User) => {
+      this.init(user);
     }, error => {
 
     })
@@ -93,7 +94,7 @@ export class IllnessesComponent implements OnInit {
 
   public search($event) {
     this.illnesses = this.realIllnesses.filter( item => {
-      return item.nombre.toLowerCase().toString().search($event.toLocaleLowerCase().toString()) != -1;
+      return item.name.toLowerCase().toString().search($event.toLocaleLowerCase().toString()) != -1;
     });
 
     this.currentPage = 1;
