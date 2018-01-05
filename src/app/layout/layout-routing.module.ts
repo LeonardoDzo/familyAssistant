@@ -18,7 +18,8 @@ const routes: Routes = [
             { path: 'safebox', loadChildren: './safebox/safebox.module#SafeboxModule'},
             { path: 'illnesses', loadChildren: './illnesses/illnesses.module#IllnessesModule' },
             { path: 'medicine', loadChildren: './medicine/medicine.module#MedicineModule' },
-            { path: 'todo', loadChildren: './todo/todo.module#TodoModule' }
+            { path: 'todo', loadChildren: './todo/todo.module#TodoModule' },
+            { path: 'insurances',loadChildren: './insurances/insurances.module#InsurancesModule' }
         ]
     }
 ];

@@ -8,8 +8,8 @@
             <input class="form-control" name="nombre" [(ngModel)]="event.title">
         </fieldset>
         <fieldset class="form-group">
-            <label for="description">Descripción</label>
-            <textarea class="form-control" name="datails" rows="4" id="description" [(ngModel)]="event.details">
+            <label for="description">Detalles</label>
+            <textarea class="form-control" name="datails" rows="4" id="details" [(ngModel)]="event.details">
             </textarea> 
         </fieldset>
         <mat-form-field>
@@ -35,7 +35,8 @@
                         class="form-control" 
                         #dps="bsDatepicker" 
                         bsDatepicker
-                        [(bsValue)]="dateModel.start">
+                        [(bsValue)]="dateModel.start"
+                        (ngModelChange)="changeStart($event)">
                 </fieldset>
             </div>
             <div class="col-lg-6">
@@ -66,7 +67,7 @@
         </div>
         <fieldset class="form-group">
             <label for="tipo">Tipo de evento</label>
-            <select class="form-control" id="tipo">
+            <select class="form-control" id="tipo" name="eventtype" [(ngModel)]="event.eventtype">
                 <option value="0">Ninguno</option>
                 <option value="2">Reunion</option>
                 <option value="1">Cumpleaños</option>
@@ -83,11 +84,16 @@
             <fieldset class="form-group">
                 <label for="repeat">Repetir cada</label>
                 <div class="input-group">
-                    <input id="repeat" type="number" class="form-control" >
-                    <select class="form-control">
-                        <option value="0">Días</option>
-                        <option value="1">Semanas</option>
-                        <option value="2">Meses</option>
+                    <input 
+                        id="repeat" 
+                        name="frequency" 
+                        type="number" 
+                        class="form-control" 
+                        [(ngModel)]="frequency">
+                    <select class="form-control" name="interval" [(ngModel)]="interval">
+                        <option value="1">Días</option>
+                        <option value="2">Semanas</option>
+                        <option value="3">Meses</option>
                     </select>
                 </div>
             </fieldset>
@@ -98,7 +104,7 @@
                     [(ngModel)]="dateModel.repeatEnd"
                     type="text" 
                     class="form-control" 
-                    #dph="bsDatepicker" 
+                    #dph="bsDatepicker"
                     bsDatepicker
                     [(bsValue)]="dateModel.repeatEnd">
             </fieldset>
@@ -129,5 +135,5 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" (click)="cale()">Agregar</button>
+    <button class="btn btn-primary" (click)="submit()">Agregar</button>
 </div>

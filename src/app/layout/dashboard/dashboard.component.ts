@@ -173,12 +173,12 @@ export class DashboardComponent implements OnInit {
     }
 
     private readEvents() {
-        this.calendarEvents = [];
         if(this.eventsSub){
             this.eventsSub.unsubscribe();
         }
         this.eventsSub = this.eventService.getEvents().subscribe((events) => {
             let promises = []
+            this.calendarEvents = [];
             events.forEach(ev => {
                 promises.push(this.eventService.getEvent(ev.key).then((event) => {
                     let eventObj: Event = event.val();

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { User } from 'app/shared/models/user';
+import { Event } from 'app/shared/models/event';
 
 @Injectable()
 export class EventService {
@@ -27,5 +28,23 @@ export class EventService {
 
 	getEvent(key: string) {
 		return this.afd.database.ref(`events/${key}`).once('value')
+	}
+	
+	private addEventToUser(eventId: string, userId: string) {
+		this.afd.database.ref(`users/${userId}/events/${eventId}`).push(true)
+	}
+
+	addEvent(event: Event) {
+		this.afd.database.ref("events/").push(event).then(ref => {
+			ref.update({
+				id: ref.key
+			})
+			let membersIds = Object.keys(event.members)
+
+			membersIds.forEach(id => {
+				this.addEventToUser(ref.key,id)
+			})
+
+		})
 	}
 }
