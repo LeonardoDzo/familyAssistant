@@ -1,3 +1,4 @@
+import { InsurancesService } from './../shared/services/insurances.service';
 import { TodoService } from './../shared/services/todo.service';
 import { FilesService } from './../shared/services/files.service';
 import { RegexService } from './../shared/services/regex.service';
@@ -20,7 +21,7 @@ import { CalendarModule } from 'angular-calendar';
         NgbDropdownModule.forRoot(),
         LayoutRoutingModule,
         TranslateModule,
-        ModalModule.forRoot(),
+        ModalModule.forRoot()
     ],
     declarations: [
         LayoutComponent,
@@ -33,7 +34,8 @@ import { CalendarModule } from 'angular-calendar';
         FilesService,
         TodoService,
         CrudService,
-        EventService
+        EventService,
+        InsurancesService
     ]
 })
 export class LayoutModule { }

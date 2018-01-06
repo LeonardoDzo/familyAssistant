@@ -9,12 +9,12 @@
   <mat-tab-group>
     <mat-tab label="Autos">
       <div class="tab-panel">
-        <app-insurances-panel></app-insurances-panel>
+        <app-insurances-panel [insurances]="carInsurances"></app-insurances-panel>
       </div>
     </mat-tab>
     <mat-tab label="Casas">
       <div class="tab-panel">
-        <app-insurances-panel></app-insurances-panel>
+        <app-insurances-panel [insurances]="homeInsurances"></app-insurances-panel>
       </div>
     </mat-tab>
   </mat-tab-group> 

@@ -4,12 +4,14 @@ import { CommonModule } from '@angular/common';
 import {MatTabsModule} from '@angular/material/tabs';
 import { InsurancesRoutingModule } from './insurances-routing.module';
 import { InsurancesPanelComponent } from './insurances-panel/insurances-panel.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   imports: [
     CommonModule,
     InsurancesRoutingModule,
-    MatTabsModule
+    MatTabsModule,
+    PdfViewerModule
   ],
   declarations: [InsurancesComponent, InsurancesPanelComponent]
 })

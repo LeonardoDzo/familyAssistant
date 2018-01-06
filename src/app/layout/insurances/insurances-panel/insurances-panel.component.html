@@ -1,25 +1,37 @@
-<div class="row">
-  <div class="col-sm-6 insurances-element">
-    <section class="tables">
-      <div class="row">
-        <div class="col-sm-6">
+<section class="tab-content">
+  <div class="row">
+    <div class="col-sm-6">
           <div class="card">
-            cdascdas
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="card">
-            cdascdas
-          </div>
-        </div>
+            <div class="card-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Póliza</th>
+                      <th>Teléfono</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let insurance of insurances" (click)="changeSelected(insurance)">
+                      <td>{{insurance.name}}</td>
+                      <td>{{insurance.policy}}</td>
+                      <td>{{insurance.telephone}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
       </div>
-    </section>
-  </div>
-  <div class="col-sm-5 insurances-element">
-    <div class="card">
-      <div class="card-body">
-        preview
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <!--<pdf-viewer [src]="'assets/Reporte_patrones.pdf'" 
+          [fit-to-page]="true"
+          [show-all]="false"
+          [page]="1"></pdf-viewer>-->
+        <div class="card-body">
+          <a href="{{selected.downloadUrl}}"><img src="{{selected.downloadUrl}}" alt=""></a>       
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
