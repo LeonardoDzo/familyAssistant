@@ -1,7 +1,8 @@
 import { InsurancesService } from 'app/shared/services/insurances.service';
 import { Insurance } from './../../shared/models/insurance';
-import { Component, OnInit } from '@angular/core';
-import { ThemePalette } from '@angular/material/core'
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 @Component({
   selector: 'app-insurances',
   templateUrl: './insurances.component.html',
@@ -10,7 +11,10 @@ import { ThemePalette } from '@angular/material/core'
 export class InsurancesComponent implements OnInit {
   carInsurances: Insurance[]
   homeInsurances: Insurance[]
+  insurance: Insurance
+  public modalRef: BsModalRef;
   constructor(
+    private modalService: BsModalService,
     private insurancesService: InsurancesService
   ) { }
 
@@ -27,4 +31,7 @@ export class InsurancesComponent implements OnInit {
     })
   }
 
+  public openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
 }

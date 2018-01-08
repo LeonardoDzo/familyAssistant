@@ -1,35 +1,49 @@
 <section class="tab-content">
   <div class="row">
     <div class="col-sm-6">
-          <div class="card">
-            <div class="card-body">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>Nombre</th>
-                      <th>Póliza</th>
-                      <th>Teléfono</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let insurance of insurances" (click)="changeSelected(insurance)">
-                      <td>{{insurance.name}}</td>
-                      <td>{{insurance.policy}}</td>
-                      <td>{{insurance.telephone}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
+      <div class="card">
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Póliza</th>
+                <th>Teléfono</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let insurance of insurances" (click)="changeSelected(insurance)" [ngClass]="{active: isActive(insurance)}">
+                <td>{{insurance.name}}</td>
+                <td>{{insurance.policy}}</td>
+                <td>{{insurance.telephone}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
     <div class="col-sm-6">
       <div class="card">
-        <!--<pdf-viewer [src]="'assets/Reporte_patrones.pdf'" 
-          [fit-to-page]="true"
-          [show-all]="false"
-          [page]="1"></pdf-viewer>-->
-        <div class="card-body">
-          <a href="{{selected.downloadUrl}}"><img src="{{selected.downloadUrl}}" alt=""></a>       
+        <div *ngIf="selected.name">
+          <div class="options">
+            <button style="width: 50%" class="edit"><i class="fa fa-pencil"></i></button>
+            <button style="width: 50%" class="erase"><i class="fa fa-trash"></i></button>
+          </div>
+
+          <div class="card-body">
+            <div *ngIf="selected.downloadUrl">
+              <div *ngIf="!isPdf()">
+                <a href="{{selected.downloadUrl}}" target="_blank"><img src="{{selected.downloadUrl}}" alt=""></a>
+              </div>
+              <div *ngIf="isPdf()">
+                <p>No hay preview disponible</p>
+                <a href="{{selected.downloadUrl}}" target="_blank">link de descarga</a>
+              </div>
+            </div>
+            <div *ngIf="!selected.downloadUrl">
+              No hay ningún archivo de póliza
+            </div>
+          </div>
         </div>
       </div>
     </div>
