@@ -370,6 +370,10 @@ nav.side-navbar a {
   font-size: 0.9em;
 }
 
+nav.side-navbar a.router-link-active {
+  border-left: 4px solid #572424;
+}
+
 nav.side-navbar a[data-toggle="collapse"]::before {
   content: '\f104';
   display: inline-block;

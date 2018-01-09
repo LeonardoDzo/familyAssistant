@@ -12,16 +12,31 @@
   <mat-tab-group>
     <mat-tab label="Autos">
       <div class="tab-panel">
-        <app-insurances-panel [insurances]="carInsurances"></app-insurances-panel>
+        <app-insurances-panel 
+          [insurances]="carInsurances"
+          [selected]="selected"></app-insurances-panel>
       </div>
     </mat-tab>
     <mat-tab label="Casas">
       <div class="tab-panel">
-        <app-insurances-panel [insurances]="homeInsurances"></app-insurances-panel>
+        <app-insurances-panel 
+          [insurances]="homeInsurances"
+          [selected]="selected"></app-insurances-panel>
       </div>
+    </mat-tab>
+    <mat-tab label="De Vida">
+      <app-insurances-panel 
+        [insurances]="lifeInsurances"
+        [selected]="selected"></app-insurances-panel>
+    </mat-tab>
+    <mat-tab label="Médicos">
+      <app-insurances-panel 
+        [insurances]="medicalInsurances"
+        [selected]="selected"></app-insurances-panel>
     </mat-tab>
   </mat-tab-group>
 </div>
+
 <ng-template #add>
   <div class="modal-header">
     <b>Nuevo seguro</b>
@@ -30,26 +45,35 @@
     </button>
   </div>
   <div class="modal-body">
-    <form>
+    <form id="form" (ngSubmit)="submit()" ngNativeValidate>
       <fieldset class="form-group">
         <label>Nombre</label>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" [(ngModel)]="insurance.name" name="name" required>
       </fieldset>
       <fieldset class="form-group">
         <label>Número de póliza</label>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" [(ngModel)]="insurance.policy" name="policy" required>
       </fieldset>
       <fieldset class="form-group">
         <label>Teléfono</label>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" [(ngModel)]="insurance.telephone" name="telephone" required>
+      </fieldset>
+      <fieldset class="form-group">
+        <label>Tipo de seguro</label>
+        <select [(ngModel)]="insurance.type" class="form-control" name="type" required>
+          <option value="car">Auto</option>
+          <option value="home">Casa</option>
+          <option value="life">Vida</option>
+          <option value="medical">Médico</option>
+        </select>
       </fieldset>
       <fieldset class="form-group">
         <label>Archivo de póliza</label>
-        <input type="file" placeholder="Agregar archivo">
+        <input name="file" type="file" placeholder="Agregar archivo" #fileupload (change)="fileChanged(fileupload.files)">
       </fieldset>
     </form>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary">Agregar</button>
+    <input type="submit" form="form" class="btn btn-primary" value="Agregar">
   </div>
 </ng-template>

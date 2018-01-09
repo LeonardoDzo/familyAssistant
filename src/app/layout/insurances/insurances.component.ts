@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Subscription';
 import { InsurancesService } from 'app/shared/services/insurances.service';
 import { Insurance } from './../../shared/models/insurance';
 import { Component, OnInit, TemplateRef } from '@angular/core';
@@ -11,27 +12,60 @@ import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 export class InsurancesComponent implements OnInit {
   carInsurances: Insurance[]
   homeInsurances: Insurance[]
-  insurance: Insurance
+  lifeInsurances: Insurance[]
+  medicalInsurances: Insurance[]
+  insurance: Insurance = new Insurance();
   public modalRef: BsModalRef;
+  userSub: Subscription
+  insurancesSub: Subscription
+  file: File
+  selected: Insurance = new Insurance()
   constructor(
     private modalService: BsModalService,
     private insurancesService: InsurancesService
   ) { }
 
   ngOnInit() {
-    this.insurancesService.getUser().subscribe(user => {
-      this.insurancesService.getInsurances().subscribe((insurances: Insurance[]) => {
+    this.userSub = this.insurancesService.getUser().subscribe(user => {
+      this.selected = new Insurance()
+      if(this.insurancesSub) {
+        this.insurancesSub.unsubscribe()
+      }
+      this.insurancesSub = this.insurancesService.getInsurances().subscribe((insurances: Insurance[]) => {
         this.carInsurances = insurances.filter((ins) => {
           return ins.type == "car"
         })
         this.homeInsurances = insurances.filter((ins) => {
           return ins.type == "home"
         })
+        this.lifeInsurances = insurances.filter((ins) => {
+          return ins.type == "life"
+        })
+        this.medicalInsurances = insurances.filter((ins) => {
+          return ins.type == "medical"
+        })
       })
     })
   }
 
-  public openModal(template: TemplateRef<any>) {
+  ngOnDestroy() {
+    if(this.insurancesSub) {
+      this.insurancesSub.unsubscribe();
+    }
+    this.userSub.unsubscribe();
+  }
+
+  fileChanged(files: any) {
+    this.file = files[0];
+  }
+
+  public openModal(template: TemplateRef<any>,insurance: Insurance = new Insurance()) {
+    this.insurance = insurance
     this.modalRef = this.modalService.show(template);
+  }
+
+  submit() {
+    this.insurancesService.addInsurance(this.insurance,this.file);
+    this.modalRef.hide()
   }
 }

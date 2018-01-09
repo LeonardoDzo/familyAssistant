@@ -18,30 +18,30 @@
     <span class="heading">Menú</span>
     <ul class="list-unstyled">
         <li>
-            <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']">
+            <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{ exact: true }">
                 <i class="icon-home"></i>Inicio</a>
         </li>
         <li *ngIf="user.selectedBoss">
-            <a [routerLink]="['/contacts']" [routerLinkActive]="['router-link-active']">
+            <a [routerLink]="['/contacts']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{ exact: true }">
                 <i class="fa fa-address-book-o"></i>Contactos </a>
         </li>
         <li *ngIf="user.selectedBoss">
-            <a [routerLink]="['/safebox']" [routerLinkActive]="['router-link-active']">
+            <a [routerLink]="['/safebox']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{ exact: true }">
                 <i class="fa fa-lock"></i> Safebox</a>
         </li>
         <li *ngIf="user.selectedBoss">
-            <a [routerLink]="['/todo']" [routerLinkActive]="['router-link-active']">
+            <a [routerLink]="['/todo']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{ exact: true }">
                 <i class="fa fa-calendar"></i>To do list</a>
         </li>
     </ul>
     <span *ngIf="user.selectedBoss" class="heading">Botiquín</span>
     <ul>
         <li *ngIf="user.selectedBoss">
-            <a [routerLink]="['/illnesses']" [routerLinkActive]="['router-link-active']">
+            <a [routerLink]="['/illnesses']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{ exact: true }">
                 <i class="fa fa-heartbeat"></i>Enfermedades</a>
         </li>
         <li *ngIf="user.selectedBoss">
-            <a [routerLink]="['/medicine']" [routerLinkActive]="['router-link-active']">
+            <a [routerLink]="['/medicine']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{ exact: true }">
                 <i class="fa fa-medkit"></i>Medicamentos</a>
         </li>
     </ul>

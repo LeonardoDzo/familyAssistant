@@ -9,6 +9,7 @@
                 <th>Nombre</th>
                 <th>Póliza</th>
                 <th>Teléfono</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -16,6 +17,12 @@
                 <td>{{insurance.name}}</td>
                 <td>{{insurance.policy}}</td>
                 <td>{{insurance.telephone}}</td>
+                <td>
+                  <div class="options">
+                    <button style="width: 50%" class="edit" (click)="openModalEdit(edit,insurance)"><i class="fa fa-pencil"></i></button>
+                    <button style="width: 50%" class="erase" (click)="openModalEdit(remove,insurance)"><i class="fa fa-trash"></i></button>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -25,10 +32,6 @@
     <div class="col-sm-6">
       <div class="card">
         <div *ngIf="selected.name">
-          <div class="options">
-            <button style="width: 50%" class="edit"><i class="fa fa-pencil"></i></button>
-            <button style="width: 50%" class="erase"><i class="fa fa-trash"></i></button>
-          </div>
 
           <div class="card-body">
             <div *ngIf="selected.downloadUrl">
@@ -49,3 +52,58 @@
     </div>
   </div>
 </section>
+
+<ng-template #remove>
+  <div class="modal-header">
+    <b>
+      <i class="fa fa-exclamation"></i>Alerta</b>
+  </div>
+  <div class="modal-body">
+    ¿Está seguro que desea eliminar el seguro {{ selected.name }}?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" (click)="removeInsurance()">Si</button>
+    <button class="btn btn-default" (click)="modalRef.hide()">No</button>
+  </div>
+</ng-template>
+
+<ng-template #edit>
+  <div class="modal-header">
+    <b>Editar</b>
+    <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <fieldset class="form-group">
+        <label>Nombre</label>
+        <input type="text" class="form-control" [(ngModel)]="insurance.name" name="name">
+      </fieldset>
+      <fieldset class="form-group">
+        <label>Número de póliza</label>
+        <input type="text" class="form-control" [(ngModel)]="insurance.policy" name="policy">
+      </fieldset>
+      <fieldset class="form-group">
+        <label>Teléfono</label>
+        <input type="text" class="form-control" [(ngModel)]="insurance.telephone" name="telephone">
+      </fieldset>
+      <fieldset class="form-group">
+        <label>Tipo de seguro</label>
+        <select [(ngModel)]="insurance.type" class="form-control" name="type">
+          <option value="car" selected>Auto</option>
+          <option value="home">Casa</option>
+          <option value="life">Vida</option>
+          <option value="medical">Médico</option>
+        </select>
+      </fieldset>
+      <fieldset class="form-group">
+        <label>Archivo de póliza</label>
+        <input name="file" type="file" placeholder="Agregar archivo" #fileupload (change)="fileChanged(fileupload.files)">
+      </fieldset>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" (click)="submit()">Guardar</button>
+  </div>
+</ng-template>
