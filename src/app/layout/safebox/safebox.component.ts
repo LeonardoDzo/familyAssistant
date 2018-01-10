@@ -11,7 +11,8 @@ import { NgIf } from '@angular/common';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import * as pako from "pako"
-
+import { HttpClient } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-safebox',
@@ -38,7 +39,8 @@ export class SafeboxComponent implements OnInit {
     private toastr: ToastsManager,
     private imageCompressService: ImageCompressService,
     private modalService: BsModalService,
-    vcr: ViewContainerRef
+    vcr: ViewContainerRef,
+    private http: HttpClient
   ) { 
     this.toastr.setRootViewContainerRef(vcr); 
   }
@@ -81,6 +83,12 @@ export class SafeboxComponent implements OnInit {
   }
 
   ngOnInit() {
+    let params = new HttpParams();
+    /*this.http.get("http://localhost:8080/api/safebox/verification").subscribe(response => {
+      console.log(response)
+    }, error => {
+      console.log(error.error.message)
+    })*/
     this.userSub = this.fs.getUser().subscribe(() => {
       this.navigation = [new FileDatabase('root','root','folder')]
       this.parent = "root"

@@ -7,6 +7,7 @@ import { SafeboxRoutingModule } from './safebox-routing.module';
 import { SafeboxComponent } from './safebox.component';
 import { ImageCompressService,ResizeOptions,ImageUtilityService } from 'ng2-image-compress';
 import { BsDropdownModule } from 'ngx-bootstrap';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { BsDropdownModule } from 'ngx-bootstrap';
     SafeboxRoutingModule,
     ToastModule,
     FormsModule,
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+    HttpClientModule
   ],
   declarations: [ SafeboxComponent ],
   providers: [ImageCompressService,ResizeOptions]

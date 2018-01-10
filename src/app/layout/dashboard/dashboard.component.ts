@@ -128,7 +128,7 @@ export class DashboardComponent implements OnInit {
         this.solicitudesSub = this.userService.getSolicitudes().subscribe((bossesIds) => {
             this.bosses = [];
             bossesIds.forEach((elem) => {
-                let userKey = elem.payload.toJSON().toString();
+                let userKey = elem.key;
                 let solicitudeKey = elem.key;
                 this.userService.getBoss(userKey).then((bossJson) => {
                     var boss = Object.assign(new Boss(),bossJson.val())

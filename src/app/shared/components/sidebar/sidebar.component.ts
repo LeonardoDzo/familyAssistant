@@ -47,6 +47,7 @@ export class SidebarComponent implements OnInit {
             }));
         })
         Promise.all(promises).then(() => {
+            console.log(this.families)
             if(this.families.length >= 1) {
                 this.familyActive = this.families[0];
                 this.us.setFamilyActive(this.families[0].id);
@@ -70,7 +71,7 @@ export class SidebarComponent implements OnInit {
             this.bosses = [];
             let promisses = [];
             bossesIds.forEach((elem) => {
-                let userKey = elem.payload.toJSON().toString();
+                let userKey = elem.key;
                 promisses.push(this.us.getBoss(userKey).then((bossJson) => {
                     var boss = Object.assign(new Boss(),bossJson.val())
                     boss.userKey = userKey;
@@ -88,9 +89,10 @@ export class SidebarComponent implements OnInit {
                     })
                 } else if(this.bosses.length > 0){
                     this.selectedBoss = this.bosses[0];
-                    this.us.setSelectedBoss(this.bosses[0].userKey);
+                    this.us.setSelectedBoss(this.bosses[0].id);
                 }
-                this.initFam()
+                if(this.user.selectedBoss)
+                    this.initFam()
             });
         }, error => {
 

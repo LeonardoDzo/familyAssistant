@@ -41,38 +41,9 @@ export class HeaderComponent implements OnInit,AfterViewInit {
         this.userSub = this.us.getUserObservable().subscribe((user: User) => {
             this.user = user;
         });
-        this.bossesSub = this.us.getBosses().subscribe((bossesIds) => {
-            this.bosses = [];
-            let promisses = [];
-            bossesIds.forEach((elem) => {
-                let userKey = elem.payload.toJSON().toString();
-                promisses.push(this.us.getBoss(userKey).then((bossJson) => {
-                    var boss = Object.assign(new Boss(),bossJson.val())
-                    boss.userKey = userKey;
-                    this.bosses.push(boss)
-                }));
-            });
-            
-            Promise.all(promisses).then(() => {
-                if(this.user.selectedBoss) {
-                    this.selectedBoss = this.bosses.find(b => {
-                        if(this.user.selectedBoss == b.userKey){
-                            return true
-                        }
-                        return false
-                    })
-                } else if(this.bosses.length > 0){
-                    this.selectedBoss = this.bosses[0];
-                    this.us.setSelectedBoss(this.bosses[0].userKey);
-                }
-            });
-        }, error => {
-            
-        });
     }
 
-    ngOnDestroy(){ 
-        this.bossesSub.unsubscribe;        
+    ngOnDestroy(){        
         this.userSub.unsubscribe();
     }
 

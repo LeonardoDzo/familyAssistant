@@ -4,4 +4,5 @@ export class Boss {
     name: string;
     url: string;
     families: any;
+    id: string
 }

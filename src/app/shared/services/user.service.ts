@@ -95,6 +95,7 @@ export class UserService {
 
   setSelectedBoss(key: string) {
     let uid = this.afa.auth.currentUser.uid;
+    console.log(key)
     this.afd.database.ref(`assistants/${uid}`).update({
       selectedBoss: key
     });
@@ -119,14 +120,14 @@ export class UserService {
 
   acceptBoss(boss: Boss) {
     var uid = this.afa.auth.currentUser.uid;
-    this.afd.database.ref(`assistants/${uid}/bosses`).push(boss.userKey);
-    this.afd.database.ref(`users/${boss.userKey}/assistants`).push(uid);
+    this.afd.database.ref(`assistants/${uid}/bosses/${boss.userKey}`).set(true);
+    this.afd.database.ref(`users/${boss.userKey}/assistants/${uid}`).set(true);
     this.afd.database.ref(`assistants/${uid}/solicitudes/${boss.solicitudeKey}`).remove();
   }
 
   rejectBoss(boss: Boss) {
     let uid = this.afa.auth.currentUser.uid;
-    this.afd.database.ref(`assistants/${uid}/solicitudes/${boss.solicitudeKey}`).remove();
+    this.afd.database.ref(`assistants/${uid}/solicitudes/${boss.userKey}`).remove();
   }
 
   private getExt(name: string): string {
