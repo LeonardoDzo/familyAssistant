@@ -5,7 +5,9 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { InsurancesRoutingModule } from './insurances-routing.module';
 import { InsurancesPanelComponent } from './insurances-panel/insurances-panel.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   imports: [
@@ -13,7 +15,10 @@ import { FormsModule } from '@angular/forms';
     InsurancesRoutingModule,
     MatTabsModule,
     PdfViewerModule,
-    FormsModule
+    FormsModule,
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule
   ],
   declarations: [InsurancesComponent, InsurancesPanelComponent]
 })

@@ -1,9 +1,11 @@
+import { Formcontrols } from './formcontrols';
 import { Subscription } from 'rxjs/Subscription';
 import { InsurancesService } from 'app/shared/services/insurances.service';
 import { Insurance } from './../../shared/models/insurance';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import {FormControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 @Component({
   selector: 'app-insurances',
   templateUrl: './insurances.component.html',
@@ -14,15 +16,24 @@ export class InsurancesComponent implements OnInit {
   homeInsurances: Insurance[]
   lifeInsurances: Insurance[]
   medicalInsurances: Insurance[]
+  insurances: Insurance[]
   insurance: Insurance = new Insurance();
   public modalRef: BsModalRef;
   userSub: Subscription
   insurancesSub: Subscription
   file: File
+  form: FormGroup = this.formBuilder.group({
+    telephone: ["", [Validators.required,Validators.pattern("^(\d{7,10})$")]],
+    name: ["",[]],
+    file: ["",[]],
+    policy: ["",[]]
+  });
   selected: Insurance = new Insurance()
+  formControls = new Formcontrols()
   constructor(
     private modalService: BsModalService,
-    private insurancesService: InsurancesService
+    private insurancesService: InsurancesService,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
@@ -32,6 +43,8 @@ export class InsurancesComponent implements OnInit {
         this.insurancesSub.unsubscribe()
       }
       this.insurancesSub = this.insurancesService.getInsurances().subscribe((insurances: Insurance[]) => {
+        this.insurances = insurances
+        console.log(insurances)
         this.carInsurances = insurances.filter((ins) => {
           return ins.type == "car"
         })
@@ -65,7 +78,9 @@ export class InsurancesComponent implements OnInit {
   }
 
   submit() {
-    this.insurancesService.addInsurance(this.insurance,this.file);
-    this.modalRef.hide()
+    if(!this.form.controls.telephone.hasError('pattern')){
+      this.insurancesService.addInsurance(this.insurance,this.file);
+      this.modalRef.hide()
+    }
   }
 }

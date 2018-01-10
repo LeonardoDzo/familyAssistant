@@ -10,29 +10,28 @@
 </header>
 <div class="inside-content">
   <mat-tab-group>
-    <mat-tab label="Autos">
+    <mat-tab label="Todos">
       <div class="tab-panel">
         <app-insurances-panel 
-          [insurances]="carInsurances"
+          [insurances]="insurances" 
           [selected]="selected"></app-insurances-panel>
+      </div>
+    </mat-tab>
+    <mat-tab label="Autos">
+      <div class="tab-panel">
+        <app-insurances-panel [insurances]="carInsurances" [selected]="selected"></app-insurances-panel>
       </div>
     </mat-tab>
     <mat-tab label="Casas">
       <div class="tab-panel">
-        <app-insurances-panel 
-          [insurances]="homeInsurances"
-          [selected]="selected"></app-insurances-panel>
+        <app-insurances-panel [insurances]="homeInsurances" [selected]="selected"></app-insurances-panel>
       </div>
     </mat-tab>
     <mat-tab label="De Vida">
-      <app-insurances-panel 
-        [insurances]="lifeInsurances"
-        [selected]="selected"></app-insurances-panel>
+      <app-insurances-panel [insurances]="lifeInsurances" [selected]="selected"></app-insurances-panel>
     </mat-tab>
     <mat-tab label="Médicos">
-      <app-insurances-panel 
-        [insurances]="medicalInsurances"
-        [selected]="selected"></app-insurances-panel>
+      <app-insurances-panel [insurances]="medicalInsurances" [selected]="selected"></app-insurances-panel>
     </mat-tab>
   </mat-tab-group>
 </div>
@@ -45,31 +44,34 @@
     </button>
   </div>
   <div class="modal-body">
-    <form id="form" (ngSubmit)="submit()" ngNativeValidate>
-      <fieldset class="form-group">
-        <label>Nombre</label>
-        <input type="text" class="form-control" [(ngModel)]="insurance.name" name="name" required>
-      </fieldset>
-      <fieldset class="form-group">
-        <label>Número de póliza</label>
-        <input type="text" class="form-control" [(ngModel)]="insurance.policy" name="policy" required>
-      </fieldset>
-      <fieldset class="form-group">
-        <label>Teléfono</label>
-        <input type="text" class="form-control" [(ngModel)]="insurance.telephone" name="telephone" required>
-      </fieldset>
-      <fieldset class="form-group">
-        <label>Tipo de seguro</label>
-        <select [(ngModel)]="insurance.type" class="form-control" name="type" required>
-          <option value="car">Auto</option>
-          <option value="home">Casa</option>
-          <option value="life">Vida</option>
-          <option value="medical">Médico</option>
-        </select>
-      </fieldset>
+    <form id="form" [formGroup]="form" (ngSubmit)="submit()">
+      <mat-form-field class="full-width">
+        <input matInput formControlName="name" placeholder="Nombre" type="text" [(ngModel)]="insurance.name" name="name" required>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput formControlName="policy" placeholder="Número de póliza" type="text" [(ngModel)]="insurance.policy" name="policy" required>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput pattern="^(\d{7,10})$" placeholder="Teléfono" type="text" [(ngModel)]="insurance.telephone" name="telephone" formControlName="telephone" required>
+        <mat-error *ngIf="form.controls.telephone.hasError('pattern') && !form.controls.telephone.hasError('required')">
+          Introduzca un teléfono correcto
+        </mat-error>
+        <mat-error *ngIf="form.controls.telephone.hasError('required')">
+          El campo teléfono es requerido
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-select placeholder="Tipo de seguro" [formControl]="formControls.insuranceType" [(ngModel)]="insurance.type" name="type" required>
+          <mat-option [value]="'car'">Auto</mat-option>
+          <mat-option [value]="'home'">Casa</mat-option>
+          <mat-option [value]="'life'">Vida</mat-option>
+          <mat-option [value]="'medical'">Médico</mat-option>
+        </mat-select>
+        <mat-error *ngIf="formControls.insuranceType.hasError('required')">Se requiere un tipo de seguro</mat-error>
+      </mat-form-field>
       <fieldset class="form-group">
         <label>Archivo de póliza</label>
-        <input name="file" type="file" placeholder="Agregar archivo" #fileupload (change)="fileChanged(fileupload.files)">
+        <input name="file" formControlName="file" type="file" placeholder="Agregar archivo" #fileupload (change)="fileChanged(fileupload.files)">
       </fieldset>
     </form>
   </div>
