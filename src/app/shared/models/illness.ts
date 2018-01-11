@@ -4,4 +4,5 @@ export class Illness {
     moreInfo: string = "";
     medicine: string = "";
     name: string = "";
+    type: number;
 }

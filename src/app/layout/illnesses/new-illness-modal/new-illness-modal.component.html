@@ -1,0 +1,49 @@
+<div class="modal-body">
+  <ul>
+    <li *ngFor="let message of errorMessage">
+      {{ message }}
+    </li>
+  </ul>
+  <form id="form" [formGroup]="form" (ngSubmit)="submitModal()" #addIllnessForm>
+    <mat-form-field style="width: 100%;">
+      <input matInput formControlName="name" placeholder="Nombre" type="text" [(ngModel)]="illness.name" name="name" required>
+      <mat-error *ngIf="form.controls.name.hasError('required')">
+        El campo nombre es requerido
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field style="width: 100%;">
+      <input matInput formControlName="dosage" placeholder="Dosis" type="text" [(ngModel)]="illness.dosage" name="dosage" required>
+      <mat-error *ngIf="form.controls.dosage.hasError('required')">
+        El campo dosis es requerido
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field style="width: 100%;">
+      <input matInput formControlName="moreInfo" placeholder="Información" type="text" [(ngModel)]="illness.moreInfo" name="info" required>
+      <mat-error *ngIf="form.controls.moreInfo.hasError('required')">
+        El campo información es requerido
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field style="width: 100%;">
+      <input matInput formControlName="medicine" placeholder="Medicamentos" type="text" [(ngModel)]="illness.medicine" name="medicine" required>
+      <mat-error *ngIf="form.controls.medicine.hasError('required')">
+        El campo medicamentos es requerido
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field style="width: 100%;">
+      <mat-select 
+        placeholder="Tipo"
+        [(ngModel)]="illness.type" name="type"
+        formControlName="type"
+        required>
+        <mat-option [value]="0">Dolor</mat-option>
+        <mat-option [value]="1">Enfermedad</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls.type.hasError('required')">
+        El campo tipo es requerido
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div class="modal-footer">
+  <input form="form" type="submit" class="btn btn-primary" value="{{(!illness.id)? 'Agregar' : 'Guardar'}}">
+</div>

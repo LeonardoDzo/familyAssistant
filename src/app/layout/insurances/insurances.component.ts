@@ -23,7 +23,7 @@ export class InsurancesComponent implements OnInit {
   insurancesSub: Subscription
   file: File
   form: FormGroup = this.formBuilder.group({
-    telephone: ["", [Validators.required,Validators.pattern("^(\d{7,10})$")]],
+    telephone: ["", [Validators.required,Validators.pattern(/^(\d{7,10})$/)]],
     name: ["",[]],
     file: ["",[]],
     policy: ["",[]]
@@ -44,7 +44,6 @@ export class InsurancesComponent implements OnInit {
       }
       this.insurancesSub = this.insurancesService.getInsurances().subscribe((insurances: Insurance[]) => {
         this.insurances = insurances
-        console.log(insurances)
         this.carInsurances = insurances.filter((ins) => {
           return ins.type == "car"
         })

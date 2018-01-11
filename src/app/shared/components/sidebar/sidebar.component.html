@@ -33,6 +33,11 @@
             <a [routerLink]="['/todo']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{ exact: true }">
                 <i class="fa fa-calendar"></i>To do list</a>
         </li>
+        <li *ngIf="user.selectedBoss">
+            <a [routerLink]="['/insurances']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{ exact: true }">
+                <i class="fa fa-file"></i> Seguros
+            </a>
+        </li>
     </ul>
     <span *ngIf="user.selectedBoss" class="heading">Botiquín</span>
     <ul>

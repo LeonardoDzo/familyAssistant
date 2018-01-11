@@ -18,6 +18,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 export class IllnessesComponent implements OnInit {
   illness: Illness;
   illnesses: Illness[] = [];
+  illnesses0: Illness[];
+  illnesses1: Illness[];
   realIllnesses: Illness[] = [];
   public modalRef: BsModalRef;
   public errorMessage: string[] = [];
@@ -59,6 +61,12 @@ export class IllnessesComponent implements OnInit {
       });
 
       //Asignaciones necesarias para mostrar las enfermedades.
+      this.illnesses0 = illnesses.filter(illness => {
+        return illness.type==0;
+      })
+      this.illnesses1 = illnesses.filter(illness => {
+        return illness.type==1;
+      })
       this.realIllnesses = illnesses;
       this.totalItems = illnesses.length;
       this.illnesses = this.realIllnesses.slice(0,this.itemsPerPage);

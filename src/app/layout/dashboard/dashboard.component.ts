@@ -189,8 +189,8 @@ export class DashboardComponent implements OnInit {
                         color: this.getColor(eventObj.eventtype),
                         meta: eventObj
                     });
-                    if(eventObj.repeatmodel)
-                        this.repeatEvents(eventObj)
+                    //if(eventObj.repeatmodel)
+                        //this.repeatEvents(eventObj)
                 }));
             });
             Promise.all(promises).then(() => {

@@ -1,0 +1,29 @@
+<section>
+  <div class="tab-content">
+    <div class="card">
+      <div class="card-header">
+        <b>{{title}}</b>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>
+                Nombre
+              </th>
+              <th>
+                Medicina
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let illness of illnesses">
+              <td>{{illness.name}}</td>
+              <td>{{illness.medicine}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

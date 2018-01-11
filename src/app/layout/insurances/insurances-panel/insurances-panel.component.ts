@@ -1,3 +1,5 @@
+import { Formcontrols } from './../formcontrols';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { Insurance } from './../../../shared/models/insurance';
 import { Component, OnInit, Input, TemplateRef } from '@angular/core';
@@ -22,10 +24,18 @@ export class InsurancesPanelComponent implements OnInit {
   selected: Insurance = new Insurance();
   pdfSrc: any
   file: File
+  form: FormGroup = this.formBuilder.group({
+    telephone: ["", [Validators.required,Validators.pattern(/^(\d{7,10})$/)]],
+    name: ["",[]],
+    file: ["",[]],
+    policy: ["",[]]
+  });
+  formControls = new Formcontrols()
   constructor(
     private http: HttpClient,
     private modalService: BsModalService,
-    private insurancesService: InsurancesService
+    private insurancesService: InsurancesService,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {

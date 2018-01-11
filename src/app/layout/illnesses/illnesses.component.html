@@ -1,55 +1,26 @@
 <div [@routerTransition]>
-  <section class="tables">
+  <header class="page-header">
     <div class="container-fluid">
-      <div class="col-lg-12">
-        <div class="card">
-          <div class="card-header d-flex align-items-center justify-content-between">
-            <h3 class="h4">
-              <i class="fa fa-heartbeat"></i> Enfermedades &nbsp;&nbsp;
-              <button class="btn btn-success" (click)="openModal(addTemplate)">
-                <i class="fa fa-plus"></i> Nuevo
-              </button>
-            </h3>
-            <div class="search-bar">
-              <form role="form" class="form-inline" #searchForm="ngForm">
-                <input (ngModelChange)="search($event)" class="form-control" type="text" placeholder="Buscar" name="searchString" [(ngModel)]="searchString">
-              </form>
-            </div>
-          </div>
-
-          <div class="card-body">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Medicina</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let illness of illnesses" (click)="openModal(infoTemplate,illness)">
-                  <td>
-                    {{ illness.name }}
-                  </td>
-                  <td>{{ illness.medicine }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="card-footer">
-            <div class="row">
-              <div class="col"></div>
-              <div class="col align-self-center">
-                <pagination [itemsPerPage]="itemsPerPage" [totalItems]="totalItems" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
-                  nextText="&rsaquo;"></pagination>
-              </div>
-              <div class="col"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <h2 class="no-margin-bottom">
+        <i class="fa fa-file"></i> Enfermedades &nbsp; &nbsp;
+        <button class="btn btn-success" (click)="openModal(addTemplate)">
+          <i class="fa fa-plus"></i> Nuevo
+        </button>
+      </h2>
     </div>
-  </section>
+  </header>
+  <mat-tab-group>
+    <mat-tab label="Dolores">
+      <div class="tab-panel">
+        <app-illnesses-table [illnesses]="illnesses0" [title]="'Dolores'"></app-illnesses-table>
+      </div>
+    </mat-tab>
+    <mat-tab label="Enfermedades">
+      <div class="tab-panel">
+        <app-illnesses-table [illnesses]="illnesses1" [title]="'Enfermedades'"></app-illnesses-table>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>
 
 <ng-template #addTemplate>
@@ -59,36 +30,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
-    <ul>
-      <li *ngFor="let message of errorMessage">
-        {{ message }}
-      </li>
-    </ul>
-    <form role="form" #addIllnessForm>
-      <fieldset class="form-group">
-        <label>Nombre</label>
-        <input class="form-control" name="nombre" [(ngModel)]="illness.name">
-      </fieldset>
-
-      <fieldset class="form-group">
-        <label>Dosis</label>
-        <input class="form-control" name="dosis" [(ngModel)]="illness.dosage">
-      </fieldset>
-
-      <fieldset class="form-group">
-        <label>Info</label>
-        <input class="form-control" name="info" [(ngModel)]="illness.moreInfo">
-      </fieldset>
-      <fieldset class="form-group">
-        <label>Medicamentos</label>
-        <input class="form-control" name="medicine" [(ngModel)]="illness.medicine">
-      </fieldset>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button (click)="submitModal()" class="btn btn-primary">{{(!illness.id)? 'Agregar' : 'Guardar'}}</button>
-  </div>
+  <app-new-illness-modal [modalRef]="modalRef" [illness]="illness"></app-new-illness-modal>
 </ng-template>
 
 <ng-template #infoTemplate>
@@ -106,28 +48,28 @@
           <a (click)="openModal(confirmTemplate,illness)" class="dropdown-item" href="javascript:void(0)">Eliminar</a>
         </li>
         <li role="menuitem">
-           <a (click)="modalRef.hide()" class="dropdown-item" href="javascript:void(0)">Cerrar</a>
+          <a (click)="modalRef.hide()" class="dropdown-item" href="javascript:void(0)">Cerrar</a>
         </li>
       </ul>
     </div>
   </div>
   <div class="modal-body">
     <div class="row justify-content-center">
+      <div>
         <div>
-            <div>
-              <b>Nombre: </b> {{ illness.name }}</div>
-            <br>
-            <div>
-              <b>Medicamento: </b>{{ illness.medicine }}</div>
-            <br>
-            <div>
-              <b>info: </b>{{ illness.moreInfo }}</div>
-            <br>
-            <div>
-              <b>Dosis: </b>{{ illness.dosage }}</div>
-          </div>
-        </div>
+          <b>Nombre: </b> {{ illness.name }}</div>
+        <br>
+        <div>
+          <b>Medicamento: </b>{{ illness.medicine }}</div>
+        <br>
+        <div>
+          <b>info: </b>{{ illness.moreInfo }}</div>
+        <br>
+        <div>
+          <b>Dosis: </b>{{ illness.dosage }}</div>
+      </div>
     </div>
+  </div>
 </ng-template>
 
 <ng-template #confirmTemplate>
