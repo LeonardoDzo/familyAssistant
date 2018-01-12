@@ -2,7 +2,7 @@
   <header class="page-header">
     <div class="container-fluid">
       <h2 class="no-margin-bottom">
-        <i class="fa fa-file"></i> Enfermedades &nbsp; &nbsp;
+        <i class="fa fa-medkit"></i> Botiquín &nbsp; &nbsp;
         <button class="btn btn-success" (click)="openModal(addTemplate)">
           <i class="fa fa-plus"></i> Nuevo
         </button>
@@ -10,6 +10,11 @@
     </div>
   </header>
   <mat-tab-group>
+    <mat-tab label="Todo">
+      <div class="tab-panel">
+        <app-illnesses-table [illnesses]="illnesses" [title]="'Todo'"></app-illnesses-table>
+      </div>
+    </mat-tab>
     <mat-tab label="Dolores">
       <div class="tab-panel">
         <app-illnesses-table [illnesses]="illnesses0" [title]="'Dolores'"></app-illnesses-table>
@@ -31,57 +36,4 @@
     </button>
   </div>
   <app-new-illness-modal [modalRef]="modalRef" [illness]="illness"></app-new-illness-modal>
-</ng-template>
-
-<ng-template #infoTemplate>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Info</h4>
-    <div class="btn-group pull-right" placement="bottom left" dropdown>
-      <a href="javascript:void(0)" dropdownToggle class="dropdown-toggle">
-        <i class="fa fa-ellipsis-v"></i>
-      </a>
-      <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
-        <li role="menuitem">
-          <a (click)="openModal(addTemplate,illness)" class="dropdown-item" href="javascript:void(0)">Editar</a>
-        </li>
-        <li role="menuitem">
-          <a (click)="openModal(confirmTemplate,illness)" class="dropdown-item" href="javascript:void(0)">Eliminar</a>
-        </li>
-        <li role="menuitem">
-          <a (click)="modalRef.hide()" class="dropdown-item" href="javascript:void(0)">Cerrar</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <div class="modal-body">
-    <div class="row justify-content-center">
-      <div>
-        <div>
-          <b>Nombre: </b> {{ illness.name }}</div>
-        <br>
-        <div>
-          <b>Medicamento: </b>{{ illness.medicine }}</div>
-        <br>
-        <div>
-          <b>info: </b>{{ illness.moreInfo }}</div>
-        <br>
-        <div>
-          <b>Dosis: </b>{{ illness.dosage }}</div>
-      </div>
-    </div>
-  </div>
-</ng-template>
-
-<ng-template #confirmTemplate>
-  <div class="modal-header">
-    <p>
-      <i class="fa fa-exclamation"></i>Alerta</p>
-  </div>
-  <div class="modal-body">
-    ¿Está seguro que desea eliminar la enfermedad {{ illness.name }}?
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-danger" (click)="removeIllness()">Si</button>
-    <button class="btn btn-default" (click)="modalRef.hide()">No</button>
-  </div>
 </ng-template>

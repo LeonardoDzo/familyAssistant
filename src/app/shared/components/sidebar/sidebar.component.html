@@ -6,12 +6,16 @@
         </div>
         <div class="title">
             <div ngbDropdown class="d-inline-block">
-              <h3 class="h4" id="dropdownBasic1" ngbDropdownToggle>{{selectedBoss.name}}<i class="fa fa-caret-down"></i></h3>
-              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button (click)="changeSelectedBoss(boss)" *ngFor="let boss of bosses" class="dropdown-item">{{boss.name}}</button>
-              </div>
+                <h3 class="h4" id="dropdownBasic1" ngbDropdownToggle>{{selectedBoss.name}}
+                    <i class="fa fa-caret-down"></i>
+                </h3>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button (click)="changeSelectedBoss(boss)" *ngFor="let boss of bosses" class="dropdown-item">{{boss.name}}</button>
+                </div>
             </div>
-            <p class="family" (click)="openModal(template)">{{familyActive.name}} <i class="fa fa-exchange"></i></p>
+            <p class="family" (click)="openModal(template)">{{familyActive.name}}
+                <i class="fa fa-exchange"></i>
+            </p>
         </div>
     </div>
     <!-- Sidebar Navidation Menus-->
@@ -38,32 +42,22 @@
                 <i class="fa fa-file"></i> Seguros
             </a>
         </li>
-    </ul>
-    <span *ngIf="user.selectedBoss" class="heading">Botiquín</span>
-    <ul>
         <li *ngIf="user.selectedBoss">
             <a [routerLink]="['/illnesses']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{ exact: true }">
-                <i class="fa fa-heartbeat"></i>Enfermedades</a>
-        </li>
-        <li *ngIf="user.selectedBoss">
-            <a [routerLink]="['/medicine']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{ exact: true }">
-                <i class="fa fa-medkit"></i>Medicamentos</a>
+                <i class="fa fa-medkit"></i>Botiquín</a>
         </li>
     </ul>
 </nav>
-     
+
 <ng-template #template>
     <div class="modal-header">
         <h4 class="modal-title pull-left">Cambiar familia</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-          <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="list-group">
-        <a *ngFor="let family of families" 
-            href="javascript:void(0)" 
-            (click)="changeFamily(family)" 
-            class="list-group-item list-group-item-action">
+        <a *ngFor="let family of families" href="javascript:void(0)" (click)="changeFamily(family)" class="list-group-item list-group-item-action">
             Familia {{family.name}}
         </a>
     </div>

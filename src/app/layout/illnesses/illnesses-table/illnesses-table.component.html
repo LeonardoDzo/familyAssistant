@@ -17,7 +17,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let illness of illnesses">
+            <tr *ngFor="let illness of illnesses" (click)="openModal(infoTemplate,illness)">
               <td>{{illness.name}}</td>
               <td>{{illness.medicine}}</td>
             </tr>
@@ -27,3 +27,7 @@
     </div>
   </div>
 </section>
+
+<ng-template #infoTemplate>
+  <app-illness-info-modal [illness]="illness" [modalRef]="modalRef"></app-illness-info-modal>
+</ng-template>

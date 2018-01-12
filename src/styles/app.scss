@@ -39,3 +39,13 @@
 .mat-ink-bar {
     background-color: #8A1111 !important;
 }
+
+.mat-form-field-type-mat-chip-list {
+    .mat-form-field-flex {
+        flex-wrap: wrap;
+    }
+    .mat-form-field-prefix, 
+    .mat-form-field-suffix {
+        max-width: 100%;
+    }
+}

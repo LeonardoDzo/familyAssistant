@@ -97,7 +97,6 @@ export class IllnessesComponent implements OnInit {
     }
     this.illness = Object.assign(new Illness(), illness);
     this.modalRef = this.modalService.show(template);
-    this.errorMessage = [];
   }
 
   public search($event) {

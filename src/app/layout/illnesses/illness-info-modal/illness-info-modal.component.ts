@@ -1,23 +1,25 @@
+import { CrudService } from './../../../shared/services/crud.service';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { BsModalService } from 'ngx-bootstrap';
 import { Illness } from './../../../shared/models/illness';
 import { Component, OnInit, Input, TemplateRef } from '@angular/core';
 
 @Component({
-  selector: 'app-illnesses-table',
-  templateUrl: './illnesses-table.component.html',
-  styleUrls: ['./illnesses-table.component.scss']
+  selector: 'app-illness-info-modal',
+  templateUrl: './illness-info-modal.component.html',
+  styleUrls: ['./illness-info-modal.component.scss']
 })
-export class IllnessesTableComponent implements OnInit {
+export class IllnessInfoModalComponent implements OnInit {
   @Input()
-  illnesses: Illness[]
-  @Input()
-  title: string
-  public modalRef: BsModalRef;
   illness: Illness
+  @Input()
+  public modalRef: BsModalRef;
   constructor(
     private modalService: BsModalService,
-  ) { }
+    private crudService: CrudService
+  ) { 
+    this.crudService.setTable("illnesses")
+  }
 
   ngOnInit() {
   }
@@ -30,4 +32,8 @@ export class IllnessesTableComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }
 
+  public removeIllness() {
+    this.crudService.removeObject(this.illness)
+    this.modalRef.hide()
+  }
 }

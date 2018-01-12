@@ -18,16 +18,22 @@
       </mat-error>
     </mat-form-field>
     <mat-form-field style="width: 100%;">
-      <input matInput formControlName="moreInfo" placeholder="Información" type="text" [(ngModel)]="illness.moreInfo" name="info" required>
-      <mat-error *ngIf="form.controls.moreInfo.hasError('required')">
-        El campo información es requerido
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field style="width: 100%;">
-      <input matInput formControlName="medicine" placeholder="Medicamentos" type="text" [(ngModel)]="illness.medicine" name="medicine" required>
-      <mat-error *ngIf="form.controls.medicine.hasError('required')">
+      <label class="{{focused}}">Medicamentos</label>
+      <mat-chip-list #chipList>
+        <mat-chip *ngFor="let medicine of medicines" [removable]="true" (remove)="remove(medicine)">
+          {{medicine}}
+          <i matChipRemove class="fa fa-close"></i>
+        </mat-chip>
+        <input [matChipInputFor]="chipList"
+          [matChipInputAddOnBlur]="true"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add($event)"
+          (focus)="onFocus()"
+          (blur)="onBlur()">
+      </mat-chip-list>
+      <!--<mat-error *ngIf="form.controls.medicine.hasError('required')">
         El campo medicamentos es requerido
-      </mat-error>
+      </mat-error>-->
     </mat-form-field>
     <mat-form-field style="width: 100%;">
       <mat-select 

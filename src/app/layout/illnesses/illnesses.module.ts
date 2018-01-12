@@ -10,6 +10,9 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatTabsModule} from '@angular/material/tabs';
 import { IllnessesTableComponent } from './illnesses-table/illnesses-table.component';
 import { NewIllnessModalComponent } from './new-illness-modal/new-illness-modal.component';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatIconModule} from '@angular/material/icon';
+import { IllnessInfoModalComponent } from './illness-info-modal/illness-info-modal.component';
 
 @NgModule({
   imports: [
@@ -21,9 +24,11 @@ import { NewIllnessModalComponent } from './new-illness-modal/new-illness-modal.
     MatInputModule,
     MatSelectModule,
     MatTabsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatChipsModule,
+    MatIconModule
   ],
-  declarations: [ IllnessesComponent, IllnessesTableComponent, NewIllnessModalComponent ],
+  declarations: [ IllnessesComponent, IllnessesTableComponent, NewIllnessModalComponent, IllnessInfoModalComponent ],
   exports: [ IllnessesComponent ]
 })
 export class IllnessesModule { }
