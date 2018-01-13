@@ -1,3 +1,5 @@
+import { MatPaginatorIntl } from '@angular/material';
+import { CustomPaginator } from './custom-paginator';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -70,7 +72,7 @@ export const firebase = {
     providers: [
         AuthGuard,
         AuthService,
-        {provide: ToastOptions, useClass: CustomOption},
+        {provide: ToastOptions, useClass: CustomOption}
     ],
     bootstrap: [AppComponent]
 })

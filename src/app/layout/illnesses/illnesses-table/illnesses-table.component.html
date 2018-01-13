@@ -1,8 +1,13 @@
 <section>
   <div class="tab-content">
     <div class="card">
-      <div class="card-header">
+      <div class="card-header justify-content-between">
         <b>{{title}}</b>
+        <div class="search-bar">
+          <form role="form" class="form-inline" #searchForm="ngForm">
+            <input (ngModelChange)="search($event)" class="form-control" type="text" placeholder="Buscar" name="searchString" [(ngModel)]="searchString">
+          </form>
+        </div>
       </div>
       <div class="card-body">
         <table class="table">
@@ -17,12 +22,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let illness of illnesses" (click)="openModal(infoTemplate,illness)">
+            <tr *ngFor="let illness of displayIllnesses" (click)="openModal(infoTemplate,illness)">
               <td>{{illness.name}}</td>
               <td>{{illness.medicine}}</td>
             </tr>
           </tbody>
         </table>
+      </div>
+      <div class="card-footer">
+          <mat-paginator [length]="length"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="[5, 10, 25, 100]"
+            (page)="change($event)"></mat-paginator>
       </div>
     </div>
   </div>

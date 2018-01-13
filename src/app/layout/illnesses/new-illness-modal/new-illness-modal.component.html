@@ -12,9 +12,9 @@
       </mat-error>
     </mat-form-field>
     <mat-form-field style="width: 100%;">
-      <input matInput formControlName="dosage" placeholder="Dosis" type="text" [(ngModel)]="illness.dosage" name="dosage" required>
+      <input matInput formControlName="dosage" placeholder="Dósis" type="text" [(ngModel)]="illness.dosage" name="dosage" required>
       <mat-error *ngIf="form.controls.dosage.hasError('required')">
-        El campo dosis es requerido
+        El campo dósis es requerido
       </mat-error>
     </mat-form-field>
     <mat-form-field style="width: 100%;">
