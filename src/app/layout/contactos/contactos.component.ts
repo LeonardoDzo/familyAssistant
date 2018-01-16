@@ -24,6 +24,7 @@ export class ContactosComponent implements OnInit {
   public contacto = new Contacto();
   public realContacts: Contacto[] = [];
   public contacts: Contacto[] = [];
+  public filteredContacts: Contacto[] = [];
   public sub: Subscription;
   folderName: string
   userSub: Subscription;
@@ -72,6 +73,7 @@ export class ContactosComponent implements OnInit {
       });
 
       this.realContacts = contacts;
+      this.filteredContacts = contacts;
       this.length = contacts.length;
       this.contacts = this.realContacts.slice(0,this.pageSize);
      }, error => {
@@ -96,11 +98,12 @@ export class ContactosComponent implements OnInit {
   }
 
   search($event) {
-    this.contacts = this.realContacts.filter( item => {
-      return item.name.toLowerCase().toString().search($event.toLocaleLowerCase().toString()) != -1;
+    this.filteredContacts = this.realContacts.filter( item => {
+      return item.name.toLocaleLowerCase().includes($event.toLocaleLowerCase());
     });
-    this.contacts = this.contacts.slice(0,this.pageSize);
-    this.length = this.contacts.length;
+    this.page = 0
+    this.contacts = this.filteredContacts.slice(0,this.pageSize);
+    this.length = this.filteredContacts.length;
   }
 
   public removeContact() {
@@ -121,7 +124,7 @@ export class ContactosComponent implements OnInit {
 
   change($event) {
     this.page = $event.pageIndex
-    this.contacts = this.realContacts.slice(this.page*this.pageSize,(this.page+1)*this.pageSize)    
+    this.contacts = this.filteredContacts.slice(this.page*this.pageSize,(this.page+1)*this.pageSize)    
     window.scrollTo(0,0)
   }
 }
