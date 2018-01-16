@@ -24,9 +24,6 @@ export class ContactosComponent implements OnInit {
   public contacto = new Contacto();
   public realContacts: Contacto[] = [];
   public contacts: Contacto[] = [];
-  public currentPage = 1;
-  public totalItems = 0;
-  public itemsPerPage = 10;
   public sub: Subscription;
   folderName: string
   userSub: Subscription;
@@ -36,6 +33,10 @@ export class ContactosComponent implements OnInit {
     backdrop: true,
     ignoreBackdropClick: false
   };
+
+  pageSize = 10;
+  page = 0;
+  length = 0;
 
   constructor(
     public toastr: ToastsManager,
@@ -71,8 +72,8 @@ export class ContactosComponent implements OnInit {
       });
 
       this.realContacts = contacts;
-      this.totalItems = contacts.length;
-      this.contacts = this.realContacts.slice(0,this.itemsPerPage);
+      this.length = contacts.length;
+      this.contacts = this.realContacts.slice(0,this.pageSize);
      }, error => {
        
      });
@@ -98,15 +99,12 @@ export class ContactosComponent implements OnInit {
     this.contacts = this.realContacts.filter( item => {
       return item.name.toLowerCase().toString().search($event.toLocaleLowerCase().toString()) != -1;
     });
-    this.currentPage = 1;
-    this.totalItems = this.contacts.length;
-    this.contacts = this.contacts.slice(0,this.itemsPerPage);
+    this.contacts = this.contacts.slice(0,this.pageSize);
+    this.length = this.contacts.length;
   }
 
   public removeContact() {
     this.crudService.removeObject(this.contacto);
-    this.currentPage = 1;
-    this.contacts = this.realContacts.slice(this.itemsPerPage*(this.currentPage - 1),this.itemsPerPage*this.currentPage);    
     this.modalRef.hide();
   }
 
@@ -121,30 +119,9 @@ export class ContactosComponent implements OnInit {
     );
   }
 
-  public addContact() {
-    this.crudService.addObject(this.contacto);
-    this.errorMessage = [];
-  }
-
-  public updateContact() {
-    this.crudService.editObject(this.contacto);
-    this.errorMessage = [];
-  }
-  
-  public submitModal() {
-    this.errorMessage = this.regexService.contactValidation(this.contacto);
-    if(this.errorMessage.length < 1) {
-      if(!this.contacto.id)
-        this.addContact();
-      else 
-        this.updateContact();
-      this.modalRef.hide();
-    }
-  }
-
-  public pageChanged($event: any) {
-    this.currentPage = $event.page;
-    this.contacts = this.realContacts.slice(this.itemsPerPage*(this.currentPage - 1),this.itemsPerPage*this.currentPage);
-    window.scrollTo(0, 0);
+  change($event) {
+    this.page = $event.pageIndex
+    this.contacts = this.realContacts.slice(this.page*this.pageSize,(this.page+1)*this.pageSize)    
+    window.scrollTo(0,0)
   }
 }

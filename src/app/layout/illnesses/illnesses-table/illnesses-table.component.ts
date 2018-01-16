@@ -10,16 +10,18 @@ import { Component, OnInit, Input, TemplateRef, IterableDiffers, DoCheck } from 
 })
 export class IllnessesTableComponent implements OnInit,DoCheck {
   @Input()
-  illnesses: Illness[] = []
+  illnesses: Illness[] = [];
   @Input()
-  title: string
-  displayIllnesses: Illness[] = []
+  title: string;
+  displayIllnesses: Illness[] = [];
+  filteredIllnesses: Illness[] = [];
   public modalRef: BsModalRef;
-  pageSize = 10
-  page = 0
-  length = 0
-  illness: Illness
-  differ: any
+  pageSize = 10;
+  page = 0;
+  length = 0;
+  illness: Illness;
+  differ: any;
+  searchString: string = "";
   constructor(
     private modalService: BsModalService,
     private differs: IterableDiffers
@@ -32,8 +34,12 @@ export class IllnessesTableComponent implements OnInit,DoCheck {
   ngDoCheck() {
     const change = this.differ.diff(this.illnesses);
     if(change) {
-      this.length = this.illnesses.length
-      this.displayIllnesses = this.illnesses.slice(this.page*this.pageSize,(this.page+1)*this.pageSize)
+      this.filteredIllnesses = this.illnesses.filter((illness) => {
+        return illness.name.toLocaleLowerCase().includes(this.searchString.toLocaleLowerCase()) ||
+          illness.medicine.toLocaleLowerCase().includes(this.searchString.toLocaleLowerCase())
+      })
+      this.length = this.filteredIllnesses.length
+      this.displayIllnesses = this.filteredIllnesses.slice(this.page*this.pageSize,(this.page+1)*this.pageSize)
     }
   }
 
@@ -48,8 +54,18 @@ export class IllnessesTableComponent implements OnInit,DoCheck {
   change($event) {
     this.page = $event.pageIndex
     this.pageSize = $event.pageSize
-    this.displayIllnesses = this.illnesses.slice(this.page*this.pageSize,(this.page+1)*this.pageSize)    
+    this.displayIllnesses = this.filteredIllnesses.slice(this.page*this.pageSize,(this.page+1)*this.pageSize)    
     window.scrollTo(0,0)
+  }
+
+  search($event) {
+    this.filteredIllnesses = this.illnesses.filter((illness) => {
+      return illness.name.toLocaleLowerCase().includes($event.toLocaleLowerCase()) ||
+        illness.medicine.toLocaleLowerCase().includes($event.toLocaleLowerCase())
+    })
+    this.length = this.filteredIllnesses.length
+    this.page = 0
+    this.displayIllnesses = this.filteredIllnesses.slice(0,this.pageSize)    
   }
 
 }

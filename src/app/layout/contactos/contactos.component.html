@@ -41,14 +41,9 @@
             </table>
           </div>
           <div class="card-footer">
-            <div class="row">
-              <div class="col"></div>
-              <div class="col align-self-center">
-                <pagination [itemsPerPage]="itemsPerPage" [totalItems]="totalItems" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
-                  nextText="&rsaquo;" [(ngModel)]="currentPage"></pagination>
-              </div>
-              <div class="col"></div>
-            </div>
+              <mat-paginator [length]="length"
+                [pageSize]="pageSize"
+                (page)="change($event)"></mat-paginator>
           </div>
         </div>
       </div>
@@ -57,53 +52,7 @@
 
   <!--Modal para agregar usuario-->
   <ng-template #template>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">{{(!contacto.id) ? 'Agregar contacto' : 'Editar'}}</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <ul>
-        <li *ngFor="let message of errorMessage">
-          {{ message }}
-        </li>
-      </ul>
-      <form role="form" #addContactForm="ngForm">
-        <fieldset class="form-group">
-          <label>Nombre:</label>
-          <input class="form-control" name="nombre" [(ngModel)]="contacto.name">
-        </fieldset>
-
-        <fieldset class="form-group">
-          <label>Teléfono:</label>
-          <input class="form-control" name="telefono" [(ngModel)]="contacto.phone">
-        </fieldset>
-
-        <fieldset class="form-group">
-          <label>Ocupación:</label>
-          <input class="form-control" name="ocupacion" [(ngModel)]="contacto.job">
-        </fieldset>
-
-        <fieldset class="form-group">
-          <label>Correo:</label>
-          <input class="form-control" name="email" [(ngModel)]="contacto.email">
-        </fieldset>
-
-        <fieldset class="form-group">
-          <label>Dirección:</label>
-          <input class="form-control" name="direccion" [(ngModel)]="contacto.address">
-        </fieldset>
-
-        <fieldset class="form-group">
-          <label>Pagina web:</label>
-          <input class="form-control" name="url" [(ngModel)]="contacto.webpage">
-        </fieldset>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button (click)="submitModal()" class="btn btn-primary">{{ (!contacto.id) ? 'Agregar' : 'Guardar' }}</button>
-    </div>
+    <app-new-contact-modal [contacto]="contacto" [modalRef]="modalRef"></app-new-contact-modal>
   </ng-template>
 
   <!--Modal user info-->
@@ -155,45 +104,6 @@
           </div>
         </div>
       </div>
-      <!--<div class="row justify-content-center">
-        <div class="col-xl-6">
-          <div class="card contact hovercard">
-            <div class="cardheader">
-              <div class="btn-group pull-right" placement="bottom left" dropdown>
-                <a href="javascript:void(0)" dropdownToggle class="dropdown-toggle">
-                  <i class="fa fa-ellipsis-v"></i>
-                </a>
-                <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
-                  <li role="menuitem">
-                    <a (click)="openModal(template,contacto)" class="dropdown-item" href="javascript:void(0)">Editar</a>
-                  </li>
-                  <li role="menuitem">
-                    <a (click)="openModal(confirmTemplate,contacto)" class="dropdown-item" href="javascript:void(0)">Eliminar</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="avatar">
-              <img alt="" src="../../assets/images/user.png">
-            </div>
-            <div class="info">
-              <div class="title">
-                <p target="_blank">{{ contacto.name }}</p>
-              </div>
-              <div class="desc">
-                <b>Telefono:</b> {{ contacto.phone }}</div>
-              <div class="desc">
-                <b>Ocupación:</b> {{ contacto.job }}</div>
-              <div class="desc">
-                <b>Correo:</b> {{ contacto.email }}</div>
-              <div class="desc">
-                <b>Dirección:</b> {{ contacto.address }}</div>
-              <div class="desc">
-                <b>Pagina web:</b> {{ contacto.webpage }}</div>
-            </div>
-          </div>
-        </div>
-      </div>-->
     </div>
   </ng-template>
 

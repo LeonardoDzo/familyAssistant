@@ -1,0 +1,49 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{(!contacto.id) ? 'Agregar contacto' : 'Editar'}}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form id="form" [formGroup]="form" (ngSubmit)="submitModal()" #addContactForm>
+    <mat-form-field style="width: 100%;">
+      <input matInput formControlName="name" placeholder="Nombre" type="text" [(ngModel)]="contacto.name" name="name" required>
+      <mat-error *ngIf="form.controls.name.hasError('required')">
+        El campo nombre es requerido
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field style="width: 100%;">
+      <input matInput formControlName="phone" placeholder="Teléfono" type="text" [(ngModel)]="contacto.phone" name="phone" required>
+      <mat-error *ngIf="form.controls.phone.hasError('required')">
+        El campo teléfono es requerido
+      </mat-error>
+      <mat-error *ngIf="!form.controls.phone.hasError('required') && form.controls.phone.hasError('pattern')">
+        Introduzca un teléfono válido
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field style="width: 100%;">
+      <input matInput formControlName="job" placeholder="Ocupación" type="text" [(ngModel)]="contacto.job" name="job" required>
+      <mat-error *ngIf="form.controls.job.hasError('required')">
+        El campo ocupación es requerido
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field style="width: 100%;">
+      <input matInput formControlName="email" placeholder="Correo" type="text" [(ngModel)]="contacto.email" name="email" required>
+      <mat-error *ngIf="form.controls.email.hasError('required')">
+        El campo correo es requerido
+      </mat-error>
+      <mat-error *ngIf="!form.controls.email.hasError('required') && form.controls.email.hasError('email')">
+        Introduzca un correo válido
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field style="width: 100%;">
+      <input matInput formControlName="address" placeholder="Dirección" type="text" [(ngModel)]="contacto.address" name="address">
+    </mat-form-field>
+    <mat-form-field style="width: 100%;">
+      <input matInput formControlName="webpage" placeholder="Página web" type="text" [(ngModel)]="contacto.webpage" name="webpage">
+    </mat-form-field>
+  </form>
+</div>
+<div class="modal-footer">
+  <input form="form" type="submit" class="btn btn-primary" value="{{(!contacto.id)? 'Agregar' : 'Guardar'}}">
+</div>

@@ -1,9 +1,4 @@
 <div class="modal-body">
-  <ul>
-    <li *ngFor="let message of errorMessage">
-      {{ message }}
-    </li>
-  </ul>
   <form id="form" [formGroup]="form" (ngSubmit)="submitModal()" #addIllnessForm>
     <mat-form-field style="width: 100%;">
       <input matInput formControlName="name" placeholder="Nombre" type="text" [(ngModel)]="illness.name" name="name" required>

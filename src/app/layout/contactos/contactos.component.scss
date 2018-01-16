@@ -20,6 +20,10 @@
     background: #f5f5f5;
 }
 
+.card-footer {
+    background-color: white;
+}
+
 .card-block {
     position: relative;
     padding-top: 0;
@@ -42,7 +46,7 @@
     margin-top: 20px;
 }
 
- .info {
+.info {
     padding: 4px 8px 10px;
 }
 
@@ -54,7 +58,7 @@
     vertical-align: middle;
 }
 
- .info .desc {
+.info .desc {
     overflow: hidden;
     font-size: 17px;
     line-height: 20px;
