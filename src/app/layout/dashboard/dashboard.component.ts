@@ -119,6 +119,7 @@ export class DashboardComponent implements OnInit {
         this.sub.unsubscribe();
 
         this.userService.destroy();
+        this.eventService.destroy();
     }
 
     private readSolicitudes() {
@@ -189,8 +190,8 @@ export class DashboardComponent implements OnInit {
                         color: this.getColor(eventObj.eventtype),
                         meta: eventObj
                     });
-                    //if(eventObj.repeatmodel)
-                        //this.repeatEvents(eventObj)
+                    if(eventObj.repeatmodel.frequency  != 0)
+                        this.repeatEvents(eventObj)
                 }));
             });
             Promise.all(promises).then(() => {
@@ -201,6 +202,8 @@ export class DashboardComponent implements OnInit {
                 });
                 this.refresh.next();
             });
+        }, error => {
+            
         });
     }
 

@@ -47,7 +47,6 @@ export class SidebarComponent implements OnInit {
             }));
         })
         Promise.all(promises).then(() => {
-            console.log(this.families)
             if(this.families.length >= 1) {
                 this.familyActive = this.families[0];
                 this.us.setFamilyActive(this.families[0].id);

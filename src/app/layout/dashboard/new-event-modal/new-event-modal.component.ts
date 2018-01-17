@@ -187,4 +187,9 @@ export class NewEventModalComponent implements OnInit {
       });
     });
   }
+
+  ngOnDestroy() {
+    this.userService.destroy()
+    this.eventService.destroy()
+  }
 }

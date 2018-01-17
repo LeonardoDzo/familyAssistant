@@ -59,7 +59,6 @@ export class MedicineComponent implements OnInit {
       this.realMedicines = medicines;
       this.totalItems = medicines.length;
       this.medicines = this.realMedicines;
-      console.log(medicines)
     })
   }
 

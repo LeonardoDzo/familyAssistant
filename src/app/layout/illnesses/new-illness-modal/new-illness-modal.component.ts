@@ -28,7 +28,9 @@ export class NewIllnessModalComponent implements OnInit {
   constructor(
     private crudService: CrudService,
     private formBuilder: FormBuilder
-  ) { }
+  ) { 
+    this.crudService.setTable("illnesses")
+  }
 
   ngOnInit() {
     if(this.illness.id) {
@@ -60,6 +62,10 @@ export class NewIllnessModalComponent implements OnInit {
     if (input) {
       input.value = '';
     }
+  }
+
+  ngOnDestroy() {
+    this.crudService.destroy();
   }
 
   onFocus() {

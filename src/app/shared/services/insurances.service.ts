@@ -5,20 +5,26 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
 import { FirebaseApp } from 'angularfire2';
 import { UUID } from 'angular2-uuid';
+import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class InsurancesService {
+  sub: Subscription
   assistant: User;
   constructor(
     private afd: AngularFireDatabase,
     private afa: AngularFireAuth,
     public app: FirebaseApp
   ) {
-    this.getUser().subscribe((user: User) => {
+    this.sub = this.getUser().subscribe((user: User) => {
       this.assistant = user;
     }, error => {
 
     })
+  }
+
+  destroy() {
+    this.sub.unsubscribe();
   }
 
   getUser() {

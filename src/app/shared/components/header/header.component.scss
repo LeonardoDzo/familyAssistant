@@ -9,3 +9,7 @@
 nav.navbar .dropdown-menu {
     margin-top: 0;
 }
+
+.dropdown-toggle::after {
+    display:none;
+}

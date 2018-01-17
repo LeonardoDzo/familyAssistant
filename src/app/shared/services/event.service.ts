@@ -3,17 +3,25 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { User } from 'app/shared/models/user';
 import { Event } from 'app/shared/models/event';
+import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class EventService {
 	assistant: User;
+	sub: Subscription;
 	constructor(
 	  	private afa: AngularFireAuth,
 	    private afd: AngularFireDatabase
 	) { 
-		this.getUser().subscribe((user: User) => {
+		this.sub = this.getUser().subscribe((user: User) => {
 			this.assistant = user;
+		}, error => {
+
 		})
+	}
+
+	destroy() {
+		this.sub.unsubscribe();
 	}
 
 	getUser() {

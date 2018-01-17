@@ -32,6 +32,10 @@ export class IllnessInfoModalComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }
 
+  ngOnDestroy() {
+    this.crudService.destroy();
+  }
+
   public removeIllness() {
     this.crudService.removeObject(this.illness)
     this.modalRef.hide()

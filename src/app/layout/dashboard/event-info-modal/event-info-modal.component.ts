@@ -23,7 +23,6 @@ export class EventInfoModalComponent implements OnInit {
   ngOnInit() {
     this.startdate = new Date(this.event.startdate)
     this.enddate = new Date(this.event.enddate)
-    console.log(this.event.location)
   }
 
 }

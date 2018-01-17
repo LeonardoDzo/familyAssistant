@@ -95,7 +95,6 @@ export class UserService {
 
   setSelectedBoss(key: string) {
     let uid = this.afa.auth.currentUser.uid;
-    console.log(key)
     this.afd.database.ref(`assistants/${uid}`).update({
       selectedBoss: key
     });

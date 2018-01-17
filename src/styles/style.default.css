@@ -1866,8 +1866,20 @@ section.forms .line {
 }
 
 .login-page .form-holder .info {
-  background: rgb(196, 59, 75);/*rgb(223, 75, 75);*/
+  background: 
+    linear-gradient(
+      rgba(154, 0, 22, 0.55), 
+      rgba(154, 0, 22, 0.55)
+    ), 
+    url(/assets/images/fondo-login.jpeg);
+  background-repeat: no-repeat;
+  /*background-position: 30% 100%;*/
+  background-size: cover;
   color: #fff;
+}
+
+.login-page .form-holder .info .logo { 
+  clear: both;
 }
 
 .login-page .form-holder .info h1 {

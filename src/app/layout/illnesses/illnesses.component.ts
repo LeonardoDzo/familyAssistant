@@ -98,37 +98,4 @@ export class IllnessesComponent implements OnInit {
     this.illness = Object.assign(new Illness(), illness);
     this.modalRef = this.modalService.show(template);
   }
-
-  public search($event) {
-    this.illnesses = this.realIllnesses.filter( item => {
-      return item.name.toLowerCase().toString().search($event.toLocaleLowerCase().toString()) != -1;
-    });
-
-    this.currentPage = 1;
-    this.totalItems = this.illnesses.length;
-    this.illnesses = this.illnesses.slice(0,this.itemsPerPage);
-  }
-
-  public submitModal() {
-    this.errorMessage = this.regexService.illnessValidation(this.illness)
-    if(this.errorMessage.length < 1){
-      if(!this.illness.id)
-        this.crudService.addObject(this.illness)
-      else
-        this.crudService.editObject(this.illness)
-      this.modalRef.hide()
-      this.errorMessage = [];
-    }
-  }
-
-  public removeIllness() {
-    this.crudService.removeObject(this.illness)
-    this.modalRef.hide()
-  }
-
-  public pageChanged($event: any) {
-    this.currentPage = $event.page;
-    this.illnesses = this.realIllnesses.slice(this.itemsPerPage*(this.currentPage - 1),this.itemsPerPage*this.currentPage);
-    window.scrollTo(0, 0);
-  }
 }

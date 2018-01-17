@@ -56,7 +56,11 @@ export class InsurancesComponent implements OnInit {
         this.medicalInsurances = insurances.filter((ins) => {
           return ins.type == "medical"
         })
+      }, error => {
+
       })
+    }, error => {
+
     })
   }
 
@@ -65,6 +69,7 @@ export class InsurancesComponent implements OnInit {
       this.insurancesSub.unsubscribe();
     }
     this.userSub.unsubscribe();
+    this.insurancesService.destroy();
   }
 
   fileChanged(files: any) {
