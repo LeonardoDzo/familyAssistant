@@ -371,7 +371,9 @@ nav.side-navbar a {
 }
 
 nav.side-navbar a.router-link-active {
-  border-left: 4px solid #572424;
+  /*border-left: 4px solid #572424;*/
+  border-left: 4px solid #a5192c;
+  color: #a5192c;
 }
 
 nav.side-navbar a[data-toggle="collapse"]::before {
@@ -445,9 +447,11 @@ nav.side-navbar ul a {
 }
 
 nav.side-navbar ul a:hover {
-  background: #F35151;
+  /*background: #F35151;
   border-left: 4px solid #572424;
-  color: #fff;
+  color: #fff;*/
+  background: rgb(236, 236, 236);
+  color: rgb(82, 82, 82);
 }
 
 nav.side-navbar ul li.active a {
@@ -610,9 +614,9 @@ nav.navbar {
 }
 
 nav.navbar .badge {
-  width: 22px;
-  height: 22px;
-  line-height: 22px;
+  width: 19px;
+  height: 19px;
+  line-height: 19px;
   text-align: center;
   padding: 0;
   border-radius: 50%;
@@ -710,8 +714,8 @@ nav.navbar .nav-item > a {
 
 nav.navbar .nav-item > a span {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 4px;
+  right: 5px;
   font-weight: 400;
   font-size: 0.7em;
 }

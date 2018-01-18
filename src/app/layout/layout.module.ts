@@ -14,7 +14,6 @@ import { ModalModule } from 'ngx-bootstrap';
 import { CrudService } from 'app/shared/services/crud.service';
 import { EventService } from 'app/shared/services/event.service';
 import { CalendarModule } from 'angular-calendar';
-import { NotificatioionsComponent } from './notificatioions/notificatioions.component';
 
 @NgModule({
     imports: [
@@ -27,8 +26,7 @@ import { NotificatioionsComponent } from './notificatioions/notificatioions.comp
     declarations: [
         LayoutComponent,
         HeaderComponent,
-        SidebarComponent,
-        NotificatioionsComponent
+        SidebarComponent
     ],
     providers: [
         UserService,

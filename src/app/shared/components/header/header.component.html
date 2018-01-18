@@ -29,27 +29,36 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="javascript:void(0)" class="nav-link" [routerLink]="['/edit']">
+                    <li class="nav-item dropdown" ngbDropdown>
+                        <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
                             <i class="fa fa-user"></i> {{user.name}}
                         </a>
-                        <!--<ul aria-labelledby="bosses" class="dropdown-menu">
-                            <li *ngFor="let boss of bosses">
-                                <a (click)="changeSelectedBoss(boss)" rel="nofollow" href="javascript:void(0)" class="dropdown-item">
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a style="text-decoration: none;" [routerLink]="['/edit']">
                                     <div class="notification">
                                         <div class="notification-content">
-                                            <i class="fa fa-user bg-red"></i>{{boss.name}}
+                                            Editar perfil
                                         </div>
                                     </div>
                                 </a>
                             </li>
-                        </ul>-->
+                            <li>
+                                <a style="text-decoration: none;" [routerLink]="['/notifications']">
+                                    <div class="notification">
+                                        <div class="notification-content">
+                                            Solicitudes y pendientes
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
 
                     <li class="nav-item dropdown" ngbDropdown>
-                        <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+                        <a href="javascript:void(0)" class="no-arrow nav-link" ngbDropdownToggle>
                             <i class="fa fa-bell"></i>&nbsp;&nbsp;&nbsp;
-                            <span class="badge bg-red">5</span>
+                            <span class="badge bg-red">15</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
@@ -98,7 +107,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a rel="nofollow" href="javascript:void(0)" class="dropdown-item">
+                                <a rel="nofollow" [routerLink]="['/notifications']" class="dropdown-item">
                                     <div class="notification">
                                         <div class="notification-content" style="text-align: center;">
                                             ver todos...

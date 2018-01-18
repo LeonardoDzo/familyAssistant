@@ -1,4 +1,3 @@
-import { SolicitudeComponent } from './../../shared/components/solicitude/solicitude.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -47,7 +46,6 @@ import {MatSelectModule, MatSelect} from '@angular/material/select';
         TimelineComponent,
         NotificationComponent,
         ChatComponent,
-        SolicitudeComponent,
         NewEventModalComponent,
         EventInfoModalComponent
     ]

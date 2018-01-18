@@ -1,7 +1,10 @@
 export class Pending {
-    description: string;
-    name: string;
+    details: string;
+    title: string;
     priority: number;
     done: boolean;
     type: number;
+    seen: boolean;
+    boss: string;
+    updatedAt: number;
 }

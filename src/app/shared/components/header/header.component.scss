@@ -10,6 +10,6 @@ nav.navbar .dropdown-menu {
     margin-top: 0;
 }
 
-.dropdown-toggle::after {
+.no-arrow.dropdown-toggle::after {
     display:none;
 }

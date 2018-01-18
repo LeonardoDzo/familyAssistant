@@ -90,7 +90,7 @@ export class SidebarComponent implements OnInit {
                     this.selectedBoss = this.bosses[0];
                     this.us.setSelectedBoss(this.bosses[0].id);
                 }
-                if(this.user.selectedBoss)
+                if(this.selectedBoss.name)
                     this.initFam()
             });
         }, error => {

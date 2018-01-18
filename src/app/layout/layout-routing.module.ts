@@ -16,10 +16,11 @@ const routes: Routes = [
             { path: 'edit', loadChildren: './edit/edit.module#EditModule' },
             { path: 'contacts', loadChildren: './contactos/contactos.module#ContactosModule' },
             { path: 'safebox', loadChildren: './safebox/safebox.module#SafeboxModule'},
-            { path: 'illnesses', loadChildren: './illnesses/illnesses.module#IllnessesModule' },
+            { path: 'medkit', loadChildren: './illnesses/illnesses.module#IllnessesModule' },
             { path: 'medicine', loadChildren: './medicine/medicine.module#MedicineModule' },
             { path: 'todo', loadChildren: './todo/todo.module#TodoModule' },
-            { path: 'insurances',loadChildren: './insurances/insurances.module#InsurancesModule' }
+            { path: 'insurances',loadChildren: './insurances/insurances.module#InsurancesModule' },
+            { path: 'notifications', loadChildren: './notifications/notifications.module#NotificationsModule' }
         ]
     }
 ];

@@ -1,5 +1,6 @@
-.card.dashboard-card {
-    margin-right: 40px;
+.item {
+    box-shadow: 0px 1px 1px rgb(247, 246, 246);
+    padding: 0;
 }
 
 .card-body-height {
@@ -9,16 +10,6 @@
 
 .dashboard-solicitude {
     margin-left: 40px;
-}
-
-.user-request {
-    width: 110px;
-    margin: 15px;
-}
-
-.item {
-    box-shadow: 0px 1px 1px rgb(247, 246, 246);
-    padding: 0;
 }
 
 .pending-modal {
@@ -42,8 +33,4 @@
 
 .item label {
     cursor: pointer;
-}
-
-div.badge {
-    margin-bottom: auto;    
 }

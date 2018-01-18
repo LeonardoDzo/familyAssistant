@@ -61,9 +61,9 @@
                             Solicitudes.
                         </div>
                         <div class="card-body no-padding card-body-height">
-                            <div *ngFor="let boss of bosses">
+                            <!--<div *ngFor="let boss of bosses">
                                 <app-solicitude [boss]="boss"></app-solicitude>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -74,10 +74,12 @@
                             Pendientes.
                         </div>
                         <div class="card-body no-padding card-body-height">
-                            <div *ngFor="let pending of pendings" (click)="openModal(pendingTemplate,pending)" class="item d-flex {{getLabel(pending)}} justify-content-between">
-                                <label>{{pending.name}}</label>
-                                <div class="badge badge-primary">
-                                    {{getType(pending.type)}}
+                            <div *ngFor="let pending of pendings" class="item d-flex {{getLabel(pending)}} justify-content-between">
+                                <div class="pending-modal" (click)="openModal(pendingTemplate,pending)">
+                                    <label>{{pending.title}}</label>                                        
+                                </div>
+                                <div style="padding-right: 20px; padding-top: 23px;">
+                                    <input id="input-3" name="input-3" class="checkbox-template pull-right" type="checkbox">                                        
                                 </div>
                             </div>
                         </div>
@@ -90,10 +92,10 @@
 
 <ng-template #pendingTemplate>
     <div class="modal-header">
-        <b>{{pending.name}}</b>
+        <b>{{pending.title}}</b>
     </div>
     <div class="modal-body">
-        <b>Descripción: </b> {{pending.description}}
+        <b>Descripción: </b> {{pending.details}}
     </div>
 </ng-template>
 
