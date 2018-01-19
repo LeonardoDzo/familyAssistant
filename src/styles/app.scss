@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "bootstrap/bootstrap";
-@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 .bs-datepicker {
     z-index: 1051 !important;
 }
@@ -49,3 +49,21 @@
         max-width: 100%;
     }
 }
+.mat-radio-label {
+    margin-bottom: 0;
+}
+/*.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #5539f3;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #5539f3;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+    border-color: green;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle{
+    background-color: green;
+}*/

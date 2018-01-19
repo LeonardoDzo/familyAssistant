@@ -1,0 +1,23 @@
+<div *ngIf="pendings.length > 0">
+  <div *ngFor="let pending of pendings" class="item d-flex {{getLabel(pending)}} justify-content-between">
+    <div class="pending-modal" (click)="openModal(info,pending)">
+      <label>{{pending.title}}</label>
+    </div>
+    <div *ngIf="pending.seen" style="padding-right: 20px; padding-top: 23px;">
+      <mat-checkbox [checked]="pending.done" 
+        [disabled]="pending.done" 
+        (change)="userService.finishPending(pending.id)">{{(pending.done)? 'Finalizado':'Finalizar'}}</mat-checkbox>
+      <!--<input class="checkbox-template pull-right" 
+            type="checkbox" 
+            [checked]="pending.done" 
+            [disabled]="pending.done"
+            (click)="userService.finishPending(pending.id)">-->
+    </div>
+  </div>
+</div>
+<div *ngIf="pendings.length == 0">
+  <img class="no-pendings" src="assets/images/no-pendings.png">
+</div>
+<ng-template #info>
+  <app-pending-info-modal [pending]="pending"></app-pending-info-modal>
+</ng-template>

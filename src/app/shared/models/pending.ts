@@ -7,4 +7,5 @@ export class Pending {
     seen: boolean;
     boss: string;
     updatedAt: number;
+    id: string;
 }

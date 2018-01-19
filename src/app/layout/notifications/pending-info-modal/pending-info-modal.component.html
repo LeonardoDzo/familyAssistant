@@ -1,0 +1,10 @@
+<div class="modal-header">
+    <b>Información de pendiente</b>
+</div>
+<div class="modal-body">
+  <b>Título: </b>&nbsp; {{pending.title}} <br>
+  <b>Detalles: </b>&nbsp; {{pending.details}} <br>
+  <b>Prioridad: </b>&nbsp; {{priorities[pending.priority]}} <br>
+  <b>Tipo: </b>&nbsp; {{types[pending.type]}} <br>
+  <b>Estado: </b>&nbsp; {{(pending.done)? 'Terminado':'No terminado'}} <br>
+</div>

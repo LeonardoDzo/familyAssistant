@@ -13,13 +13,18 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
   styleUrls: ['./notifications.component.scss']
 })
 export class NotificationsComponent implements OnInit {
-  pendings: Pending[] = []
+  pendings: Pending[] = [];
+  allPendings: Pending[] = [];
+  pendings0: Pending[] = [];
+  pendings1: Pending[] = [];
+  pendings2: Pending[] = [];
+  unseen: Pending[] = [];
   userSub: Subscription;
   pendingsSub: Subscription;
   solicitudesSub: Subscription;
   pending: Pending;
   bosses: Boss[];
-
+  done: boolean = false;
   public modalRef: BsModalRef;
 
   constructor(
@@ -33,9 +38,24 @@ export class NotificationsComponent implements OnInit {
         this.pendingsSub.unsubscribe();
       }
       if (user.selectedBoss) {
-        this.pendingsSub = this.pendingsSub = this.userService.getPendings(user.selectedBoss)
+        this.pendingsSub = this.userService.getPendings(user.selectedBoss)
           .subscribe((pendings: Pending[]) => {
             this.pendings = pendings;
+            this.allPendings = pendings.filter(elem => {
+              return elem.done == this.done;
+            })
+            this.pendings0 = pendings.filter(elem => {
+              return elem.priority == 0 && elem.done == this.done;
+            })
+            this.pendings1 = pendings.filter(elem => {
+              return elem.priority == 1 && elem.done == this.done;
+            })
+            this.pendings2 = pendings.filter(elem => {
+              return elem.priority == 2 && elem.done == this.done;
+            })
+            this.unseen = pendings.filter(elem => {
+              return !elem.seen && elem.done == this.done;
+            })
           }, error => {
 
           });
@@ -72,10 +92,34 @@ export class NotificationsComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }
 
+  change($event) {
+    this.done = $event.value
+    this.allPendings = this.pendings.filter(elem => {
+      return elem.done == this.done;
+    })
+    this.pendings0 = this.pendings.filter(elem => {
+      return elem.priority == 0 && elem.done == this.done;
+    })
+    this.pendings1 = this.pendings.filter(elem => {
+      return elem.priority == 1 && elem.done == this.done;
+    })
+    this.pendings2 = this.pendings.filter(elem => {
+      return elem.priority == 2 && elem.done == this.done;
+    })
+    this.unseen = this.pendings.filter(elem => {
+      return !elem.seen && elem.done == this.done;
+    })
+  }
+
   ngOnDestroy() {
     if (this.pendingsSub) {
       this.pendingsSub.unsubscribe();
     }
+    if (this.solicitudesSub) {
+      this.solicitudesSub.unsubscribe();
+    }
     this.userSub.unsubscribe()
+
+    this.userService.destroy()
   }
 }
