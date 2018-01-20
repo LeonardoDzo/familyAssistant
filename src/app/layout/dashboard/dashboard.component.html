@@ -54,50 +54,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xl-6">
-                    <div class="articles card dashboard-card">
-                        <div class="card-header d-flex align-items-center">
-                            Solicitudes.
-                        </div>
-                        <div class="card-body no-padding card-body-height">
-                            <!--<div *ngFor="let boss of bosses">
-                                <app-solicitude [boss]="boss"></app-solicitude>
-                            </div>-->
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-6">
-                    <div class="checklist card dashboard-card">
-                        <div class="card-header d-flex align-items-center">
-                            Pendientes.
-                        </div>
-                        <div class="card-body no-padding card-body-height">
-                            <div *ngFor="let pending of pendings" class="item d-flex {{getLabel(pending)}} justify-content-between">
-                                <div class="pending-modal" (click)="openModal(pendingTemplate,pending)">
-                                    <label>{{pending.title}}</label>                                        
-                                </div>
-                                <div style="padding-right: 20px; padding-top: 23px;">
-                                    <input id="input-3" name="input-3" class="checkbox-template pull-right" type="checkbox">                                        
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 </div>
-
-<ng-template #pendingTemplate>
-    <div class="modal-header">
-        <b>{{pending.title}}</b>
-    </div>
-    <div class="modal-body">
-        <b>Descripción: </b> {{pending.details}}
-    </div>
-</ng-template>
 
 <ng-template #newEventTemplate>
     <app-new-event-modal [longitude]="longitude" [latitude]="latitude" [zoom]="zoom" [dateModel]="dateModel" [event]="event"

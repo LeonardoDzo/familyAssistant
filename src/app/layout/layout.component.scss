@@ -1,3 +1,14 @@
 .altura {
     min-height: 1000px;
 }
+
+.chat-pos {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 11;
+}
+
+.no-padding {
+    padding: 0;
+}

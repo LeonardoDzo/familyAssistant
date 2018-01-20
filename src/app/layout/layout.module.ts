@@ -14,6 +14,7 @@ import { ModalModule } from 'ngx-bootstrap';
 import { CrudService } from 'app/shared/services/crud.service';
 import { EventService } from 'app/shared/services/event.service';
 import { CalendarModule } from 'angular-calendar';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import { CalendarModule } from 'angular-calendar';
     declarations: [
         LayoutComponent,
         HeaderComponent,
-        SidebarComponent
+        SidebarComponent,
+        ChatComponent
     ],
     providers: [
         UserService,
