@@ -99,8 +99,7 @@ p { margin: 0; }
 }
 
 .chat-history {
-	height: 252px;
-	padding: 8px 24px;
+	height: 336px;
 	overflow-y: scroll;
 }
 
@@ -125,4 +124,40 @@ p { margin: 0; }
 .chat-feedback {
 	font-style: italic;	
 	margin: 0 0 0 80px;
+}
+
+.image img {
+    width: 40px;
+    height: 40px;
+    max-width: 55px;
+    max-height: 55px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.text {
+	padding-left: 4px;
+}
+
+.item {
+	box-shadow: 0px 1px 1px rgb(230, 230, 230);
+	padding: 10px;
+	padding-left: 15px;
+}
+
+.item:hover {
+	background-color: rgb(230, 230, 230);
+	cursor: pointer;
+}
+
+.btn{ 
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
 }

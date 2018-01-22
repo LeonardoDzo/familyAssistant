@@ -14,7 +14,10 @@ import { ModalModule } from 'ngx-bootstrap';
 import { CrudService } from 'app/shared/services/crud.service';
 import { EventService } from 'app/shared/services/event.service';
 import { CalendarModule } from 'angular-calendar';
-import { ChatComponent } from './chat/chat.component';
+import { ChatsetComponent } from './chatset/chatset.component';
+import { ChatComponent } from './chatset/chat/chat.component';
+import { ListComponent } from './chatset/list/list.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
@@ -22,13 +25,16 @@ import { ChatComponent } from './chat/chat.component';
         NgbDropdownModule.forRoot(),
         LayoutRoutingModule,
         TranslateModule,
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        FormsModule
     ],
     declarations: [
         LayoutComponent,
         HeaderComponent,
         SidebarComponent,
-        ChatComponent
+        ChatsetComponent,
+        ChatComponent,
+        ListComponent
     ],
     providers: [
         UserService,

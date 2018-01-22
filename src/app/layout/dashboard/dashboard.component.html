@@ -1,62 +1,60 @@
-<div [@routerTransition]>
-    <section class="dashboard-solicitude">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="card dashboard-card">
-                        <div class="card-body">
-                            <div class="row text-center">
-                                <div class="col-md-4">
-                                    <div class="btn-group">
-                                        <div class="btn btn-outline-danger" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="viewDateChanged($event)">
-                                            Anterior
-                                        </div>
-                                        <div class="btn btn-outline-danger" mwlCalendarToday [(viewDate)]="viewDate" (viewDateChange)="viewDateChanged($event)">
-                                            Hoy
-                                        </div>
-                                        <div class="btn btn-outline-danger" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="viewDateChanged($event)">
-                                            Siguiente
-                                        </div>
+<section [@routerTransition]>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-md-4">
+                                <div class="btn-group">
+                                    <div class="btn btn-outline-danger" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="viewDateChanged($event)">
+                                        Anterior
+                                    </div>
+                                    <div class="btn btn-outline-danger" mwlCalendarToday [(viewDate)]="viewDate" (viewDateChange)="viewDateChanged($event)">
+                                        Hoy
+                                    </div>
+                                    <div class="btn btn-outline-danger" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="viewDateChanged($event)">
+                                        Siguiente
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <h3>
-                                        {{(view != 'day')? monthNames[viewDate.getMonth()] + ' ' + viewDate.getFullYear() : viewDate}}
-                                    </h3>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="btn-group">
-                                        <div class="btn btn-danger" (click)="view = 'month'" [class.active]="view === 'month'">
-                                            Mes
-                                        </div>
-                                        <div class="btn btn-danger" (click)="view = 'week'" [class.active]="view === 'week'">
-                                            Semana
-                                        </div>
-                                        <button class="btn btn-success" (click)="openModalEvent(newEventTemplate)">
+                            </div>
+                            <div class="col-md-4">
+                                <h3>
+                                    {{(view != 'day')? monthNames[viewDate.getMonth()] + ' ' + viewDate.getFullYear() : viewDate}}
+                                </h3>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="btn-group">
+                                    <div class="btn btn-danger" (click)="view = 'month'" [class.active]="view === 'month'">
+                                        Mes
+                                    </div>
+                                    <div class="btn btn-danger" (click)="view = 'week'" [class.active]="view === 'week'">
+                                        Semana
+                                    </div>
+                                    <button class="btn btn-success" (click)="openModalEvent(newEventTemplate)">
                                             <i class="fa fa-plus"></i> Nuevo
                                         </button>
-                                    </div>
                                 </div>
                             </div>
-                            <br>
-                            <div [ngSwitch]="view">
-                                <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (dayClicked)="dayClicked($event.day)"
-                                    [activeDayIsOpen]="activeDayIsOpen" [locale]="es-mx" (eventClicked)="displayInfo($event,eventInfoTemplate)">
-                                </mwl-calendar-month-view>
-                                <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-                                    (eventTimesChanged)="eventTimesChanged($event)" [locale]="es-mx">
-                                </mwl-calendar-week-view>
-                                <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-                                    (eventTimesChanged)="eventTimesChanged($event)">
-                                </mwl-calendar-day-view>
-                            </div>
+                        </div>
+                        <br>
+                        <div [ngSwitch]="view">
+                            <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (dayClicked)="dayClicked($event.day)"
+                                [activeDayIsOpen]="activeDayIsOpen" [locale]="es-mx" (eventClicked)="displayInfo($event,eventInfoTemplate)">
+                            </mwl-calendar-month-view>
+                            <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+                                (eventTimesChanged)="eventTimesChanged($event)" [locale]="es-mx">
+                            </mwl-calendar-week-view>
+                            <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+                                (eventTimesChanged)="eventTimesChanged($event)">
+                            </mwl-calendar-day-view>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-</div>
+    </div>
+</section>
 
 <ng-template #newEventTemplate>
     <app-new-event-modal [longitude]="longitude" [latitude]="latitude" [zoom]="zoom" [dateModel]="dateModel" [event]="event"

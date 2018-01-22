@@ -1,16 +1,15 @@
-<div id="live-chat" [@slideInOut]="chatState">
+<div id="live-chat">
 
   <header (click)="toggle()" class="clearfix">
-
+    <a href="javascript:void(0)" (click)="closeChat()" class="chat-close"><i class="fa fa-close"></i></a>
     <h4>
-      <span class="badge bg-red">3</span>&nbsp; John Doe</h4>
+      <!--<span class="badge bg-red">3</span>-->{{boss.name}}</h4>
 
   </header>
 
-  <div class="chat" [id]="id">
+  <div *ngIf="chatState=='in'" class="chat">
 
-    <!--<div class="chat-history">
-
+    <div class="chat-history" [id]="id">
       <div class="chat-message clearfix">
 
         <img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">
@@ -64,16 +63,9 @@
 
       </div>
 
-    </div>-->
-    <form action="#" method="post">
-
-      <fieldset>
-
-        <input type="text" placeholder="Type your message…" autofocus>
-        <input type="hidden">
-
-      </fieldset>
-
+    </div>
+    <form (ngSubmit)="sendMessage()" method="post">
+      <input name="message" type="text" class="form-control" placeholder="Escribe un mensaje" [(ngModel)]="message" autofocus>
     </form>
 
   </div>
