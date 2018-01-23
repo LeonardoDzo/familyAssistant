@@ -105,6 +105,8 @@ p { margin: 0; }
 
 .chat-message {
 	margin: 16px 0;
+	word-break: break-word;
+    word-break: break-all;
 }
 
 .chat-message img {

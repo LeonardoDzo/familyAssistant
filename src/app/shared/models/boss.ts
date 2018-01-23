@@ -4,5 +4,7 @@ export class Boss {
     name: string;
     photoURL: string;
     families: any;
-    id: string
+    id: string;
+    messages: any[];
+    unread: number
 }

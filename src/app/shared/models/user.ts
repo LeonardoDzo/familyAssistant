@@ -9,4 +9,7 @@ export class User {
     public photoURL: string = '';
     public selectedBoss: string;
     public familyActive: string;
+    public password: string;
+    bosses: any;
+    id: string;
 }

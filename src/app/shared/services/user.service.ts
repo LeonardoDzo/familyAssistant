@@ -122,16 +122,79 @@ export class UserService {
     return this.afd.list(`assistants/${uid}/bosses`).snapshotChanges();
   }
 
+  getBossesAdded() {
+    var uid = this.afa.auth.currentUser.uid;
+    return this.afd.database.ref(`assistants/${uid}/bosses`)
+  }
+
   getSolicitudes() {
     var uid = this.afa.auth.currentUser.uid;
     return this.afd.list(`assistants/${uid}/solicitudes`).snapshotChanges();
   }
 
+  private createChat(bossId: string, assistantId: string) {
+    var id;
+    if(bossId < assistantId)
+    id = bossId + "-" + assistantId
+    else
+      id = assistantId + "-" + bossId
+    var today = new Date().getTime()
+    var members = {}
+    members[bossId] = today
+    members[assistantId] = today
+    var group = {
+      createdAt: today,
+      isGroup: false,
+      members: members,
+      title: ""
+    }
+    this.afd.database.ref(`groups/${id}`).set(group)
+  }
+
+  getMessage(id: string) {
+    return this.afd.database.ref(`messages/${id}`).once('value')
+  }
+
+  openChat(boss: Boss) {
+    let uid = this.afa.auth.currentUser.uid
+    this.afd.database.ref(`assistants/${uid}/bosses/${boss.id}`).set(new Date().getTime())
+  }
+
+  sendMessage(boss: Boss, message: string) {
+    var bossId = boss.id, assistantId = this.afa.auth.currentUser.uid
+    var id;
+    if(bossId < assistantId)
+      id = bossId + "-" + assistantId
+    else
+      id = assistantId + "-" + bossId
+    this.afd.database.ref(`messages/`).push({
+      groupId: id,
+      receiver: bossId,
+      remittent: assistantId,
+      status: 0,
+      text: message,
+      timestamp: new Date().getTime(),
+      type: ""
+    })
+  }
+
   acceptBoss(boss: Boss) {
     var uid = this.afa.auth.currentUser.uid;
-    this.afd.database.ref(`assistants/${uid}/bosses/${boss.userKey}`).set(true);
+    var bossId = boss.userKey
+    this.afd.database.ref(`assistants/${uid}/bosses/${boss.userKey}`).set(new Date().getTime());
     this.afd.database.ref(`users/${boss.userKey}/assistants/${uid}`).set(true);
     this.afd.database.ref(`assistants/${uid}/solicitudes/${boss.solicitudeKey}`).remove();
+    this.createChat(bossId,uid)
+  }
+
+  getMessages(boss: Boss) {
+    var bossId = boss.id, assistantId = this.afa.auth.currentUser.uid
+    var id;
+    if(bossId < assistantId)
+      id = bossId + "-" + assistantId
+    else
+      id = assistantId + "-" + bossId
+    return this.afd.database.ref(`groups/${id}/messages`)
   }
 
   rejectBoss(boss: Boss) {

@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <h2 class="no-margin-bottom">
         <i class="fa fa-lock"></i> Caja Fuerte &nbsp; &nbsp;
-        <div class="btn-group" dropdown>
+        <div *ngIf="validated" class="btn-group" dropdown>
           <button type="button" class="btn btn-outline-danger dropdown-toggle" dropdownToggle>
             Agregar
           </button>
@@ -23,60 +23,82 @@
             </li>
           </ul>
         </div>
-        <span class="search-bar pull-right">
+        <span *ngIf="validated" class="search-bar pull-right">
           <form role="form" class="form-inline">
             <input (ngModelChange)="search($event)" class="form-control" type="text" placeholder="Buscar" name="searchString" [(ngModel)]="searchString">
           </form>
         </span> &nbsp;&nbsp;
         <!--<span *ngFor="let route of navigation">
-          <div (click)="changeParent(route)" class="link-nav">{{route}}/</div>
-        </span>-->
+                  <div (click)="changeParent(route)" class="link-nav">{{route}}/</div>
+                </span>-->
         <!--<span *ngIf="upload.isUploading" class="btn-file">
-            &nbsp;
-            <i class="fa fa-spinner fa-pulse"></i> Subiendo el archivo {{ upload.progress }}%
-          </span>-->
+                    &nbsp;
+                    <i class="fa fa-spinner fa-pulse"></i> Subiendo el archivo {{ upload.progress }}%
+                  </span>-->
       </h2>
     </div>
   </header>
-  <ol class="breadcrumb">
-    <li *ngFor="let route of navigation" class="breadcrumb-item">
-      <a (click)="changeParent(route.id)" href="javascript:void(0)">
-        {{ route.filename }}
-      </a>
-    </li>
-  </ol>
-  <section class="tables">
-    <div class="container-fluid">
-      <div class="row">
-        <div *ngFor="let file of files">
-          <div *ngIf="!fs.isFolder(file)">
-            <a class="file-link" href="{{ file.downloadUrl }}">
-              <div class="card hovercard file-div">
-                <img class="image" src="{{ getImageLink(file) }}">
-                <div class="title">
-                  <div class="desc">
-                    {{ file.filename }}
+  <div *ngIf="validated">
+    <ol class="breadcrumb">
+      <li *ngFor="let route of navigation" class="breadcrumb-item">
+        <a (click)="changeParent(route.id)" href="javascript:void(0)">
+          {{ route.filename }}
+        </a>
+      </li>
+    </ol>
+    <section class="tables">
+      <div class="container-fluid">
+        <div class="row">
+          <div *ngFor="let file of files">
+            <div *ngIf="!fs.isFolder(file)">
+              <a class="file-link" href="{{ file.downloadUrl }}">
+                <div class="card hovercard file-div">
+                  <img class="image" src="{{ getImageLink(file) }}">
+                  <div class="title">
+                    <div class="desc">
+                      {{ file.filename }}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </a>
-          </div>
-          <div *ngIf="fs.isFolder(file)">
-            <a (click)="changeFolder(file)" class="file-link" href="javascript:void(0)">
-              <div class="card hovercard file-div">
-                <img class="image" src="assets/images/folder.png">
-                <div class="title">
-                  <div class="desc">
-                    {{ file.filename }}
+              </a>
+            </div>
+            <div *ngIf="fs.isFolder(file)">
+              <a (click)="changeFolder(file)" class="file-link" href="javascript:void(0)">
+                <div class="card hovercard file-div">
+                  <img class="image" src="assets/images/folder.png">
+                  <div class="title">
+                    <div class="desc">
+                      {{ file.filename }}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </a>
+              </a>
+            </div>
           </div>
         </div>
       </div>
+    </section>
+  </div>
+  <div *ngIf="!validated">
+    <div class="container-fluid">
+      <section>
+        <div class="d-flex justify-content-center">
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-body">
+                <form (ngSubmit)="validate()">
+                  <p class="error" *ngIf="error">Contraseña incorrecta</p>
+                  <mat-form-field style="width: 100%;">
+                    <input matInput placeholder="Contraseña" type="password" name="password" [(ngModel)]="password">
+                  </mat-form-field>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-  </section>
+  </div>
 </div>
 
 <ng-template #createfolder>

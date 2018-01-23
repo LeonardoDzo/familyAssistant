@@ -23,7 +23,8 @@ export class AuthService {
           curp: '',
           bloodtype: '',
           phone: '',
-          nss: ''
+          nss: '',
+          password: password
         });
         this.router.navigate(['/dashboard']);
       })

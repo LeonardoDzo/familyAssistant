@@ -7,22 +7,13 @@
     color: white;
 }
 
-.card {
-    max-width: 100%;
-    margin: 10px 0 20px 0;
-    background-color: rgba(214, 224, 226, 0.2);
+.card.hovercard {
     border-bottom-width: 2px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
     word-break: break-word;
     word-break: break-all;
-}
-
-.card.hovercard {
     position: relative;
     text-align: center;
     background-color: rgb(255, 255, 255);
@@ -78,6 +69,10 @@
     color: #686a76;
     font-size: 14px;
     cursor: pointer;
+}
+
+.error {
+    color: rgb(216, 15, 1);
 }
 
 .card.hovercard .info {

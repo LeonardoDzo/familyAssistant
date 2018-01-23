@@ -1,3 +1,4 @@
+import { MatInputModule } from '@angular/material/input';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 import { NgModule } from '@angular/core';
@@ -16,7 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
     ToastModule,
     FormsModule,
     BsDropdownModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    MatInputModule    
   ],
   declarations: [ SafeboxComponent ],
   providers: [ImageCompressService,ResizeOptions]

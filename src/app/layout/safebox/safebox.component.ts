@@ -1,3 +1,4 @@
+import { User } from 'app/shared/models/user';
 import { FileDatabase } from './../../shared/models/file-database';
 import { Subscription } from 'rxjs/Subscription';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -23,6 +24,7 @@ import { HttpParams } from '@angular/common/http';
 
 export class SafeboxComponent implements OnInit {
   extensiones: string[];
+  validated = false;
   realFiles: FileDatabase[];
   files: FileDatabase[];
   upload: any;
@@ -34,6 +36,9 @@ export class SafeboxComponent implements OnInit {
   folderName: string
   navigation: FileDatabase[] = []
   userSub: Subscription;
+  assistant: User = new User();
+  password: string = "";
+  error: boolean = false;
   constructor(
     private fs: FilesService,
     private toastr: ToastsManager,
@@ -78,18 +83,23 @@ export class SafeboxComponent implements OnInit {
       });
   }
 
+  validate() {
+    console.log(":c")
+    if(this.password == this.assistant.password){
+      this.error = false
+      this.validated = true
+    }
+    else 
+      this.error = true
+  }
+
   public openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
 
   ngOnInit() {
-    let params = new HttpParams();
-    /*this.http.get("http://localhost:8080/api/safebox/verification").subscribe(response => {
-      console.log(response)
-    }, error => {
-      console.log(error.error.message)
-    })*/
-    this.userSub = this.fs.getUser().subscribe(() => {
+    this.userSub = this.fs.getUser().subscribe((user: User) => {
+      this.assistant = user
       this.navigation = [new FileDatabase('root','root','folder')]
       this.parent = "root"
       this.init();
