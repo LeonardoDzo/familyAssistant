@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="card-body">
-        <table class="table">
+        <table *ngIf="displayIllnesses.length > 0" class="table">
           <thead>
             <tr>
               <th>
@@ -28,8 +28,11 @@
             </tr>
           </tbody>
         </table>
+        <div *ngIf="displayIllnesses.length == 0" class="d-flex justify-content-center">
+          <img [src]="'assets/images/no-medkit.png'" alt="">
+        </div>
       </div>
-      <div class="card-footer">
+      <div *ngIf="displayIllnesses.length > 0" class="card-footer">
           <mat-paginator [length]="length"
             [pageSize]="pageSize"
             (page)="change($event)"></mat-paginator>

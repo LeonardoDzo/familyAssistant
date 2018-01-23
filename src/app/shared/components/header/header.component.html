@@ -1,13 +1,13 @@
 <header class="header">
     <nav class="navbar color-rojo">
-        <div class="search-box">
+        <!--<div class="search-box">
             <button class="dismiss">
                 <i class="icon-close"></i>
             </button>
             <form id="searchForm" action="#" role="search">
                 <input type="search" placeholder="¿Qué estás buscando?..." class="form-control">
             </form>
-        </div>
+        </div>-->
         <div class="container-fluid">
             <div class="navbar-holder d-flex align-items-center justify-content-between">
                 <!-- Navbar Header-->
@@ -23,11 +23,11 @@
                 <!-- Navbar Menu -->
                 <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                     <!-- Search-->
-                    <li class="nav-item d-flex align-items-center">
+                    <!--<li class="nav-item d-flex align-items-center">
                         <a id="search" href="#">
                             <i class="icon-search"></i>
                         </a>
-                    </li>
+                    </li>-->
 
                     <li class="nav-item dropdown" ngbDropdown>
                         <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
@@ -55,62 +55,26 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item dropdown" ngbDropdown>
+                    <li *ngIf="unseen + solicitudes > 0" class="nav-item dropdown" ngbDropdown>
                         <a href="javascript:void(0)" class="no-arrow nav-link" ngbDropdownToggle>
                             <i class="fa fa-bell"></i>&nbsp;&nbsp;&nbsp;
-                            <span class="badge bg-red">15</span>
+                            <span class="badge bg-red">{{unseen + solicitudes}}</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a rel="nofollow" href="javascript:void(0)" class="dropdown-item">
-                                    <div class="notification">
-                                        <div class="notification-content">
-                                            <i class="fa fa-bell bg-blue"></i> notifiqueichon1
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a rel="nofollow" href="javascript:void(0)" class="dropdown-item">
-                                    <div class="notification">
-                                        <div class="notification-content">
-                                            <i class="fa fa-bell bg-blue"></i> notifiqueichon2
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a rel="nofollow" href="javascript:void(0)" class="dropdown-item">
-                                    <div class="notification">
-                                        <div class="notification-content">
-                                            <i class="fa fa-bell bg-blue"></i> notifiqueichon3
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a rel="nofollow" href="javascript:void(0)" class="dropdown-item">
-                                    <div class="notification">
-                                        <div class="notification-content">
-                                            <i class="fa fa-bell bg-blue"></i> notifiqueichon4
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a rel="nofollow" href="javascript:void(0)" class="dropdown-item">
-                                    <div class="notification">
-                                        <div class="notification-content">
-                                            <i class="fa fa-bell bg-blue"></i> notifiqueichon5
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
+                            <li *ngIf="unseen > 0">
                                 <a rel="nofollow" [routerLink]="['/notifications']" class="dropdown-item">
                                     <div class="notification">
-                                        <div class="notification-content" style="text-align: center;">
-                                            ver todos...
+                                        <div class="notification-content">
+                                            <i class="fa fa-bell bg-blue"></i> Tienes {{unseen}} {{(unseen == 1)? 'pendiente sin ver': 'pendientes sin ver' }}
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li *ngIf="solicitudes > 0">
+                                <a rel="nofollow" [routerLink]="['/notifications']" class="dropdown-item">
+                                    <div class="notification">
+                                        <div class="notification-content">
+                                            <i class="fa fa-bell bg-blue"></i> Tienes {{solicitudes}} {{(solicitudes == 1)? 'solicitud pendiente': 'solicitudes pendientes' }}
                                         </div>
                                     </div>
                                 </a>

@@ -52,15 +52,13 @@
     </div>
   </div>
   <div *ngIf="insurances.length == 0">
-    <section>
-      <div class="container-fluid">
-        <div class="card">
-          <div class="card-body">
-            <img [src]="'assets/images/no_insurance.png'">
+      <div class="d-flex justify-content-center">
+          <div class="card">
+            <div class="card-body">
+              <img [src]="'assets/images/no_insurance.png'">
+            </div>
           </div>
-        </div>
       </div>
-    </section>
   </div>
 </section>
 
@@ -94,13 +92,15 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field class="full-width">
-        <input matInput formControlName="policy" placeholder="Número de póliza" type="text" [(ngModel)]="insurance.policy" name="policy" required>
+        <input matInput formControlName="policy" placeholder="Número de póliza" type="text" [(ngModel)]="insurance.policy" name="policy"
+          required>
         <mat-error *ngIf="form.controls.policy.hasError('required')">
           El campo número de póliza es requerido
         </mat-error>
       </mat-form-field>
       <mat-form-field class="full-width">
-        <input matInput pattern="^(\d{7,10})$" placeholder="Teléfono" type="text" [(ngModel)]="insurance.telephone" name="telephone" formControlName="telephone" required>
+        <input matInput pattern="^(\d{7,10})$" placeholder="Teléfono" type="text" [(ngModel)]="insurance.telephone" name="telephone"
+          formControlName="telephone" required>
         <mat-error *ngIf="form.controls.telephone.hasError('pattern') && !form.controls.telephone.hasError('required')">
           Introduzca un teléfono correcto
         </mat-error>
@@ -109,7 +109,8 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field class="full-width">
-        <mat-select placeholder="Tipo de seguro" [formControl]="formControls.insuranceType" [(ngModel)]="insurance.type" name="type" required>
+        <mat-select placeholder="Tipo de seguro" [formControl]="formControls.insuranceType" [(ngModel)]="insurance.type" name="type"
+          required>
           <mat-option [value]="'car'">Auto</mat-option>
           <mat-option [value]="'home'">Casa</mat-option>
           <mat-option [value]="'life'">Vida</mat-option>

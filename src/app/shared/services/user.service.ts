@@ -8,12 +8,14 @@ import { Injectable } from '@angular/core';
 import { User } from 'app/shared/models/user';
 import { FirebaseApp } from 'angularfire2';
 import { Subscription } from 'rxjs/Subscription';
+import { Pending } from 'app/shared/models/pending';
 
 @Injectable()
 export class UserService {
   contacts: Observable<Contacto[]> = null;
   assistant: User = new User();
   private sub: Subscription;
+  private unseenSub: Subscription;
   constructor(private afd: AngularFireDatabase,private afa: AngularFireAuth,public app: FirebaseApp) { 
     this.sub = this.getUserObservable().subscribe((user: User) => {
       this.assistant = user;
@@ -24,6 +26,8 @@ export class UserService {
 
   destroy() {
     this.sub.unsubscribe();
+    if(this.unseenSub)
+      this.unseenSub.unsubscribe()
   }
 
   getContacts() {
@@ -75,6 +79,11 @@ export class UserService {
   getPendings(bossKey: string) {
     let uid = this.afa.auth.currentUser.uid;
     return this.afd.list(`pendings/${uid}`, ref => ref.orderByChild('boss').equalTo(bossKey)).valueChanges();
+  }
+
+  getUnseenPendings(bossKey) {
+    let uid = this.afa.auth.currentUser.uid;
+    return this.afd.list(`pendings/${uid}`, ref => ref.orderByChild('seen').equalTo(false)).valueChanges()
   }
 
   seePending(id: string) {

@@ -12,11 +12,11 @@ import {FormControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./insurances.component.scss']
 })
 export class InsurancesComponent implements OnInit {
-  carInsurances: Insurance[]
-  homeInsurances: Insurance[]
-  lifeInsurances: Insurance[]
-  medicalInsurances: Insurance[]
-  insurances: Insurance[]
+  carInsurances: Insurance[] = []
+  homeInsurances: Insurance[] = []
+  lifeInsurances: Insurance[] = []
+  medicalInsurances: Insurance[] = []
+  insurances: Insurance[] = []
   insurance: Insurance = new Insurance();
   public modalRef: BsModalRef;
   userSub: Subscription

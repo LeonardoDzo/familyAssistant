@@ -22,7 +22,10 @@ export class HeaderComponent implements OnInit,AfterViewInit {
     bosses: Boss[];
     selectedBoss: Boss = new Boss();
     bossesSub: Subscription
+    pendingsSub: Subscription
     userSub: Subscription
+    unseen: number = 0
+    solicitudes: number = 0
     constructor(
         private translate: TranslateService, 
         public router: Router,
@@ -40,11 +43,30 @@ export class HeaderComponent implements OnInit,AfterViewInit {
     ngOnInit() {
         this.userSub = this.us.getUserObservable().subscribe((user: User) => {
             this.user = user;
+            if(this.pendingsSub) {
+                this.pendingsSub.unsubscribe()
+            }
+            this.pendingsSub = this.us.getUnseenPendings(user.selectedBoss).subscribe((pendings => {
+                this.unseen = pendings.length
+            }))
+            if(this.bossesSub) {
+                this.bossesSub.unsubscribe()
+            }
+            this.bossesSub = this.us.getSolicitudes().subscribe(bosses => {
+                this.solicitudes = bosses.length
+            })
         });
     }
 
     ngOnDestroy(){        
         this.userSub.unsubscribe();
+        if(this.bossesSub) {
+            this.bossesSub.unsubscribe()
+        }
+        if(this.pendingsSub) {
+            this.pendingsSub.unsubscribe()
+        }
+        this.us.destroy();
     }
 
     ngAfterViewInit() { 

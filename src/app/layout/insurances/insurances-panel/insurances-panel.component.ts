@@ -16,7 +16,7 @@ import { InsurancesService } from 'app/shared/services/insurances.service';
 })
 export class InsurancesPanelComponent implements OnInit {
   @Input()
-  insurances: Insurance[] = [];
+  insurances: Insurance[];
   template: TemplateRef<any>
   insurance: Insurance
   public modalRef: BsModalRef;
@@ -39,6 +39,7 @@ export class InsurancesPanelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.insurances)
   }
 
   removeParam(url){

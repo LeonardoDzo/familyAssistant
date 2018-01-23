@@ -38,7 +38,7 @@
       </h2>
     </div>
   </header>
-  <div *ngIf="validated">
+  <div *ngIf="validated && files.length > 0">
     <ol class="breadcrumb">
       <li *ngFor="let route of navigation" class="breadcrumb-item">
         <a (click)="changeParent(route.id)" href="javascript:void(0)">
@@ -78,6 +78,13 @@
         </div>
       </div>
     </section>
+  </div>
+  <div *ngIf="validated && files.length == 0" class="d-flex justify-content-center">
+    <section>
+        <div class="card">
+            <img [src]="'assets/images/no-files.png'" alt="">
+          </div>
+        </section>
   </div>
   <div *ngIf="!validated">
     <div class="container-fluid">

@@ -33,10 +33,10 @@
             <a [routerLink]="['/safebox']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{ exact: true }">
                 <i class="fa fa-lock"></i> Safebox</a>
         </li>
-        <li *ngIf="user.selectedBoss">
+        <!--<li *ngIf="user.selectedBoss">
             <a [routerLink]="['/todo']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{ exact: true }">
                 <i class="fa fa-calendar"></i>To do list</a>
-        </li>
+        </li>-->
         <li *ngIf="user.selectedBoss">
             <a [routerLink]="['/insurances']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{ exact: true }">
                 <i class="fa fa-file"></i> Seguros

@@ -21,7 +21,7 @@
           </div>
 
           <div class="card-body">
-            <table class="table">
+            <table *ngIf="contacts.length > 0" class="table">
               <thead>
                 <tr>
                   <th>Nombre</th>
@@ -39,8 +39,13 @@
                 </tr>
               </tbody>
             </table>
+            <div *ngIf="contacts.length == 0">
+              <div class="d-flex justify-content-center">
+                <img [src]="'assets/images/no-users.png'">
+              </div>
+            </div>
           </div>
-          <div class="card-footer">
+          <div *ngIf="contacts.length > 0" class="card-footer">
               <mat-paginator [length]="length"
                 [pageSize]="pageSize"
                 (page)="change($event)"></mat-paginator>
