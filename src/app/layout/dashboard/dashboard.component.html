@@ -1,63 +1,68 @@
-<div [@routerTransition]>
-    <h2 class="text-muted">Dashboard <small>Statistics Overview</small></h2>
-    <div class="row">
-        <div class="col-md-12">
-            <ngb-carousel>
-                <ng-template ngbSlide *ngFor="let slider of sliders">
-                    <img class="img-fluid mx-auto d-block" [src]="slider.imagePath" alt="Random first slide" width="100%">
-                    <div class="carousel-caption">
-                        <h3>{{slider.label}}</h3>
-                        <p>{{slider.text}}</p>
+<section [@routerTransition]>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-md-4">
+                                <div class="btn-group">
+                                    <div class="btn btn-outline-danger" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="viewDateChanged($event)">
+                                        Anterior
+                                    </div>
+                                    <div class="btn btn-outline-danger" mwlCalendarToday [(viewDate)]="viewDate" (viewDateChange)="viewDateChanged($event)">
+                                        Hoy
+                                    </div>
+                                    <div class="btn btn-outline-danger" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="viewDateChanged($event)">
+                                        Siguiente
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <h3>
+                                    {{(view != 'day')? monthNames[viewDate.getMonth()] + ' ' + viewDate.getFullYear() : viewDate}}
+                                </h3>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="btn-group">
+                                    <div class="btn btn-danger" (click)="view = 'month'" [class.active]="view === 'month'">
+                                        Mes
+                                    </div>
+                                    <div class="btn btn-danger" (click)="view = 'week'" [class.active]="view === 'week'">
+                                        Semana
+                                    </div>
+                                    <button class="btn btn-success" (click)="openModalEvent(newEventTemplate)">
+                                            <i class="fa fa-plus"></i> Nuevo
+                                        </button>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div [ngSwitch]="view">
+                            <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (dayClicked)="dayClicked($event.day)"
+                                [activeDayIsOpen]="activeDayIsOpen" [locale]="es-mx" (eventClicked)="displayInfo($event,eventInfoTemplate)">
+                            </mwl-calendar-month-view>
+                            <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+                                (eventTimesChanged)="eventTimesChanged($event)" [locale]="es-mx">
+                            </mwl-calendar-week-view>
+                            <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+                                (eventTimesChanged)="eventTimesChanged($event)">
+                            </mwl-calendar-day-view>
+                        </div>
                     </div>
-                </ng-template>
-            </ngb-carousel>
+                </div>
+            </div>
         </div>
     </div>
-    <hr>
-    <div class="row">
-        <div class="col-xl-3 col-lg-6">
-            <app-stat [bgClass]="'card-primary'" [icon]="'fa-comments'" [count]="26" [label]="'New Comments!'" ></app-stat>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-            <app-stat [bgClass]="'card-info'" [icon]="'fa-tasks'" [count]="12" [label]="'New task!'" ></app-stat>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-            <app-stat [bgClass]="'card-success'" [icon]="'fa-shopping-cart'" [count]="124" [label]="'New Orders!'" ></app-stat>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-            <app-stat [bgClass]="'card-danger'" [icon]="'fa-support'" [count]="13" [label]="'New Tickets!'"></app-stat>
-        </div>
-    </div>
-    <hr />
-    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)" *ngFor="let alert of alerts">{{ alert.message }}</ngb-alert>
-    <hr />
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="card card-default">
-                <div class="card-header">
-                    <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
-                </div>
-                <!-- /.card-header -->
-                <app-timeline></app-timeline>
-                <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-        </div>
-        <!-- /.col-lg-8 -->
-        <div class="col-lg-4">
-            <div class="card card-default">
-                <div class="card-header">
-                    <i class="fa fa-bell fa-fw"></i> Notifications card
-                </div>
-                <!-- /.card-header -->
-                <app-notification></app-notification>
-                <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
+</section>
 
-            <app-chat></app-chat>
-            <!-- /.card .chat-card -->
-        </div>
-        <!-- /.col-lg-4 -->
-    </div>
-</div>
+<ng-template #newEventTemplate>
+    <app-new-event-modal [longitude]="longitude" [latitude]="latitude" [zoom]="zoom" [dateModel]="dateModel" [event]="event"
+        [modalRef]="modalRef">
+    </app-new-event-modal>
+</ng-template>
+
+<ng-template #eventInfoTemplate>
+    <app-event-info-modal [event]="event">
+    </app-event-info-modal>
+</ng-template>

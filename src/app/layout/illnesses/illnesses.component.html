@@ -1,0 +1,39 @@
+<div [@routerTransition]>
+  <header class="page-header">
+    <div class="container-fluid">
+      <h2 class="no-margin-bottom">
+        <i class="fa fa-medkit"></i> Botiquín &nbsp; &nbsp;
+        <button class="btn btn-success" (click)="openModal(addTemplate)">
+          <i class="fa fa-plus"></i> Nuevo
+        </button>
+      </h2>
+    </div>
+  </header>
+  <mat-tab-group>
+    <mat-tab label="Todo">
+      <div class="tab-panel">
+        <app-illnesses-table [illnesses]="realIllnesses" [title]="'Todo'"></app-illnesses-table>
+      </div>
+    </mat-tab>
+    <mat-tab label="Dolores">
+      <div class="tab-panel">
+        <app-illnesses-table [illnesses]="illnesses0" [title]="'Dolores'"></app-illnesses-table>
+      </div>
+    </mat-tab>
+    <mat-tab label="Enfermedades">
+      <div class="tab-panel">
+        <app-illnesses-table [illnesses]="illnesses1" [title]="'Enfermedades'"></app-illnesses-table>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+<ng-template #addTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{(!illness.id)? 'Agregar enfermedad' : 'Editar enfermedad'}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-new-illness-modal [modalRef]="modalRef" [illness]="illness"></app-new-illness-modal>
+</ng-template>

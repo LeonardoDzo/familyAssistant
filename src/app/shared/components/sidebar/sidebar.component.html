@@ -1,7 +1,75 @@
-<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
+<nav class="side-navbar">
+    <!-- Sidebar Header-->
+    <div *ngIf="familyActive" class="sidebar-header d-flex align-items-center">
+        <div class="">
+            <img src="{{(!familyActive.photoURL) ? 'assets/images/background_family.jpg' : familyActive.photoURL}}" alt="..." class="imagen">
+        </div>
+        <div class="title">
+            <div ngbDropdown class="d-inline-block">
+                <h3 class="h4" id="dropdownBasic1" ngbDropdownToggle>{{selectedBoss.name}}<i class="fa fa-caret-down"></i>
+                </h3>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button (click)="changeSelectedBoss(boss)" *ngFor="let boss of bosses" class="dropdown-item">{{boss.name}}</button>
+                </div>
+            </div>
+            <p class="family" (click)="openModal(template)">{{familyActive.name}}
+                <i class="fa fa-exchange"></i>
+            </p>
+        </div>
+    </div>
+    <!-- Sidebar Navidation Menus-->
+    <span class="heading">Menú</span>
+    <ul class="list-unstyled">
+        <li>
+            <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{ exact: true }">
+                <i class="icon-home"></i>Inicio</a>
+        </li>
+        <li *ngIf="user.selectedBoss">
+            <a [routerLink]="['/contacts']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{ exact: true }">
+                <i class="fa fa-address-book-o"></i>Contactos </a>
+        </li>
+        <li *ngIf="user.selectedBoss">
+            <a [routerLink]="['/safebox']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{ exact: true }">
+                <i class="fa fa-lock"></i> Safebox</a>
+        </li>
+        <!--<li *ngIf="user.selectedBoss">
+            <a [routerLink]="['/todo']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{ exact: true }">
+                <i class="fa fa-calendar"></i>To do list</a>
+        </li>-->
+        <li *ngIf="user.selectedBoss">
+            <a [routerLink]="['/insurances']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{ exact: true }">
+                <i class="fa fa-file"></i> Seguros
+            </a>
+        </li>
+        <li *ngIf="user.selectedBoss">
+            <a [routerLink]="['/medkit']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{ exact: true }">
+                <i class="fa fa-medkit"></i>Botiquín</a>
+        </li>
+    </ul>
+</nav>
+
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Cambiar familia</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="list-group">
+        <a *ngFor="let family of families" href="javascript:void(0)" (click)="changeFamily(family)" class="list-group-item list-group-item-action">
+            Familia {{family.name}}
+        </a>
+    </div>
+</ng-template>
+
+
+<!--<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
     <ul class="list-group">
         <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'Dashboard' | translate }}
+        </a>
+        <a [routerLink]="['/contactos']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-address-book-o"></i>&nbsp;{{ 'Contactos' | translate }}
         </a>
         <a [routerLink]="['/charts']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;{{ 'Charts' | translate }}
@@ -46,4 +114,4 @@
             {{ 'More Theme' | translate }}
         </a>
     </ul>
-</nav>
+</nav>-->

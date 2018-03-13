@@ -1,0 +1,139 @@
+<div class="modal-header">
+    <b>Nuevo evento</b>
+</div>
+<div class="modal-body">
+    <form role="form" #addContactForm="ngForm">
+        <fieldset class="form-group">
+            <label>Título</label>
+            <input class="form-control" name="nombre" [(ngModel)]="event.title">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="description">Detalles</label>
+            <textarea class="form-control" name="datails" rows="4" id="details" [(ngModel)]="event.details">
+            </textarea> 
+        </fieldset>
+        <mat-form-field>
+            <mat-select placeholder="Invitar personas" [(ngModel)]="selectedUsers" name="invite" multiple>
+                <mat-option *ngFor="let user of usersToInvite" [value]="user.id">{{user.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <fieldset class="form-group"> 
+            <label>Todo el día</label>
+            <label class="switch" for="checkbox">
+                <input type="checkbox" id="checkbox" [checked]="allDay" (change)="allDay = !allDay"/>
+                <div class="slider round"></div>
+            </label>
+        </fieldset>
+        <div class="row">
+            <div class="col-lg-6">
+                <fieldset class="form-group">
+                    <label for="startdate">Fecha de inicio</label>
+                    <input name="startdate" 
+                        id="startdate"
+                        [(ngModel)]="dateModel.start"
+                        type="text" 
+                        class="form-control" 
+                        #dps="bsDatepicker" 
+                        bsDatepicker
+                        [(bsValue)]="dateModel.start"
+                        (ngModelChange)="changeStart($event)">
+                </fieldset>
+            </div>
+            <div class="col-lg-6">
+                <fieldset class="form-group">
+                    <label for="enddate">Fecha de finalización</label>
+                    <input name="enddate" 
+                        id="enddatee"
+                        [(ngModel)]="dateModel.end"
+                        type="text" 
+                        class="form-control" 
+                        #dpe="bsDatepicker" 
+                        bsDatepicker
+                        [(bsValue)]="dateModel.end">
+                </fieldset>
+            </div>
+        </div>
+        <div *ngIf="!allDay">
+            <div class="row">
+                <div class="col-lg-6">
+                    <label>Hora de inicio</label>
+                    <timepicker [(ngModel)]="dateModel.start" name="start"></timepicker>
+                </div>
+                <div class="col-lg-6">
+                    <label>Hora de finalización</label>
+                    <timepicker [(ngModel)]="dateModel.end" name="end"></timepicker>
+                </div>
+            </div>
+        </div>
+        <fieldset class="form-group">
+            <label for="tipo">Tipo de evento</label>
+            <select class="form-control" id="tipo" name="eventtype" [(ngModel)]="event.eventtype">
+                <option value="0">Ninguno</option>
+                <option value="2">Reunion</option>
+                <option value="1">Cumpleaños</option>
+            </select>
+        </fieldset>
+        <fieldset class="form-group"> 
+            <label>Repetir este evento</label>
+            <label class="switch" for="repeatcheckbox">
+                <input type="checkbox" id="repeatcheckbox" [checked]="repeat" (change)="repeat = !repeat"/>
+                <div class="slider round"></div>
+            </label>
+        </fieldset>
+        <div *ngIf="repeat">
+            <fieldset class="form-group">
+                <label for="repeat">Repetir cada</label>
+                <div class="input-group">
+                    <input 
+                        id="repeat" 
+                        name="frequency" 
+                        type="number" 
+                        class="form-control" 
+                        [(ngModel)]="frequency">
+                    <select class="form-control" name="interval" [(ngModel)]="interval">
+                        <option value="1">Días</option>
+                        <option value="2">Semanas</option>
+                        <option value="3">Meses</option>
+                    </select>
+                </div>
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="">Repetir hasta</label>
+                <input name="repeatEnd" 
+                    id="repeatEnd"
+                    [(ngModel)]="dateModel.repeatEnd"
+                    type="text" 
+                    class="form-control" 
+                    #dph="bsDatepicker"
+                    bsDatepicker
+                    [(bsValue)]="dateModel.repeatEnd">
+            </fieldset>
+        </div>
+        <fieldset class="form-group"> 
+            <label>Agregar ubicación</label>
+            <label class="switch" for="locationcheckbox">
+                <input type="checkbox" id="locationcheckbox" [checked]="hasLocation" (change)="hasLocation = !hasLocation"/>
+                <div class="slider round"></div>
+            </label>
+        </fieldset>
+        <div [hidden]="!hasLocation">
+            <div class="form-group">
+                <input placeholder="buscar ubicación" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+            </div>
+        </div>
+        <div *ngIf="hasLocation">
+          <agm-map [latitude]="latitude" 
+            [longitude]="longitude" 
+            [zoom]="zoom" 
+            [draggableCursor]="'default'" 
+            [draggingCursor]="'grabbing'"
+            [streetViewControl]="false"
+            (mapClick)="mapClick($event)">
+            <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+          </agm-map>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" (click)="submit()">Agregar</button>
+</div>

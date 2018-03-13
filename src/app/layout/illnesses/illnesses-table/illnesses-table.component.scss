@@ -1,0 +1,20 @@
+.tab-panel {
+    overflow: hidden;
+}
+
+.tab-content {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.table tbody tr {
+	cursor: pointer;
+}
+
+.table tbody tr:hover {
+	background: #f5f5f5;
+}
+
+.card-footer {
+    background-color: white;
+}

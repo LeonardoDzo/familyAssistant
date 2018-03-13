@@ -12,8 +12,15 @@ const routes: Routes = [
             { path: 'forms', loadChildren: './form/form.module#FormModule' },
             { path: 'bs-element', loadChildren: './bs-element/bs-element.module#BsElementModule' },
             { path: 'grid', loadChildren: './grid/grid.module#GridModule' },
-            { path: 'components', loadChildren: './bs-component/bs-component.module#BsComponentModule' },
             { path: 'blank-page', loadChildren: './blank-page/blank-page.module#BlankPageModule' },
+            { path: 'edit', loadChildren: './edit/edit.module#EditModule' },
+            { path: 'contacts', loadChildren: './contactos/contactos.module#ContactosModule' },
+            { path: 'safebox', loadChildren: './safebox/safebox.module#SafeboxModule'},
+            { path: 'medkit', loadChildren: './illnesses/illnesses.module#IllnessesModule' },
+            { path: 'medicine', loadChildren: './medicine/medicine.module#MedicineModule' },
+            { path: 'todo', loadChildren: './todo/todo.module#TodoModule' },
+            { path: 'insurances',loadChildren: './insurances/insurances.module#InsurancesModule' },
+            { path: 'notifications', loadChildren: './notifications/notifications.module#NotificationsModule' }
         ]
     }
 ];

@@ -1,0 +1,45 @@
+.card-block {
+    position: relative;
+    padding-top: 0;
+    overflow: hidden;
+    text-align: center;
+    margin: 20px;
+    border-right: solid #900C3F;
+}
+
+.imagen {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.card-block .info {
+    padding: 4px 8px 10px;
+}
+
+.card-block .info .title {
+    margin-bottom: 4px;
+    font-size: 24px;
+    line-height: 1;
+    color: #262626;
+    vertical-align: middle;
+}
+
+.card-block .info .desc {
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 20px;
+    color: #737373;
+    text-overflow: ellipsis;
+}
+
+.edit-form {
+    margin: 20px;
+}
+
+.center {
+    text-align: center;
+}

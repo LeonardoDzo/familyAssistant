@@ -1,0 +1,26 @@
+<div id="live-chat">
+
+  <header (click)="toggle()" class="clearfix">
+
+    <h4>Chat</h4>
+
+  </header>
+
+  <div class="chat" *ngIf="chatState=='in'">
+
+    <div class="chat-history">
+      <div *ngFor="let boss of bosses" class="item d-flex align-items-center" (click)="chatClicked(boss)">
+        <div class="row d-flex align-items-center">
+          <div class="image">
+            <img [src]="(!boss.photoURL) ? 'assets/images/user.png' : boss.photoURL" alt="...">
+          </div>
+          <div class="text">
+            <h3 class="h5">{{boss.name}}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

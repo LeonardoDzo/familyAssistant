@@ -1,28 +1,76 @@
-<div class="login-page" [@routerTransition]>
+<div class="login-page">
+    <div class="container d-flex align-items-center" [@routerTransition]>
+        <div class="form-holder has-shadow">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="info d-flex align-items-center">
+                        <div class="content">
+                            <div class="logo">
+                                <h1>Family Assistant</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Form Panel    -->
+                <div class="col-lg-6 bg-white">
+                    <div class="form d-flex align-items-center">
+                        <div class="content">
+                            <form id="login-form" (ngSubmit)="signup()" role="form" #loginForm="ngForm" ngNativeValidate>
+                                <div class="form-group">
+                                    <input id="register-fullname" type="text" name="fullName" [(ngModel)]="fullName" class="input-material" required>
+                                    <label for="register-fullname" class="label-material">Nombre</label>
+                                </div>
+
+                                <div class="form-group">
+                                    <input id="register-email" type="text" name="email" [(ngModel)]="email" class="input-material" required>
+                                    <label for="register-email" class="label-material">Correo</label>
+                                </div>
+
+                                <div class="form-group">
+                                    <input id="register-password" type="password" name="password" [(ngModel)]="password" name="loginPassword" required="" class="input-material">
+                                    <label for="register-password" class="label-material">Contraseña</label>
+                                </div>
+
+                                <div class="form-group">
+                                    <input id="register-confirm" type="password" name="confirm" [(ngModel)]="confirm" class="input-material" required>
+                                    <label for="register-confirm" class="label-material">Contraseña</label>                                    
+                                </div>
+                                <div class="row">
+                                    <input type="submit" id="register" class="btn btn-primary" value="Registrar"> &nbsp;
+                                </div>
+                            </form>
+                            <small>¿Ya tienes una cuenta? </small>
+                            <a [routerLink]="['/login']" class="signup">Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="login-page" [@routerTransition]>
     <div class="row">
         <div class="col-md-4 push-md-4">
             <img class="user-avatar" src="assets/images/logo.png" width="150px" />
             <h1>SB Admin BS4 Angular4</h1>
-            <form role="form">
+            <form (ngSubmit)="signup()" role="form" #signupForm="ngForm" ngNativeValidate>
                 <div class="form-content">
                     <div class="form-group">
-                        <input type="text" class="form-control input-underline input-lg" id="" placeholder="Full Name">
-                    </div>
-
-                    <div class="form-group">
-                        <input type="text" class="form-control input-underline input-lg" id="" placeholder="Email">
-                    </div>
-
-                    <div class="form-group">
-                        <input type="password" class="form-control input-underline input-lg" id="" placeholder="Password">
+                        <input type="text" name="fullName" [(ngModel)]="fullName" class="form-control input-underline input-lg" id="" placeholder="Full Name" required>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control input-underline input-lg" id="" placeholder="Repeat Password">
+                        <input type="text" name="email" [(ngModel)]="email" class="form-control input-underline input-lg" id="" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" [(ngModel)]="password" class="form-control input-underline input-lg" id="" placeholder="Password" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="confirm" [(ngModel)]="confirm" class="form-control input-underline input-lg" id="" placeholder="Repeat Password" required>
                     </div>
                 </div>
-                <a class="btn rounded-btn" [routerLink]="['/dashboard']"> Register </a>&nbsp;
+                <input type="submit" class="btn rounded-btn" value="Register">&nbsp;
                 <a class="btn rounded-btn" [routerLink]="['/login']"> Log in </a>
             </form>
         </div>
     </div>
-</div>
+</div>-->

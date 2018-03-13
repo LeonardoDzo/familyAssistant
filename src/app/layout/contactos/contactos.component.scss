@@ -1,0 +1,82 @@
+.search-bar {
+    margin-left: 20px;
+}
+
+.modal-body ul {
+    margin-left: 20px;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.list-item {
+    cursor: pointer;
+}
+
+.list-item:hover {
+    background: #f5f5f5;
+}
+
+.card-footer {
+    background-color: white;
+}
+
+.card-block {
+    position: relative;
+    padding-top: 0;
+    overflow: hidden;
+    text-align: center;
+    margin: 20px;
+    border-right: solid #900C3F;
+}
+
+.imagen {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.info-div {
+    margin-top: 20px;
+}
+
+.info {
+    padding: 4px 8px 10px;
+}
+
+ .info .title {
+    margin-bottom: 4px;
+    font-size: 20px;
+    line-height: 1;
+    color: #262626;
+    vertical-align: middle;
+}
+
+.info .desc {
+    overflow: hidden;
+    font-size: 17px;
+    line-height: 20px;
+    color: #737373;
+    text-overflow: ellipsis;
+}
+
+.edit-form {
+    margin: 20px;
+}
+
+
+.dropdown-toggle::after {
+    display:none;
+}
+
+.dropdown-toggle {
+	padding-left: 10px;
+	padding-right: 5px;
+	text-decoration: none;
+}

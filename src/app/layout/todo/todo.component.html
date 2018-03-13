@@ -1,0 +1,115 @@
+<div [@routerTransition]>
+  <header class="page-header align-items-center">
+    <div class="container-fluid">
+      <h2 class="no-margin-bottom">
+        <i class="fa fa-calendar"></i> To do List &nbsp; &nbsp;
+        <button class="btn btn-success" (click)="openModal(new)">
+          <i class="fa fa-plus"></i> Nuevo</button>
+        <span class="search-bar pull-right">
+          <form role="form" class="form-inline">
+            <input class="form-control" type="text" placeholder="Buscar" name="searchString" [(ngModel)]="searchString">
+          </form>
+        </span>
+      </h2>
+    </div>
+  </header>
+
+  <section>
+    <div class="row justify-content-center">
+      <div class="col-lg-11">
+        <ul class="event-list">
+          <li *ngFor="let todo of todos">
+            <time datetime="2014-07-20">
+              <span class="day">{{todo.date.getDate()}}</span>
+              <span class="month">{{months[todo.date.getMonth()]}}</span>
+              <span class="year">{{todo.date.getFullYear()}}</span>
+              <span class="time">ALL DAY</span>
+            </time>
+            <img *ngIf="todo.downloadUrl" src="{{todo.downloadUrl}}" />
+
+            <div class="info">
+              <h2 class="title">{{todo.name}}</h2>
+              <p class="desc">{{todo.description}}</p>
+            </div>
+            <div class="social">
+              <ul>
+                <li class="edit" style="width: 50%;">
+                  <a (click)="openModal(new,todo)" href="/todo#">
+                    <span class="fa fa-pencil"></span>
+                  </a>
+                </li>
+                <li class="erase" style="width:50%;">
+                  <a (click)="openModal(confirm,todo)" href="/todo#">
+                    <span class="fa fa-trash"></span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<ng-template #new>
+  <div class="modal-header">
+    <h3>{{(!todo.key) ? 'Nuevo pendiente' : 'Editar pendiente'}}</h3>
+  </div>
+
+  <div class="modal-body">
+    <form role="form">
+      <fieldset class="form-group">
+        <label>Fecha:</label>
+        <div class="input-group">
+          <input name="date" [(ngModel)]="todo.date" [bsConfig]="bsConfig" type="text" class="form-control" #dp="bsDatepicker" bsDatepicker
+            [(bsValue)]="bsValue">
+          <div class="input-group-btn">
+            <button class="btn btn-default" (click)="dp.toggle()">
+              <i class="fa fa-calendar"></i>
+            </button>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label>Nombre:</label>
+        <input name="name" [(ngModel)]="todo.name" class="form-control">
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label>Descripción:</label>
+        <input name="description" [(ngModel)]="todo.description" class="form-control">
+      </fieldset>
+
+      <fieldset class="form-check">
+        <label class="form-check-label">
+          <input name="active" [(ngModel)]="todo.active" type="checkbox" class="form-check-input"> Activo
+        </label>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label for="exampleInputFile">Imagen</label>
+        <input #fileupload (change)="fileChanged(fileupload.files)" type="file" name="file" class="form-control-file">
+      </fieldset>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button (click)="submitModal()" class="btn btn-primary">{{(!todo.key) ? 'Agregar' : 'Guardar'}}</button>
+  </div>
+</ng-template>
+
+<ng-template #confirm>
+  <div class="modal-header">
+    <p>
+      <i class="fa fa-exclamation"></i>Alerta</p>
+  </div>
+  <div class="modal-body">
+    ¿Está seguro que desea eliminar el pendiente {{ todo.name }}?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" (click)="removeTodo()">Si</button>
+    <button class="btn btn-default" (click)="modalRef.hide()">No</button>
+  </div>
+</ng-template>

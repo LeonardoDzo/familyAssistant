@@ -1,0 +1,155 @@
+<div [@routerTransition]>
+  <section class="tables">
+    <div class="container-fluid">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header d-flex align-items-center justify-content-between">
+            <h3 class="h4">
+              <i class="fa fa-medkit"></i> Medicamentos &nbsp;&nbsp;
+              <button class="btn btn-success" (click)="openModal(addTemplate)">
+                <i class="fa fa-plus"></i> Nuevo
+              </button>
+            </h3>
+            <div class="search-bar">
+              <form role="form" class="form-inline" #searchForm="ngForm">
+                <input (ngModelChange)="search($event)" class="form-control" type="text" placeholder="Buscar" name="searchString" [(ngModel)]="searchString">
+              </form>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Dosis</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let medicine of medicines" (click)="openModal(infoTemplate,medicine)">
+                  <td>
+                    {{ medicine.name }}
+                  </td>
+                  <td>{{ medicine.dosage }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card-footer">
+            <div class="row">
+              <div class="col"></div>
+              <div class="col align-self-center">
+                <pagination [itemsPerPage]="itemsPerPage" [totalItems]="totalItems" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+                  nextText="&rsaquo;"></pagination>
+              </div>
+              <div class="col"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<ng-template #addTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{(!medicine.id)? 'Agregar enfermedad' : 'Editar enfermedad'}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ul>
+      <li *ngFor="let message of errorMessage">
+        {{ message }}
+      </li>
+    </ul>
+    <form role="form" #addMedicineForm>
+      <fieldset class="form-group">
+        <label>Nombre</label>
+        <input class="form-control" name="nombre" [(ngModel)]="medicine.name">
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label>Indicaciones</label>
+        <input class="form-control" name="indications" [(ngModel)]="medicine.indications">
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label>Dosis</label>
+        <input class="form-control" name="dosage" [(ngModel)]="medicine.dosage">
+      </fieldset>
+      <fieldset class="form-group">
+        <label>Restricciones</label>
+        <input class="form-control" name="restrictions" [(ngModel)]="medicine.restrictions">
+      </fieldset>
+      <fieldset class="form-group">
+        <label>Info</label>
+        <input class="form-control" name="moreInfo" [(ngModel)]="medicine.moreInfo">
+      </fieldset>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button (click)="submitModal()" class="btn btn-primary">{{(!medicine.id)? 'Agregar' : 'Guardar'}}</button>
+  </div>
+</ng-template>
+
+<ng-template #infoTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Info</h4>
+    <!--<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>-->
+    <div class="btn-group pull-right" placement="bottom left" dropdown>
+      <a href="javascript:void(0)" dropdownToggle class="dropdown-toggle">
+        <i class="fa fa-ellipsis-v"></i>
+      </a>
+      <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
+        <li role="menuitem">
+          <a (click)="openModal(addTemplate,medicine)" class="dropdown-item" href="javascript:void(0)">Editar</a>
+        </li>
+        <li role="menuitem">
+          <a (click)="openModal(confirmTemplate,medicine)" class="dropdown-item" href="javascript:void(0)">Eliminar</a>
+        </li>
+        <li role="menuitem">
+          <a (click)="modalRef.hide()" class="dropdown-item" href="javascript:void(0)">Cerrar</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="row justify-content-center">
+        <div>
+            <div>
+              <b>Nombre: </b> {{ medicine.name }}</div>
+            <br>
+            <div>
+              <b>Indicaciones: </b>{{ medicine.indications }}</div>
+            <br>
+            <div>
+              <b>Dosis: </b>{{ medicine.dosage }}</div>
+            <br>
+            <div>
+              <b>Restricciones: </b>{{ medicine.restrictions }}</div>
+            <br>
+            <div>
+              <b>info: </b>{{ medicine.moreInfo }}</div>
+          </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #confirmTemplate>
+  <div class="modal-header">
+    <p>
+      <i class="fa fa-exclamation"></i>Alerta</p>
+  </div>
+  <div class="modal-body">
+    ¿Está seguro que desea eliminar el medicamento {{ medicine.name }}?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" (click)="removeMedicine()">Si</button>
+    <button class="btn btn-default" (click)="modalRef.hide()">No</button>
+  </div>
+</ng-template>

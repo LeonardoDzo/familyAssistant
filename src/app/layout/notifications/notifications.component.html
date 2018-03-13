@@ -1,0 +1,57 @@
+<section>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xl-8">
+        <div class="checklist card dashboard-card">
+          <div class="card-header d-flex justify-content-between">
+            <h3>Pendientes</h3>
+            <mat-radio-group [selected]="no" (change)="change($event)">
+              <mat-radio-button [value]="false" #no>No finalizados</mat-radio-button>
+              <mat-radio-button [value]="true" #yes>Finalizados</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div class="card-body no-padding card-body-height">
+            <mat-tab-group>
+              <mat-tab label="Sin ver">
+                <app-pendings-list [pendings]="unseen"></app-pendings-list>
+              </mat-tab>
+              <mat-tab label="Todos">
+                <app-pendings-list [pendings]="allPendings"></app-pendings-list>
+              </mat-tab>
+              <mat-tab label="Muy urgentes">
+                <app-pendings-list [pendings]="pendings2"></app-pendings-list>
+              </mat-tab>
+              <mat-tab label="Poco urgentes">
+                <app-pendings-list [pendings]="pendings1"></app-pendings-list>
+              </mat-tab>
+              <mat-tab label="Nada urgentes">
+                <app-pendings-list [pendings]="pendings0"></app-pendings-list>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4">
+        <div class="articles card dashboard-card">
+          <div class="card-header d-flex align-items-center">
+            <b>Solicitudes</b>
+          </div>
+          <div class="card-body no-padding card-body-height">
+            <div *ngFor="let boss of bosses">
+              <app-solicitude [boss]="boss"></app-solicitude>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-template #pendingTemplate>
+  <div class="modal-header">
+    <h3>{{pending.title}}</h3>
+  </div>
+  <div class="modal-body">
+    <b>Descripción: </b> {{pending.details}}
+  </div>
+</ng-template>

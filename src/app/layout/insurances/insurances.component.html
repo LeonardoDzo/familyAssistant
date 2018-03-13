@@ -1,0 +1,87 @@
+<header class="page-header">
+  <div class="container-fluid">
+    <h2 class="no-margin-bottom">
+      <i class="fa fa-file"></i> Seguros &nbsp; &nbsp;
+      <button class="btn btn-success" (click)="openModal(add)">
+        <i class="fa fa-plus"></i> Nuevo
+      </button>
+    </h2>
+  </div>
+</header>
+<div class="inside-content">
+  <mat-tab-group>
+    <mat-tab label="Todos">
+      <div class="tab-panel">
+        <app-insurances-panel 
+          [insurances]="insurances" 
+          [selected]="selected"></app-insurances-panel>
+      </div>
+    </mat-tab>
+    <mat-tab label="Autos">
+      <div class="tab-panel">
+        <app-insurances-panel [insurances]="carInsurances" [selected]="selected"></app-insurances-panel>
+      </div>
+    </mat-tab>
+    <mat-tab label="Casas">
+      <div class="tab-panel">
+        <app-insurances-panel [insurances]="homeInsurances" [selected]="selected"></app-insurances-panel>
+      </div>
+    </mat-tab>
+    <mat-tab label="De Vida">
+      <app-insurances-panel [insurances]="lifeInsurances" [selected]="selected"></app-insurances-panel>
+    </mat-tab>
+    <mat-tab label="Médicos">
+      <app-insurances-panel [insurances]="medicalInsurances" [selected]="selected"></app-insurances-panel>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+<ng-template #add>
+  <div class="modal-header">
+    <b>Nuevo seguro</b>
+    <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form id="form" [formGroup]="form" (ngSubmit)="submit()">
+      <mat-form-field class="full-width">
+        <input matInput formControlName="name" placeholder="Nombre" type="text" [(ngModel)]="insurance.name" name="name" required>
+        <mat-error *ngIf="form.controls.name.hasError('required')">
+          El campo nombre es requerido
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput formControlName="policy" placeholder="Número de póliza" type="text" [(ngModel)]="insurance.policy" name="policy" required>
+        <mat-error *ngIf="form.controls.policy.hasError('required')">
+          El campo número de póliza es requerido
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput pattern="^(\d{7,10})$" placeholder="Teléfono" type="text" [(ngModel)]="insurance.telephone" name="telephone" formControlName="telephone" required>
+        <mat-error *ngIf="form.controls.telephone.hasError('pattern') && !form.controls.telephone.hasError('required')">
+          Introduzca un teléfono correcto
+        </mat-error>
+        <mat-error *ngIf="form.controls.telephone.hasError('required')">
+          El campo teléfono es requerido
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-select placeholder="Tipo de seguro" [formControl]="formControls.insuranceType" [(ngModel)]="insurance.type" name="type" required>
+          <mat-option [value]="'car'">Auto</mat-option>
+          <mat-option [value]="'home'">Casa</mat-option>
+          <mat-option [value]="'life'">Vida</mat-option>
+          <mat-option [value]="'medical'">Médico</mat-option>
+        </mat-select>
+        <mat-error *ngIf="formControls.insuranceType.hasError('required')">Se requiere un tipo de seguro</mat-error>
+      </mat-form-field>
+      <fieldset class="form-group">
+        <label>Archivo de póliza</label>
+        <input name="file" formControlName="file" type="file" placeholder="Agregar archivo" #fileupload (change)="fileChanged(fileupload.files)">
+      </fieldset>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <input type="submit" form="form" class="btn btn-primary" value="Agregar">
+  </div>
+</ng-template>

@@ -1,0 +1,50 @@
+<div class="modal-body">
+  <form id="form" [formGroup]="form" (ngSubmit)="submitModal()" #addIllnessForm>
+    <mat-form-field style="width: 100%;">
+      <input matInput formControlName="name" placeholder="Nombre" type="text" [(ngModel)]="illness.name" name="name" required>
+      <mat-error *ngIf="form.controls.name.hasError('required')">
+        El campo nombre es requerido
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field style="width: 100%;">
+      <input matInput formControlName="dosage" placeholder="Dósis" type="text" [(ngModel)]="illness.dosage" name="dosage" required>
+      <mat-error *ngIf="form.controls.dosage.hasError('required')">
+        El campo dósis es requerido
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field style="width: 100%;">
+      <label class="{{focused}}">Medicamentos</label>
+      <mat-chip-list #chipList>
+        <mat-chip *ngFor="let medicine of medicines" [removable]="true" (remove)="remove(medicine)">
+          {{medicine}}
+          <i matChipRemove class="fa fa-close"></i>
+        </mat-chip>
+        <input [matChipInputFor]="chipList"
+          [matChipInputAddOnBlur]="true"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add($event)"
+          (focus)="onFocus()"
+          (blur)="onBlur()">
+      </mat-chip-list>
+      <!--<mat-error *ngIf="form.controls.medicine.hasError('required')">
+        El campo medicamentos es requerido
+      </mat-error>-->
+    </mat-form-field>
+    <mat-form-field style="width: 100%;">
+      <mat-select 
+        placeholder="Tipo"
+        [(ngModel)]="illness.type" name="type"
+        formControlName="type"
+        required>
+        <mat-option [value]="0">Dolor</mat-option>
+        <mat-option [value]="1">Enfermedad</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls.type.hasError('required')">
+        El campo tipo es requerido
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div class="modal-footer">
+  <input form="form" type="submit" class="btn btn-primary" value="{{(!illness.id)? 'Agregar' : 'Guardar'}}">
+</div>

@@ -1,0 +1,49 @@
+.card.dashboard-card {
+    margin-right: 40px;
+}
+
+.card-body-height {
+    min-height: 350px;
+    padding-top: 5px;
+}
+
+.dashboard-solicitude {
+    margin-left: 40px;
+}
+
+.user-request {
+    width: 110px;
+    margin: 15px;
+}
+
+.item {
+    box-shadow: 0px 1px 1px rgb(247, 246, 246);
+    padding: 0;
+}
+
+.pending-modal {
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.green-label {
+    border-left: solid #00a33f 8px;
+}
+
+.red-label {
+    border-left: solid #e40000 8px;
+}
+
+.yellow-label {
+    border-left: solid #ffee00 8px;
+}
+
+.item label {
+    cursor: pointer;
+}
+
+div.badge {
+    margin-bottom: auto;    
+}

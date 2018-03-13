@@ -1,0 +1,18 @@
+<div class="item d-flex align-items-center justify-content-between">
+  <div class="row d-flex align-items-center">
+    <div class="image">
+      <img [src]="(!boss.photoURL) ? 'assets/images/user.png' : boss.photoURL" alt="...">
+    </div>
+    <div class="text">
+      <h3 class="h5">{{boss.name}}</h3>
+    </div>
+  </div>
+  <div class="pull-right">
+    <button (click)="acceptBoss()" class="btn btn-success">
+      <i class="fa fa-check"></i>
+    </button>
+    <button (click)="rejectBoss()" class="btn btn-danger">
+      <i class="fa fa-times"></i>
+    </button>
+  </div>
+</div>

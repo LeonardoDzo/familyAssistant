@@ -1,0 +1,42 @@
+<div id="live-chat">
+
+  <header (click)="toggle()" class="clearfix">
+    <a href="javascript:void(0)" (click)="closeChat()" class="chat-close">
+      <i class="fa fa-close"></i>
+    </a>
+    <h4>
+      <span *ngIf="boss.unread > 0" class="badge bg-red">{{boss.unread}}</span>   {{boss.name}}</h4>
+
+  </header>
+
+  <div *ngIf="chatState=='in'" class="chat">
+
+    <div class="chat-history" [id]="id"  #scrollMe [scrollTop]="scrollMe.scrollHeight">
+      <div *ngFor="let message of getMessages()">
+        <div class="chat-message clearfix">
+
+          <img *ngIf="boss.id == message.remittent" [src]="boss.photoURL" alt="" width="32" height="32">
+
+          <div class="chat-message-content clearfix">
+
+            <span class="chat-time">{{getDateString(message.timestamp)}}</span>
+
+            <h5>{{(boss.id == message.remittent)? boss.name: 'Tú'}}</h5>
+
+            <p>{{message.text}}</p>
+
+          </div>
+
+        </div>
+
+        <hr>
+      </div>
+
+    </div>
+    <form (ngSubmit)="sendMessage()" method="post">
+      <input (focus)="onFocus()" name="message" type="text" class="form-control" placeholder="Escribe un mensaje" [(ngModel)]="message">
+    </form>
+
+  </div>
+
+</div>

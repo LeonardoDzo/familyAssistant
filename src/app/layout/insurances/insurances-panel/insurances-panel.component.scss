@@ -1,0 +1,74 @@
+.insurances-element {
+    margin: 20px;
+}
+
+.tab-content {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.table tbody tr {
+	cursor: pointer;
+}
+
+.table tbody tr:hover {
+	background: #f5f5f5;
+}
+
+.active {
+    background: #f5f5f5;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.options button {
+    background-color: rgba(0,0,0,0);
+    border: 0px;
+    cursor: pointer;
+    float: left; 
+}
+
+.options button:not(:last-child) {
+    border-right: none;
+}
+
+.options:after {
+    content: "";
+    clear: both;
+    display: table; 
+}
+
+.edit {
+    transition: background-color 0.8s ease;
+    color: rgb(75, 110, 168) !important;
+}
+
+.input {
+    box-shadow: none;
+}
+
+.edit:hover {
+    color: white !important;
+    background-color: rgb(75, 110, 168) !important;
+}
+
+.erase {
+    transition: background-color 0.8s ease;
+    color: rgb(221, 58, 58) !important;
+}
+
+.erase:hover {
+    color: white !important;
+    background-color: rgb(248, 79, 79) !important;
+}
+
+.options button:hover {
+    background-color: #3e8e41;
+}
+
+.full-width {
+    width: 100%;
+}

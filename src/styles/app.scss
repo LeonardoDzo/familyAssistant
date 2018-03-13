@@ -1,6 +1,69 @@
 /* You can add global styles to this file, and also import other style files */
 @import "bootstrap/bootstrap";
-@import "spinner";
-@import "utils";
-@import "rtl";
-@import "responsive";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+.bs-datepicker {
+    z-index: 1051 !important;
+}
+
+.cal-month-view .cal-open-day-events {
+    background-color: #e3e3e3;
+    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.5);
+}
+
+.modal{
+    z-index: 100;
+}
+.pac-container {
+    background-color: #FFF;
+    z-index: 1051 !important;
+    position: fixed;
+    display: inline-block;
+    float: left;
+}
+
+.modal-backdrop {
+    z-index: 12;
+}​
+
+.modal {
+    z-index: 20;   
+}
+
+.mat-tab-header {
+    background-color: white;
+    border-top: 0.5px solid #e7e7e7;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+    z-index:9;
+}
+
+.mat-ink-bar {
+    background-color: #8A1111 !important;
+}
+
+.mat-form-field-type-mat-chip-list {
+    .mat-form-field-flex {
+        flex-wrap: wrap;
+    }
+    .mat-form-field-prefix, 
+    .mat-form-field-suffix {
+        max-width: 100%;
+    }
+}
+.mat-radio-label {
+    margin-bottom: 0;
+}
+/*.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #5539f3;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #5539f3;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+    border-color: green;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle{
+    background-color: green;
+}*/

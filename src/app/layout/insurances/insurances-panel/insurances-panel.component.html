@@ -1,0 +1,130 @@
+<section class="tab-content">
+  <div *ngIf="insurances.length > 0" class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Póliza</th>
+                <th>Teléfono</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let insurance of insurances" (click)="changeSelected(insurance)" [ngClass]="{active: isActive(insurance)}">
+                <td>{{insurance.name}}</td>
+                <td>{{insurance.policy}}</td>
+                <td>{{insurance.telephone}}</td>
+                <td>
+                  <div class="options">
+                    <button style="width: 50%" class="edit" (click)="openModalEdit(edit,insurance)"><i class="fa fa-pencil"></i></button>
+                    <button style="width: 50%" class="erase" (click)="openModalEdit(remove,insurance)"><i class="fa fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div *ngIf="selected.name">
+
+          <div class="card-body">
+            <div *ngIf="selected.downloadUrl">
+              <div *ngIf="!isPdf()">
+                <a href="{{selected.downloadUrl}}" target="_blank"><img src="{{selected.downloadUrl}}" alt=""></a>
+              </div>
+              <div *ngIf="isPdf()">
+                <p>No hay preview disponible</p>
+                <a href="{{selected.downloadUrl}}" target="_blank">link de descarga</a>
+              </div>
+            </div>
+            <div *ngIf="!selected.downloadUrl">
+              No hay ningún archivo de póliza
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="insurances.length == 0">
+      <div class="d-flex justify-content-center">
+          <div class="card">
+            <div class="card-body">
+              <img [src]="'assets/images/no_insurance.png'">
+            </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+<ng-template #remove>
+  <div class="modal-header">
+    <b>
+      <i class="fa fa-exclamation"></i>Alerta</b>
+  </div>
+  <div class="modal-body">
+    ¿Está seguro que desea eliminar el seguro {{ selected.name }}?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" (click)="removeInsurance()">Si</button>
+    <button class="btn btn-default" (click)="modalRef.hide()">No</button>
+  </div>
+</ng-template>
+
+<ng-template #edit>
+  <div class="modal-header">
+    <b>Editar</b>
+    <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form id="form" [formGroup]="form" (ngSubmit)="submit()">
+      <mat-form-field class="full-width">
+        <input matInput formControlName="name" placeholder="Nombre" type="text" [(ngModel)]="insurance.name" name="name" required>
+        <mat-error *ngIf="form.controls.name.hasError('required')">
+          El campo nombre es requerido
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput formControlName="policy" placeholder="Número de póliza" type="text" [(ngModel)]="insurance.policy" name="policy"
+          required>
+        <mat-error *ngIf="form.controls.policy.hasError('required')">
+          El campo número de póliza es requerido
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput pattern="^(\d{7,10})$" placeholder="Teléfono" type="text" [(ngModel)]="insurance.telephone" name="telephone"
+          formControlName="telephone" required>
+        <mat-error *ngIf="form.controls.telephone.hasError('pattern') && !form.controls.telephone.hasError('required')">
+          Introduzca un teléfono correcto
+        </mat-error>
+        <mat-error *ngIf="form.controls.telephone.hasError('required')">
+          El campo teléfono es requerido
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-select placeholder="Tipo de seguro" [formControl]="formControls.insuranceType" [(ngModel)]="insurance.type" name="type"
+          required>
+          <mat-option [value]="'car'">Auto</mat-option>
+          <mat-option [value]="'home'">Casa</mat-option>
+          <mat-option [value]="'life'">Vida</mat-option>
+          <mat-option [value]="'medical'">Médico</mat-option>
+        </mat-select>
+        <mat-error *ngIf="formControls.insuranceType.hasError('required')">Se requiere un tipo de seguro</mat-error>
+      </mat-form-field>
+      <fieldset class="form-group">
+        <label>Archivo de póliza</label>
+        <input name="file" formControlName="file" type="file" placeholder="Agregar archivo" #fileupload (change)="fileChanged(fileupload.files)">
+      </fieldset>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <input type="submit" form="form" class="btn btn-primary" value="Agregar">
+  </div>
+</ng-template>
