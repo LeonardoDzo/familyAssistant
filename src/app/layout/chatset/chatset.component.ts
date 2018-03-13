@@ -20,19 +20,17 @@ export class ChatsetComponent implements OnInit {
   ) { }
 
   readMessages(boss: Boss) {
-    this.userService.getMessages(boss).on('child_added',messagePay => {
-      this.userService.getMessage(messagePay.key).then(message => {
-        if(this.assistant.bosses[boss.id] < message.val().timestamp && message.val().remittent == boss.id){
-          boss.unread++;
-          var ind = this.chats.findIndex(elem => {
-            return elem.id == boss.id
-          })
-          if(ind == -1) {
-            this.chats.push(boss)
-          }
+    this.userService.getMessages(boss).on('child_added',message => {
+      if(this.assistant.bosses[boss.id] < message.val().timestamp && message.val().remittent == boss.id){
+        boss.unread++;
+        var ind = this.chats.findIndex(elem => {
+          return elem.id == boss.id
+        })
+        if(ind == -1) {
+          this.chats.push(boss)
         }
-        boss.messages.push(message.val())
-      })
+      }
+      boss.messages.push(message.val())
     })
   }
 

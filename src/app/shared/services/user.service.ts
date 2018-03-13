@@ -203,7 +203,9 @@ export class UserService {
       id = bossId + "-" + assistantId
     else
       id = assistantId + "-" + bossId
-    return this.afd.database.ref(`groups/${id}/messages`)
+
+
+    return this.afd.database.ref(`messages`).orderByChild("groupId").equalTo(id)
   }
 
   rejectBoss(boss: Boss) {

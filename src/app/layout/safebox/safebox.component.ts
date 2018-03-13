@@ -84,7 +84,6 @@ export class SafeboxComponent implements OnInit {
   }
 
   validate() {
-    console.log(":c")
     if(this.password == this.assistant.password){
       this.error = false
       this.validated = true
