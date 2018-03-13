@@ -1877,7 +1877,7 @@ section.forms .line {
     ), 
     url(/assets/images/fondo-login.jpeg);
   background-repeat: no-repeat;
-  /*background-position: 30% 100%;*/
+  background-position: 50% 100%;
   background-size: cover;
   color: #fff;
 }
