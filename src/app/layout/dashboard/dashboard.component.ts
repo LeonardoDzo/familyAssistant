@@ -70,16 +70,14 @@ export class DashboardComponent implements OnInit {
         private modalService: BsModalService,
         private http: Http,
         private eventService: EventService
-    ) {
-        
-    }
+    ) {}
 
     public openModal(template: TemplateRef<any>,pending: Pending) {
         this.pending = Object.assign(new Pending(),pending);
         this.modalRef = this.modalService.show(template);
     }
 
-    displayInfo($event,template: TemplateRef<any>) {
+    displayInfo($event, template: TemplateRef<any>) {
         this.event = $event.event.meta;
         this.modalRef = this.modalService.show(template);
     }
@@ -144,8 +142,8 @@ export class DashboardComponent implements OnInit {
     }
 
     dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-        //this.viewDate = date;
-        //this.view = "day";
+        // this.viewDate = date;
+        // this.view = "day";
         if (isSameMonth(date, this.viewDate)) {
             if (
                 (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -198,7 +196,7 @@ export class DashboardComponent implements OnInit {
                 let startMonthDate = startOfMonth(subMonths(this.viewDate,1))
                 let endMonthDate = endOfMonth(addMonths(this.viewDate,1))
                 this.events = this.calendarEvents.filter((event) => {
-                    return areRangesOverlapping(event.start,event.end,startMonthDate,endMonthDate);
+                    return areRangesOverlapping(event.start, event.end, startMonthDate, endMonthDate);
                 });
                 this.refresh.next();
             });

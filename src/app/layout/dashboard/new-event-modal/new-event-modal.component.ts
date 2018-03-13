@@ -22,6 +22,7 @@ import {
   addWeeks,
   subMonths
 } from 'date-fns';
+
 @Component({
   selector: 'app-new-event-modal',
   templateUrl: './new-event-modal.component.html',
@@ -121,7 +122,7 @@ export class NewEventModalComponent implements OnInit {
     } else {
       this.event.repeatmodel = {
         interval: 0,
-        frequency: -1,
+        frequency: 0,
         end: 0
       }
     }

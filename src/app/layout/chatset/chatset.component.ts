@@ -22,7 +22,6 @@ export class ChatsetComponent implements OnInit {
   readMessages(boss: Boss) {
     this.userService.getMessages(boss).on('child_added',messagePay => {
       this.userService.getMessage(messagePay.key).then(message => {
-        console.log(message.val())
         if(this.assistant.bosses[boss.id] < message.val().timestamp && message.val().remittent == boss.id){
           boss.unread++;
           var ind = this.chats.findIndex(elem => {
