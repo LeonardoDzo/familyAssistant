@@ -16,6 +16,7 @@ export class AuthService {
       .auth
       .createUserWithEmailAndPassword(email, password)
       .then(user => {
+       console.log(user) 
        this.afd.database.ref('assistants/' + user.uid).set({
           name: name,
           email: email,
@@ -24,7 +25,8 @@ export class AuthService {
           bloodtype: '',
           phone: '',
           nss: '',
-          password: password
+          password: password,
+          id: user.uid
         });
         this.router.navigate(['/dashboard']);
       })

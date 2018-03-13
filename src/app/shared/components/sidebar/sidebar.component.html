@@ -6,8 +6,7 @@
         </div>
         <div class="title">
             <div ngbDropdown class="d-inline-block">
-                <h3 class="h4" id="dropdownBasic1" ngbDropdownToggle>{{selectedBoss.name}}
-                    <i class="fa fa-caret-down"></i>
+                <h3 class="h4" id="dropdownBasic1" ngbDropdownToggle>{{selectedBoss.name}}<i class="fa fa-caret-down"></i>
                 </h3>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                     <button (click)="changeSelectedBoss(boss)" *ngFor="let boss of bosses" class="dropdown-item">{{boss.name}}</button>
